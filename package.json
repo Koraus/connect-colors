@@ -2,7 +2,7 @@
   "name": "connect-colors",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://koraus.github.io/connect-colors/",
+  "homepage": "https://koraus.github.io/connect-colors",
   "type": "module",
   "scripts": {
     "dev": "vite",
