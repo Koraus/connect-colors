@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil"
 import { gameFigureRecoil } from "./data-recoil/playing-data"
 import { Cell } from "./Cell"
-import { Vector3 } from "three";
+import { Group, Object3DEventMap, Vector3 } from "three";
 import { useEffect, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
@@ -9,7 +9,7 @@ export const GameFigure = () => {
 
     const { viewport } = useThree()
 
-    const ref = useRef(null)
+    const ref = useRef<Group<Object3DEventMap>>(null)
     const [isPressed, setIsPressed] = useState(false)
 
 
