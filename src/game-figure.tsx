@@ -1,65 +1,42 @@
-import { useRecoilValue } from "recoil"
-import { gameFigureRecoil } from "./data-recoil/playing-data"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { figureCoordsRecoil, gameFiguresRecoil, heldFigureRecoil } from "./data-recoil/playing-data"
 import { Cell } from "./Cell"
-import { Group, Object3DEventMap, Vector3 } from "three";
-import { useEffect, useRef, useState } from "react";
-import { useFrame, useThree } from "@react-three/fiber";
+import { Vector3 } from "three";
+
 
 export const GameFigure = () => {
 
-    const { viewport } = useThree()
+    const setPointerFigure = useSetRecoilState(heldFigureRecoil);
 
-    const ref = useRef<Group<Object3DEventMap>>(null)
-    const [isPressed, setIsPressed] = useState(false)
-
-
-    useEffect(() => {
-        if (isPressed) {
-            window.addEventListener('mouseup', () => setIsPressed(false))
-        }
-        return () => {
-            window.removeEventListener('mouseup', () => setIsPressed(false))
-        }
-    }, [isPressed])
-
-    useFrame(({ mouse }) => {
-        if (!isPressed) { return }
-        if (isPressed) {
-            const x = (mouse.x * viewport.width) / 2 -  5;
-            const y = (mouse.y * viewport.height) / 2 ;
-            
-            ref.current && ref.current.position.set(x, y, 0.2)
-        }
-    })
-
-    const rowLength = 4;
-    const gameFigure = useRecoilValue(gameFigureRecoil);
+    const gameFigure = useRecoilValue(gameFiguresRecoil)[0];
     const cellSize = [0.3, 0.3, 0.2];
-
-    const sideShift = 4;
     const gape = 0.03;
 
-    const cells = gameFigure.map((el, index) => {
-        const row = Math.floor(index / rowLength);
-        const column = index % rowLength;
-        const position = new Vector3(
-            ((cellSize[0] + gape) * column) + sideShift,
-            (cellSize[1] + gape) * row,
-            0
-        );
-        return el === 0 ? null : <Cell
-            value={el}
-            key={index}
-            position={position}
-            size={cellSize} />;
-    }
-    );
-    return <group
-        ref={ref}
-        onPointerDown={() => setIsPressed(true)}
-    >
+    const cells = gameFigure.map((el, index1) => {
 
+        return [el.map((el, index) => {
+            const position = new Vector3(
+                ((cellSize[0] + gape) * index),
+                index1 * (cellSize[1] + gape),
+                0
+            );
+            return (el === 0 ? null :
+                <Cell
+                    value={el}
+                    key={index}
+                    coords={[index1, index]}
+                    position={position}
+                    size={cellSize} />
+            )
+        })]
+    });
+
+    const position = useRecoilValue(figureCoordsRecoil);
+    return <group
+        position={position}
+        onClick={() => { setPointerFigure(gameFigure); }}
+    >
         {cells}
-    </group>
+    </group >
 
 }

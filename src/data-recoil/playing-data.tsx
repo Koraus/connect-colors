@@ -1,26 +1,41 @@
 import { atom } from "recoil";
+import { Vector3 } from "three";
 
 export const playingFieldRecoil = atom({
     key: 'playingField',
-    default: Array.from(
-        { length: 100 },
-        // () => Math.floor(Math.random() * 5),
-        () => 0,
-    ),
-});
-
-export const gameFigureRecoil = atom({
-    key: 'gameFigure',
     default: [
-        0, 0, 2, 0,
-        0, 1, 1, 0,
-        0, 0, 1, 0,
-        0, 0, 0, 0,
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
+        Array.from({ length: 10 }, () => 0),
     ]
 });
 
+type Figure = number[][];
 
-export const movingFigure = atom({
-    key: 'movingFigure',
+export const gameFiguresRecoil = atom<Figure[]>({
+    key: 'gameFigure',
+    default: [
+        [
+            [0, 1, 1],
+            [1, 1, 0],
+            [1, 1, 0],
+        ]
+    ]
+});
+
+export const heldFigureRecoil = atom<Figure | null>({
+    key: 'heldFigure',
     default: null
 });
+
+export const figureCoordsRecoil = atom<Vector3>({
+    key: 'figureCoords',
+    default: new Vector3(2, 0, 0)
+})
