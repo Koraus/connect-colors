@@ -10,14 +10,14 @@ export const PlayingField = () => {
 
   const playingField = useRecoilValue(playingFieldRecoil);
   const cellSize = [0.3, 0.3, 0.2];
-  const gape = 0.03;
+  const gap = 0.03;
 
   const cells = playingField.map((el, index1) => {
 
     return [el.map((el, index) => {
       const position = new Vector3(
-        ((cellSize[0] + gape) * index) - sideShift,
-        index1 * (cellSize[1] + gape),
+        ((cellSize[0] + gap) * index) - sideShift,
+        index1 * (cellSize[1] + gap),
         0
       );
 
@@ -26,7 +26,7 @@ export const PlayingField = () => {
           value={el}
           key={index}
           coords={[index1, index]}
-          position={position}
+          position={[position.x, position.y, position.z]}
           size={cellSize} />
       )
     })]

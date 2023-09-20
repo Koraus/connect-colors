@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { Vector3 } from "three";
 
 export const playingFieldRecoil = atom({
     key: 'playingField',
@@ -17,25 +16,32 @@ export const playingFieldRecoil = atom({
     ]
 });
 
-type Figure = number[][];
+export type Figure = number[][];
 
 export const gameFiguresRecoil = atom<Figure[]>({
-    key: 'gameFigure',
+    key: 'gameFigures',
     default: [
         [
-            [0, 1, 1],
-            [1, 1, 0],
-            [1, 1, 0],
+            [0, 2, 1],
+            [1, 3, 0],
+            [1, 2, 0],
+        ],
+        [
+            [2, 3, 0],
+            [1, 2, 3],
         ]
     ]
 });
 
-export const heldFigureRecoil = atom<Figure | null>({
+export const heldFigureRecoil = atom({
     key: 'heldFigure',
-    default: null
+    default: undefined as Figure | undefined
+
 });
 
-export const figureCoordsRecoil = atom<Vector3>({
+export const figureCoordsRecoil = atom({
     key: 'figureCoords',
-    default: new Vector3(2, 0, 0)
+    default: [0, 0, 0] as [number, number, number]
 })
+
+export const color = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']
