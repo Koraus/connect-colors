@@ -17,10 +17,12 @@ export const FieldCell = ({
   const [field, setField] = useRecoilState(playingFieldRecoil);
   const gameFigures = useRecoilValue(gameFiguresRecoil);
 
-  const pointerFigure = pointerFigureIndex && gameFigures[pointerFigureIndex]
 
   const putPointerFigure = (coords: [number, number] | undefined) => {
     if (!coords) return
+    if (pointerFigureIndex === undefined) return
+
+    const pointerFigure = gameFigures[pointerFigureIndex]
     const [x, y] = coords;
 
     const fieldWithFigure = [...field.map(el => [...el])];
@@ -60,7 +62,7 @@ export const FieldCell = ({
       position={position}
       onPointerUp={() => { putPointerFigure(coords); }}
       onPointerOver={() => setFigureCoords(
-        pointerFigure
+        pointerFigureIndex !== undefined
           ? [
             position[0],
             position[1],

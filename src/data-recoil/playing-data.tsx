@@ -37,10 +37,8 @@ export const gameFiguresRecoil = atom<Figure[]>({
     ]
 });
 
-
-
 export const figureOnPointerIndexRecoil = atom({
-    key: 'heldFigure',
+    key: 'figureOnPointerIndex',
     default: undefined as number | undefined
 
 });

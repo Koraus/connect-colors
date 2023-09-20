@@ -3,6 +3,7 @@ import { Figure, figureGhostCoordsRecoil, gameFiguresRecoil, figureOnPointerInde
 import { Cell } from "./Cell"
 import { Vector3 } from "three";
 import { RoundedBox } from "@react-three/drei";
+import { rotateFigure } from "./rotate-figure";
 
 
 export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
@@ -15,22 +16,6 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
 
     const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
     const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
-
-    const rotateFigure = (figure: Figure) => {
-        const numRows = figure.length;
-        const numCols = figure[0].length;
-
-        const rotatedFigure = new Array(numCols)
-            .fill(null)
-            .map(() => new Array(numRows).fill(null));
-
-        for (let row = 0; row < numRows; row++) {
-            for (let col = 0; col < numCols; col++) {
-                rotatedFigure[col][numRows - row - 1] = figure[row][col];
-            }
-        }
-        return rotatedFigure
-    }
 
     const oneFiguraСells = ctrGameFigure.map((el, index1) => {
 
@@ -58,9 +43,9 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
 
 
     return (
-        <group position={new Vector3(1, sequenceNumber * 1.2, 0)}>
+        <group position={new Vector3(1.5, sequenceNumber * 1.2, 0)}>
             <mesh
-                position={[1, 1, 0]}
+                position={[1, 0.8, 0]}
                 onClick={() => {
                     const rotatedFigure = rotateFigure(ctrGameFigure)
                     const newFigures = gameFigures.map(
@@ -76,7 +61,7 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
                 position={new Vector3(xGhost, yGhost, zGhost)}
                 onPointerDown={() => {
                     setPointerFigureIndex(figureIndex);
-                    console.log('click',pointerFigureIndex )
+                    console.log('click', pointerFigureIndex)
                 }} >
                 {oneFiguraСells}
             </group >
