@@ -3,12 +3,15 @@ import './App.css'
 import { PlayingField } from './playing-field';
 import { ResetBtn } from './reset-btn';
 import { GameFiguresArea } from './game-figures-area';
+import { RotateButtons } from './rotate-buttons';
+
 
 
 function App() {
 
   return (
     <>
+      <RotateButtons />
       <ResetBtn />
       <Canvas  >
         <ambientLight />
