@@ -1,12 +1,11 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
-import { Figure, figureCoordsRecoil, gameFiguresRecoil, heldFigureRecoil } from "./data-recoil/playing-data"
+import { useRecoilState, useRecoilValue } from "recoil"
+import { Figure, figureGhostCoordsRecoil, gameFiguresRecoil, figureOnPointerIndexRecoil } from "./data-recoil/playing-data"
 import { Cell } from "./Cell"
 import { Vector3 } from "three";
 import { RoundedBox } from "@react-three/drei";
-import { useState } from "react";
 
 
-export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex
+export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
 }: {
     ctrGameFigure: Figure, sequenceNumber: number, figureIndex: number
 }) => {
@@ -14,27 +13,26 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex
     const cellSize = [0.3, 0.3, 0.2];
     const gap = 0.03;
 
-    const [figure, setFigure] = useState(ctrGameFigure)
     const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
-    const setPointerFigure = useSetRecoilState(heldFigureRecoil);
+    const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
 
     const rotateFigure = (figure: Figure) => {
         const numRows = figure.length;
         const numCols = figure[0].length;
 
-        const rotatedTable = new Array(numCols)
+        const rotatedFigure = new Array(numCols)
             .fill(null)
             .map(() => new Array(numRows).fill(null));
 
         for (let row = 0; row < numRows; row++) {
             for (let col = 0; col < numCols; col++) {
-                rotatedTable[col][numRows - row - 1] = figure[row][col];
+                rotatedFigure[col][numRows - row - 1] = figure[row][col];
             }
         }
-        setFigure(rotatedTable)
+        return rotatedFigure
     }
 
-    const oneFiguraСells = figure.map((el, index1) => {
+    const oneFiguraСells = ctrGameFigure.map((el, index1) => {
 
         return [el.map((el, index) => {
             const position = new Vector3(
@@ -46,25 +44,27 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex
                 <Cell
                     value={el}
                     key={index}
-                    coords={[index1, index]}
                     position={position}
                     size={cellSize} />
             )
         })]
     });
 
-    const [xItem, yItem, zItem] = useRecoilValue(figureCoordsRecoil);
+    const [xItem, yItem, zItem] = useRecoilValue(figureGhostCoordsRecoil);
+    const [xGhost, yGhost, zGhost] =
+        figureIndex === pointerFigureIndex
+            ? [xItem, yItem, zItem]
+            : [0, 0, 0]
+
 
     return (
-        // фігура з конопкою
         <group position={new Vector3(1, sequenceNumber * 1.2, 0)}>
             <mesh
-                // кнопка
                 position={[1, 1, 0]}
                 onClick={() => {
-                    rotateFigure(figure)
+                    const rotatedFigure = rotateFigure(ctrGameFigure)
                     const newFigures = gameFigures.map(
-                        (el, i) => i === figureIndex ? figure : el
+                        (el, i) => i === figureIndex ? rotatedFigure : el
                     );
                     setGameFigures(newFigures)
                 }}>
@@ -73,9 +73,10 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex
                 </RoundedBox>
             </mesh>
             <group
-                position={new Vector3(xItem, yItem, zItem)}
-                onClick={() => {
-                    setPointerFigure(ctrGameFigure);
+                position={new Vector3(xGhost, yGhost, zGhost)}
+                onPointerDown={() => {
+                    setPointerFigureIndex(figureIndex);
+                    console.log('click',pointerFigureIndex )
                 }} >
                 {oneFiguraСells}
             </group >

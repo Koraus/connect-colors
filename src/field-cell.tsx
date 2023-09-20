@@ -1,7 +1,7 @@
 import { Color } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color, figureCoordsRecoil, heldFigureRecoil, playingFieldRecoil } from './data-recoil/playing-data';
+import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
 
 
 export const FieldCell = ({
@@ -11,8 +11,13 @@ export const FieldCell = ({
 }) => {
   const cellColor = new Color(color[value]);
 
-  const pointerFigure = useRecoilValue(heldFigureRecoil);
+  const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
+
+  const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
+  const gameFigures = useRecoilValue(gameFiguresRecoil);
+
+  const pointerFigure = pointerFigureIndex && gameFigures[pointerFigureIndex]
 
   const putPointerFigure = (coords: [number, number] | undefined) => {
     if (!coords) return
@@ -43,17 +48,25 @@ export const FieldCell = ({
           }
         }
       }
+      setPointerFigureIndex(undefined)
     }
     setField(fieldWithFigure)
+
   }
 
-  const setFigureCoords = useSetRecoilState(figureCoordsRecoil);
 
   return (
     <mesh
       position={position}
-      onPointerUp={() => { putPointerFigure(coords) }}
-      onPointerOver={() => setFigureCoords(pointerFigure ? [position[0], position[1], position[2]] : [0, 0, 0])
+      onPointerUp={() => { putPointerFigure(coords); }}
+      onPointerOver={() => setFigureCoords(
+        pointerFigure
+          ? [
+            position[0],
+            position[1],
+            position[2],
+          ]
+          : [0, 0, 0])
       }
     >
       <RoundedBox args={[size[0], size[1], size[2]]}>

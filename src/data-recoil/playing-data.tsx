@@ -29,18 +29,24 @@ export const gameFiguresRecoil = atom<Figure[]>({
         [
             [2, 3, 0],
             [1, 2, 3],
+        ],
+        [
+            [1, 2],
+            [1, 1],
         ]
     ]
 });
 
-export const heldFigureRecoil = atom({
+
+
+export const figureOnPointerIndexRecoil = atom({
     key: 'heldFigure',
-    default: undefined as Figure | undefined
+    default: undefined as number | undefined
 
 });
 
-export const figureCoordsRecoil = atom({
-    key: 'figureCoords',
+export const figureGhostCoordsRecoil = atom({
+    key: 'figureGhostCoords',
     default: [0, 0, 0] as [number, number, number]
 })
 

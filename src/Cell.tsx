@@ -4,13 +4,13 @@ import { color } from './data-recoil/playing-data';
 
 
 export const Cell = ({
-  value, position, size, coords
+  value, position, size,
 }: {
-  value: number; position: Vector3; size: number[], coords?: [number, number]
+  value: number; position: Vector3; size: number[],
 }) => {
   const cellColor = new Color(color[value]);
   return (
-    <mesh position={position} onPointerUp={() => console.log(coords)}>
+    <mesh position={position}>
       <RoundedBox args={[size[0], size[1], size[2]]}>
         <meshLambertMaterial attach="material" color={cellColor} />
       </RoundedBox>
