@@ -27,8 +27,12 @@ export const gameFiguresRecoil = atom<Figure[]>({
             [1, 2, 0],
         ],
         [
-            [2, 3, 0],
-            [1, 2, 3],
+            [2, 3, 0, 1, 2],
+            [2, 3, 2, 1, 2],
+            [2, 3, 0, 1, 2],
+            [2, 3, 2, 1, 2],
+            [2, 3, 0, 1, 2],
+
         ],
         [
             [1, 2],
@@ -46,6 +50,11 @@ export const figureOnPointerIndexRecoil = atom({
 export const figureGhostCoordsRecoil = atom({
     key: 'figureGhostCoords',
     default: [1, 0, 0.5] as [number, number, number]
+})
+
+export const isAvailableMoveRecoil = atom({
+    key: 'isAvailableMove',
+    default: true,
 })
 
 export const color = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']

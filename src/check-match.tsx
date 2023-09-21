@@ -1,30 +1,4 @@
-import { Figure } from "./data-recoil/playing-data";
-
-export const hasMinTwoSameNeighbors = (
-    x: number, y: number, field: number[][]) => {
-
-    const value = field[x][y];
-    const maxHeightIndex = field.length - 1;
-    const maxWidthIndex = field[0].length - 1;
-
-    const right = y < maxWidthIndex ? field[x][y + 1] : undefined;
-    const left = y > 0 ? field[x][y - 1] : undefined;
-
-    const top = x < maxHeightIndex ? field[x + 1][y] : undefined;
-    const bottom = x > 0 ? field[x - 1][y] : undefined;
-
-    const neighbors = [];
-
-    if (right && right === value) neighbors.push([x, y + 1]);
-    if (left && left === value) neighbors.push([x, y - 1]);
-    if (top !== undefined && top === value) neighbors.push([x + 1, y]);
-    if (bottom && bottom === value) neighbors.push([x - 1, y]);
-
-    if (neighbors.length >= 2) { neighbors.push([x, y]) }
-
-    return neighbors.length >= 3 ? neighbors : [];
-
-}
+import { hasMinTwoSameNeighbors } from "./has-min-two-same-neighbors";
 
 export const checkMatch = (field: number[][]) => {
 
@@ -53,56 +27,5 @@ export const checkMatch = (field: number[][]) => {
             uniqueCoords.push(item);
         }
     }
-    console.log(uniqueCoords)
     return uniqueCoords;
-}
-
-export const canPlaceFigureInCoords = (
-    figure: Figure, field: number[][], coords: [number, number]
-) => {
-
-    const maxHeightIndex = field.length - 1;
-    const maxWidthIndex = field[0].length - 1;
-
-    const [x, y] = coords;
-    let canPlace = true;
-
-    for (let i = 0; i < figure?.length; i++) {
-        for (let j = 0; j < figure[i].length; j++) {
-
-            if (field[x + i] === undefined) {
-                canPlace = false
-                console.log('can`t Place')
-                return
-            }
-            if (
-                field[x + i][y + j] !== 0
-                && figure[i][j] !== 0
-                || field[x + i][y + j] === undefined
-                || x + i > maxHeightIndex
-                || y + j > maxWidthIndex
-                || x + i < 0
-                || y + j < 0) {
-
-                canPlace = false
-                console.log('can`t Place')
-                return
-            }
-        }
-    }
-    return canPlace;
-}
-
-export const canPlaceOnField = (figure: Figure, field: number[][]) => {
-
-    const allCoords = field
-        .map((e, i) => e.map((e, i1) => [i, i1])).flat() as [number, number][];
-
-    let canPlace = true;
-
-    for (const coords of allCoords) {
-        canPlace = canPlaceFigureInCoords(figure, field, coords) ? true : false;
-    }
-
-    return canPlace;
 }

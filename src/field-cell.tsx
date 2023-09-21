@@ -1,8 +1,10 @@
 import { Color } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
-import { canPlaceFigureInCoords, checkMatch } from './check-match';
+import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, isAvailableMoveRecoil, playingFieldRecoil } from './data-recoil/playing-data';
+import { checkMatch } from './check-match';
+import { isAvailableMove } from "./is-available-move";
+import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
 
 
 export const FieldCell = ({
@@ -10,13 +12,16 @@ export const FieldCell = ({
 }: {
   value: number; position: [number, number, number]; size: number[], coords?: [number, number]
 }) => {
-  const cellColor = new Color(color[value]);
 
   const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
 
   const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
   const gameFigures = useRecoilValue(gameFiguresRecoil);
+  const [availableMove, setAvailableMove] = useRecoilState(isAvailableMoveRecoil)
+
+  let cellColor = new Color(color[value]);
+  if (!availableMove && value === 0) { cellColor = new Color("#ff0000"); }
 
 
   const putPointerFigure = (coords: [number, number] | undefined) => {
@@ -40,7 +45,7 @@ export const FieldCell = ({
       setField(fieldWithFigure)
       checkMatch(field)
     }
-
+    setAvailableMove(isAvailableMove(gameFigures, field))
   }
 
   return (
