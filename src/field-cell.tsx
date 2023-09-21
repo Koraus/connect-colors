@@ -2,9 +2,9 @@ import { Color } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, isAvailableMoveRecoil, playingFieldRecoil } from './data-recoil/playing-data';
-import { checkMatch } from './check-match';
 import { isAvailableMove } from "./is-available-move";
 import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
+import { destroyIdenticalCells } from './destroy-identical-cells';
 
 
 export const FieldCell = ({
@@ -43,8 +43,9 @@ export const FieldCell = ({
       }
       setPointerFigureIndex(undefined)
       setField(fieldWithFigure)
-      checkMatch(field)
+
     }
+    destroyIdenticalCells(fieldWithFigure, setField)
     setAvailableMove(isAvailableMove(gameFigures, field))
   }
 
