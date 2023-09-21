@@ -2,6 +2,7 @@ import { Color } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
+import { canPlaceFigureInCoords, checkMatch } from './check-match';
 
 
 export const FieldCell = ({
@@ -27,22 +28,7 @@ export const FieldCell = ({
 
     const fieldWithFigure = [...field.map(el => [...el])];
 
-    let canPut = true;
-
-    if (pointerFigure) {
-      for (let i = 0; i < pointerFigure?.length; i++) {
-        for (let j = 0; j < pointerFigure[i].length; j++) {
-          if (field[x + i][y + j] !== 0 && pointerFigure[i][j] !== 0
-            || x + i > 9 || y + j > 9 || x + i < 0 || y + j < 0) {
-            canPut = false
-            console.log('cant put')
-            return
-          }
-        }
-      }
-    }
-
-    if (pointerFigure && canPut) {
+    if (pointerFigure && canPlaceFigureInCoords(pointerFigure, field, coords)) {
       for (let i = 0; i < pointerFigure?.length; i++) {
         for (let j = 0; j < pointerFigure[i].length; j++) {
           if (pointerFigure[i][j] !== 0) {
@@ -51,11 +37,11 @@ export const FieldCell = ({
         }
       }
       setPointerFigureIndex(undefined)
+      setField(fieldWithFigure)
+      checkMatch(field)
     }
-    setField(fieldWithFigure)
 
   }
-
 
   return (
     <mesh

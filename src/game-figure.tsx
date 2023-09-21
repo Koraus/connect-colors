@@ -45,7 +45,6 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
             position={new Vector3(xGhost, yGhost, zGhost)}
             onPointerDown={() => {
                 setPointerFigureIndex(figureIndex);
-                console.log('click', pointerFigureIndex)
             }} >
             {oneFiguraСells}
         </group >)
