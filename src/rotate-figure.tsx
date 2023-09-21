@@ -2,7 +2,7 @@ import { Figure } from "./data-recoil/playing-data";
 
 export const rotateFigure = (figure: Figure, position?: number) => {
 
-    const rotatedFigure = (figure: Figure): Figure => {
+    const rotatedFigure = (figure: Figure) => {
         const numRows = figure.length;
         const numCols = figure[0].length;
         const rotatedFigure = new Array(numCols)
@@ -14,11 +14,13 @@ export const rotateFigure = (figure: Figure, position?: number) => {
                 rotatedFigure[col][numRows - row - 1] = figure[row][col];
             }
         }
-        return rotatedFigure
+        return rotatedFigure as Figure;
     }
+
     if (position === 0) return figure;
     if (position === 1 || position === undefined) return rotatedFigure(figure);
     if (position === 2) return rotatedFigure(rotatedFigure(figure));
     if (position === 3) return rotatedFigure(rotatedFigure(rotatedFigure(figure)));
+    return figure;
 
 }

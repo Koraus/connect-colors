@@ -12,7 +12,11 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
     ).flat() as Figure[];
 
     const allFieldCoords = field
-        .map((e, i) => e.map((e, i1) => [i, i1])).flat() as [number, number][];
+
+        .map((e, i) => e.map(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            (e, i1) => [i, i1])).flat() as [number, number][];
 
     return allVariantsOfFigures
         .some(figure => allFieldCoords

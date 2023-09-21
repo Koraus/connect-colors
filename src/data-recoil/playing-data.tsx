@@ -18,7 +18,7 @@ export const playingFieldRecoil = atom({
 
 export type Figure = number[][];
 
-export const gameFiguresRecoil = atom<Figure[]>({
+export const gameFiguresRecoil = atom({
     key: 'gameFigures',
     default: [
         [
@@ -38,7 +38,7 @@ export const gameFiguresRecoil = atom<Figure[]>({
             [1, 2],
             [1, 1],
         ]
-    ]
+    ] as Figure[]
 });
 
 export const figureOnPointerIndexRecoil = atom({
