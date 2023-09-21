@@ -7,6 +7,8 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
 
     const allVariantsOfFigures = availableFigures.map((figure) => {
         const arr = Array.from({ length: 4 }, () => undefined);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         return arr.map((e, i) => rotateFigure(figure, i));
     }
     ).flat() as Figure[];
