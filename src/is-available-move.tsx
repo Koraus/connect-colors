@@ -13,15 +13,12 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
     }
     ).flat() as Figure[];
 
-    const allFieldCoords = field
-
+    const allEmptyFieldCoords = field
         .map((e, i) => e.map(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            (e, i1) => [i, i1])).flat() as [number, number][];
+            (e, i1) => e === 0 ? [i, i1] : [])).flat() as [number, number][];
 
     return allVariantsOfFigures
-        .some(figure => allFieldCoords
+        .some(figure => allEmptyFieldCoords
             .some(coord => canPlaceFigureInCoords(figure, field, coord)
             ))
 

@@ -4,6 +4,7 @@ import { PlayingField } from './playing-field';
 import { ResetBtn } from './reset-btn';
 import { GameFiguresArea } from './game-figures-area';
 import { RotateButtons } from './rotate-buttons';
+import { FieldSizeInput } from './field-size-input';
 
 
 
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <>
+      <FieldSizeInput />
       <RotateButtons />
       <ResetBtn />
       <Canvas  >

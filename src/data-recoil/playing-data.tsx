@@ -3,17 +3,17 @@ import { atom } from "recoil";
 export const playingFieldRecoil = atom({
     key: 'playingField',
     default: [
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-        Array.from({ length: 10 }, () => 0),
-    ]
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+            Array.from({ length: 10 }, () => 0),
+        ]
 });
 
 export type Figure = number[][];
@@ -48,11 +48,6 @@ export const figureOnPointerIndexRecoil = atom({
 export const figureGhostCoordsRecoil = atom({
     key: 'figureGhostCoords',
     default: [1, 0, 0.5] as [number, number, number]
-})
-
-export const isAvailableMoveRecoil = atom({
-    key: 'isAvailableMove',
-    default: true,
 })
 
 export const color = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']

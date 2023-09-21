@@ -1,7 +1,7 @@
 import { Color } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, isAvailableMoveRecoil, playingFieldRecoil } from './data-recoil/playing-data';
+import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
 import { isAvailableMove } from "./is-available-move";
 import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
 import { destroyIdenticalCells } from './destroy-identical-cells';
@@ -18,10 +18,12 @@ export const FieldCell = ({
   const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
   const gameFigures = useRecoilValue(gameFiguresRecoil);
-  const [availableMove, setAvailableMove] = useRecoilState(isAvailableMoveRecoil)
 
   let cellColor = new Color(color[value]);
-  if (!availableMove && value === 0) { cellColor = new Color("#ff0000"); }
+
+  if (!isAvailableMove(gameFigures, field) && value === 0) {
+    cellColor = new Color("#ff0000");
+  }
 
 
   const putPointerFigure = (coords: [number, number] | undefined) => {
@@ -46,7 +48,6 @@ export const FieldCell = ({
 
     }
     destroyIdenticalCells(fieldWithFigure, setField)
-    setAvailableMove(isAvailableMove(gameFigures, field))
   }
 
   return (
