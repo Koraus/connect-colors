@@ -37,7 +37,7 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
     const [xGhost, yGhost, zGhost] =
         figureIndex === pointerFigureIndex
             ? [xItem, yItem, zItem]
-            : [1.5, sequenceNumber * 1.2, 0]
+            : [1.5, sequenceNumber * 1.5, 0]
 
 
     return (

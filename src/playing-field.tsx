@@ -8,7 +8,7 @@ export const PlayingField = () => {
 
   const sideShift = 2;
 
-  const playingField = useRecoilValue(playingFieldRecoil);
+  const playingField = useRecoilValue(playingFieldRecoil).field;
   const cellSize = [0.3, 0.3, 0.2];
   const gap = 0.03;
 

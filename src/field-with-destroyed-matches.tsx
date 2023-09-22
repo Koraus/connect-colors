@@ -1,8 +1,6 @@
-import { SetterOrUpdater } from "recoil";
 import { checkMatch } from "./check-match"
 
-export const destroyIdenticalCells = (
-    field: number[][], setField: SetterOrUpdater<number[][]>
+export const fieldWithDestroyedMatches = (field: number[][]
 ) => {
 
     const machesIndexes = checkMatch(field);
@@ -12,5 +10,5 @@ export const destroyIdenticalCells = (
             cleanedField[i[0]][i[1]] = 0
         }
     )
-    setField(cleanedField)
+    return cleanedField
 }

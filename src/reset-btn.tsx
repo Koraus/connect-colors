@@ -9,7 +9,7 @@ export const ResetBtn = () => {
     const resetHeldFigure = useResetRecoilState(figureOnPointerIndexRecoil);
     const resetFigureCoords = useResetRecoilState(figureGhostCoordsRecoil);
 
-    const setReset = () => {
+    const reset = () => {
         resetFiedl()
         resetFigure()
         resetHeldFigure()
@@ -17,7 +17,7 @@ export const ResetBtn = () => {
     }
 
     return <button onClick={() => {
-        setReset()
+        reset()
     }}>reset</button>
 }
 
