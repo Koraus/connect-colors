@@ -17,9 +17,9 @@ export const playingFieldRecoil = atom({
                 Array.from({ length: 10 }, () => 0),
             ],
         score: 0,
-        prev: {
-            field: undefined as number[][] | undefined,
-            score: undefined as number | undefined,
+        prevMove: undefined as undefined | {
+            field: number[][],
+            score: number,
         }
     }
 });
@@ -54,7 +54,7 @@ export const figureOnPointerIndexRecoil = atom({
 
 export const figureGhostCoordsRecoil = atom({
     key: 'figureGhostCoords',
-    default: [1, 0, 0.5] as [number, number, number]
+    default: [0, 0, 0] as [number, number, number]
 })
 
 export const bestScoreRecoil = atom({
@@ -63,3 +63,7 @@ export const bestScoreRecoil = atom({
 })
 
 export const cellColors = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']
+
+export const cellSize = [0.3, 0.3, 0.13];
+
+export const cellGap = 0.04;

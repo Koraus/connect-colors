@@ -1,4 +1,4 @@
-import { playingFieldRecoil } from './data-recoil/playing-data';
+import { cellSize, cellGap, playingFieldRecoil } from './data-recoil/playing-data';
 import { FieldCell } from './field-cell';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
@@ -12,8 +12,6 @@ export const PlayingField = () => {
   const sideShift = 2;
 
   const playingField = useRecoilValue(playingFieldRecoil).field;
-  const cellSize = [0.3, 0.3, 0.2];
-  const gap = 0.03;
 
   const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
@@ -43,13 +41,14 @@ export const PlayingField = () => {
       setField({
         field: fieldWithFigure,
         score: field.score,
-        prev: { field: field.field, score: field.score }
+        prevMove: { field: field.field, score: field.score }
       })
+
       setTimeout(() => {
         setField({
           field: fieldWithDestroyedMatches(fieldWithFigure),
           score: field.score + calculateScore(fieldWithFigure),
-          prev: { field: field.field, score: field.score }
+          prevMove: { field: field.field, score: field.score }
         })
       }, 20)
     }
@@ -59,8 +58,8 @@ export const PlayingField = () => {
 
     return [el.map((el, index) => {
       const position = [
-        ((cellSize[0] + gap) * index) - sideShift,
-        index1 * (cellSize[1] + gap),
+        ((cellSize[0] + cellGap) * index) - sideShift,
+        index1 * (cellSize[1] + cellGap),
         0
       ]
 
