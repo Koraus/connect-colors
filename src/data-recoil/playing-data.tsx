@@ -16,7 +16,11 @@ export const playingFieldRecoil = atom({
                 Array.from({ length: 10 }, () => 0),
                 Array.from({ length: 10 }, () => 0),
             ],
-        score: 0
+        score: 0,
+        prev: {
+            field: undefined as number[][] | undefined,
+            score: undefined as number | undefined,
+        }
     }
 });
 
@@ -58,4 +62,4 @@ export const bestScoreRecoil = atom({
     default: 0
 })
 
-export const color = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']
+export const cellColors = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']

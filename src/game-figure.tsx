@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil"
 import { Figure, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./data-recoil/playing-data"
 import { Cell } from "./Cell"
-import { Vector3 } from "three";
+
 
 
 export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
@@ -18,11 +18,12 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
     const oneFiguraСells = ctrGameFigure.map((el, index1) => {
 
         return [el.map((el, index) => {
-            const position = new Vector3(
-                ((cellSize[0] + gap) * index),
+            const position = [
+                (cellSize[0] + gap) * index,
                 index1 * (cellSize[1] + gap),
                 0
-            );
+            ] as [number, number, number];
+
             return (el === 0 ? null :
                 <Cell
                     value={el}
@@ -39,10 +40,9 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
             ? [xItem, yItem, zItem]
             : [1.5, sequenceNumber * 1.5, 0]
 
-
     return (
         <group
-            position={new Vector3(xGhost, yGhost, zGhost)}
+            position={[xGhost, yGhost, zGhost]}
             onPointerDown={() => {
                 setPointerFigureIndex(figureIndex);
             }} >

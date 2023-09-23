@@ -1,60 +1,53 @@
-import { Color } from 'three';
+import { Mesh } from 'three';
 import { RoundedBox } from '@react-three/drei';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
-import { isAvailableMove } from "./is-available-move";
-import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
-import { fieldWithDestroyedMatches } from './field-with-destroyed-matches';
-import { calculateScore } from './calculate-score';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from './data-recoil/playing-data';
+
+import { useEffect, useRef, useState } from 'react';
+import { useFrame } from '@react-three/fiber';
 
 
 export const FieldCell = ({
-  value, position, size, coords
+  position,
+  size,
+  coords,
+  value,
+  putPointerFigure
 }: {
-  value: number; position: [number, number, number]; size: number[], coords?: [number, number]
+  position: [number, number, number];
+  size: number[],
+  coords: [number, number],
+  value: number,
+  putPointerFigure: (coords: [number, number] | undefined) => void
 }) => {
 
+  const pointerFigureIndex = useRecoilValue(figureOnPointerIndexRecoil);
   const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
 
-  const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
-  const [field, setField] = useRecoilState(playingFieldRecoil);
-  const gameFigures = useRecoilValue(gameFiguresRecoil);
+  const cellRef = useRef<Mesh>(null!);
 
-  let cellColor = new Color(color[value]);
-
-  if (!isAvailableMove(gameFigures, field.field) && value === 0) {
-    cellColor = new Color("#ff0000");
-  }
-
-  const putPointerFigure = (coords: [number, number] | undefined) => {
-    if (!coords) return
-    if (pointerFigureIndex === undefined) return
-
-    const pointerFigure = gameFigures[pointerFigureIndex]
-    const [x, y] = coords;
-
-    const fieldWithFigure = [...field.field.map(el => [...el])];
-
-    if (pointerFigure && canPlaceFigureInCoords(pointerFigure, field.field, coords)) {
-      for (let i = 0; i < pointerFigure?.length; i++) {
-        for (let j = 0; j < pointerFigure[i].length; j++) {
-          if (pointerFigure[i][j] !== 0) {
-            fieldWithFigure[x + i][y + j] = pointerFigure[i][j]
-          }
-        }
-      }
-      setPointerFigureIndex(undefined)
-      setField({ field: fieldWithFigure, score: field.score })
-
+  const [time, setTime] = useState<number>();
+  useEffect(() => {
+    if (value === 0) {
+      setTime(Date.now())
     }
-    setField({
-      field: fieldWithDestroyedMatches(fieldWithFigure),
-      score: field.score + calculateScore(fieldWithFigure)
-    })
-  }
+  }, [value])
+
+  useFrame(() => {
+    if (time === undefined) return
+    const t = Date.now() - time;
+    const y = Math.max(0, 1 - t / 500)
+    cellRef.current?.scale.set(y, y, y)
+    cellRef.current?.rotation.set(y * 0.4, y * 0.4, y * 0.4)
+
+    if (y === 0) {
+      cellRef.current?.scale.set(1, 1, 1)
+    }
+  },)
 
   return (
     <mesh
+      ref={cellRef}
       position={position}
       onPointerUp={() => { putPointerFigure(coords); }}
       onPointerOver={() => setFigureCoords(
@@ -68,7 +61,7 @@ export const FieldCell = ({
       }
     >
       <RoundedBox args={[size[0], size[1], size[2]]}>
-        <meshLambertMaterial attach="material" color={cellColor} />
+        <meshLambertMaterial attach="material" color={cellColors[value]} />
       </RoundedBox>
     </mesh >
   );

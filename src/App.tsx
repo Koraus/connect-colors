@@ -7,12 +7,11 @@ import { RotateButtons } from './rotate-buttons';
 import { CurrentScore } from './current-score'
 
 
-
 function App() {
 
   return (
     <>
-      <div style={{position: "fixed", zIndex: 2}}>
+      <div style={{ position: "fixed", zIndex: 2 }}>
         <RotateButtons />
         <ResetBtn />
         <CurrentScore />
