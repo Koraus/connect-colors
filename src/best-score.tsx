@@ -1,12 +1,13 @@
 import { useRecoilValue } from "recoil"
-import { playingFieldRecoil } from "./data-recoil/playing-data"
-import { Chart } from "@emotion-icons/evil/Chart"
+import { bestScoreRecoil } from "./data-recoil/playing-data"
+import { Trophy } from "@emotion-icons/evil/Trophy"
 
-export const CurrentScore = () => {
-    const score = useRecoilValue(playingFieldRecoil).score
+
+export const BestScore = () => {
+    const score = useRecoilValue(bestScoreRecoil)
     return <div style={{ fontSize: "24px", display: "flex" }}>
         <span style={{ width: "2em", display: "inline-block" }} >
-            <Chart size={"100%"} />
+            <Trophy size={"100%"} />
         </span>
         <p style={{ display: "inline-block" }}> {score} </p>
     </div>

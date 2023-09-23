@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { playingFieldRecoil } from "./data-recoil/playing-data";
-
+import { Undo } from "@emotion-icons/boxicons-regular/Undo"
 
 export const CancelMoveBtn = () => {
 
@@ -8,6 +8,13 @@ export const CancelMoveBtn = () => {
 
     return (
         <button
+            style={{
+                fontSize: "14px",
+                marginBottom: "0.3rem",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "0.3rem",
+            }}
             disabled={field.prevMove === undefined}
             onClick={() => {
                 if (field.prevMove === undefined) return
@@ -17,6 +24,11 @@ export const CancelMoveBtn = () => {
                     prevMove: undefined
                 })
             }}
-        > Cancel Move </button >
+        > Undo
+            <span style={{ display: "inline-block", height: "1.5em" }} >
+                <Undo size={"100%"} />
+            </span>
+
+        </button >
     )
 }

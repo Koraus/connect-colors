@@ -1,4 +1,4 @@
-import { cellSize, cellGap, playingFieldRecoil } from './data-recoil/playing-data';
+import { cellSize, cellGap, playingFieldRecoil, bestScoreRecoil } from './data-recoil/playing-data';
 import { FieldCell } from './field-cell';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
@@ -9,13 +9,14 @@ import { calculateScore } from './calculate-score';
 
 export const PlayingField = () => {
 
-  const sideShift = 2;
+  const sideShift = 2.5;
 
   const playingField = useRecoilValue(playingFieldRecoil).field;
 
   const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
   const gameFigures = useRecoilValue(gameFiguresRecoil);
+  const [bestScore, setBestScore] = useRecoilState(bestScoreRecoil)
 
   const putPointerFigure = (coords: [number, number] | undefined) => {
 
@@ -50,6 +51,7 @@ export const PlayingField = () => {
           score: field.score + calculateScore(fieldWithFigure),
           prevMove: { field: field.field, score: field.score }
         })
+        setBestScore(Math.max(bestScore, field.score + calculateScore(fieldWithFigure)))
       }, 20)
     }
   }

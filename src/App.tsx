@@ -6,6 +6,7 @@ import { GameFiguresArea } from './game-figures-area';
 import { RotateButtons } from './rotate-buttons';
 import { CurrentScore } from './current-score'
 import { CancelMoveBtn } from './cancel-move-btn';
+import { BestScore } from './best-score';
 
 
 function App() {
@@ -15,9 +16,10 @@ function App() {
 
       <div style={{ position: "fixed", zIndex: 2 }}>
         <RotateButtons />
-        <ResetBtn />
-        <CurrentScore />
         <CancelMoveBtn />
+        <CurrentScore />
+        <BestScore />
+        <ResetBtn />
       </div>
       <Canvas>
         <ambientLight />
