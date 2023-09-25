@@ -10,31 +10,21 @@ import { BestScore } from './best-score';
 import { MenuWindow } from './menu-window';
 import { useEffect, useState } from 'react';
 import { MenuBtn } from './menu-btn';
+import { Sound } from './sound';
+import audioUrl from "./assets/audio/put-figure.wav";
 
 
 function App() {
 
-  const [isMenuOpen, setIsmenueOpen] = useState<boolean>(true);
-  useEffect(() => {
-    addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        setIsmenueOpen(!isMenuOpen)
-      }
-    })
-    return () => {
-      removeEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          setIsmenueOpen(!isMenuOpen)
-        }
-      })
-    }
-  }, [])
+
+  const [isMenuOpen, setIsmenueOpen] = useState<boolean>(false);
 
   return (
     <>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-      <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
+
       <div style={{ position: "fixed", zIndex: 2 }}>
+        <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />  
         <RotateButtons />
         <CancelMoveBtn />
         <CurrentScore />
@@ -42,6 +32,7 @@ function App() {
         <ResetBtn />
       </div>
       <Canvas>
+        <Sound url={audioUrl} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <PlayingField />

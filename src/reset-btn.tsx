@@ -1,31 +1,41 @@
 import { useResetRecoilState } from "recoil";
 import { figureGhostCoordsRecoil, gameFiguresRecoil, figureOnPointerIndexRecoil, playingFieldRecoil } from "./data-recoil/playing-data";
 import { Refresh } from "@emotion-icons/evil/Refresh";
+import { CSSProperties } from "react";
 
-export const ResetBtn = () => {
+export const ResetBtn = ({ style, clothMenue
+}: {
+    style?: CSSProperties, clothMenue?: (isOpen: boolean) => void | undefined
+}) => {
 
-    const resetFiedl = useResetRecoilState(playingFieldRecoil);
+    const resetField = useResetRecoilState(playingFieldRecoil);
     const resetFigure = useResetRecoilState(gameFiguresRecoil);
     const resetHeldFigure = useResetRecoilState(figureOnPointerIndexRecoil);
     const resetFigureCoords = useResetRecoilState(figureGhostCoordsRecoil);
 
     const reset = () => {
-        resetFiedl()
+        resetField()
         resetFigure()
         resetHeldFigure()
         resetFigureCoords()
     }
+    const btnStyle = style ? style : {
+        fontSize: "14px",
+        height: '2em',
+        borderRadius: "0.3rem",
+    }
 
     return <button
-        onClick={() => { reset() }}
-        style={{
-            fontSize: "14px",
-            height: '2em',
-            borderRadius: "0.3rem",
-        }}
+        onClick={
+            () => {
+                reset();
+                if (clothMenue) { clothMenue(false) }
+            }
+        }
+        style={btnStyle}
     > Reset &nbsp;
         <span style={{ display: "inline-block", height: "1.5em" }} >
-            <Refresh size={"100%"} />
+            <Refresh height={"100%"} />
         </span>
     </button>
 }

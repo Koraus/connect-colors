@@ -18,7 +18,7 @@ export const MenuBtn = ({
         }}
     > Menu &nbsp;
         <span style={{ display: "inline-block", height: "1.5em" }} >
-            {isOpen ? <MenuOpen size={"100%"} /> : <MenuOutline size={"100%"} />}
+            {isOpen ? <MenuOpen height={"100%"} /> : <MenuOutline height={"100%"} />}
         </span>
     </button>
 }

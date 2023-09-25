@@ -84,3 +84,8 @@ export const cellColors = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']
 export const cellSize = [0.3, 0.3, 0.13];
 
 export const cellGap = 0.04;
+
+export const isSounOnRecoil = atom({
+    key: 'isSoundOn',
+    default: true,
+});

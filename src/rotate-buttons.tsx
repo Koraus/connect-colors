@@ -23,7 +23,7 @@ export function RotateButtons() {
             }}>
             Rotate {i}&nbsp;
             <span style={{ display: "inline-block", height: "1.5em" }} >
-                <Rotate90DegreesCcw size={"100%"} />
+                <Rotate90DegreesCcw height={"100%"} />
             </span>
         </button>)
     }</div >

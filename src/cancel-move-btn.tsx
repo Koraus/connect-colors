@@ -26,7 +26,7 @@ export const CancelMoveBtn = () => {
             }}
         > Undo
             <span style={{ display: "inline-block", height: "1.5em" }} >
-                <Undo size={"100%"} />
+                <Undo height={"100%"} />
             </span>
 
         </button >
