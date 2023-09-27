@@ -16,22 +16,20 @@ import audioUrl from "./assets/audio/put-figure.wav";
 
 function App() {
 
-
   const [isMenuOpen, setIsmenueOpen] = useState<boolean>(false);
 
   return (
     <>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-
       <div style={{ position: "fixed", zIndex: 2 }}>
-        <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />  
+        <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
         <RotateButtons />
         <CancelMoveBtn />
         <CurrentScore />
         <BestScore />
         <ResetBtn />
       </div>
-      <Canvas>
+      <Canvas camera={{ fov: 90, position: [-0.266, -0.485, 3.51] }}>
         <Sound url={audioUrl} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
