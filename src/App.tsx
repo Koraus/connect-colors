@@ -1,7 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import './App.css'
 import { PlayingField } from './playing-field';
-import { ResetBtn } from './reset-btn';
 import { GameFiguresArea } from './game-figures-area';
 import { RotateButtons } from './rotate-buttons';
 import { CurrentScore } from './current-score'
@@ -21,15 +20,19 @@ function App() {
   return (
     <>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-      <div style={{ position: "fixed", zIndex: 2 }}>
-        <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-        <RotateButtons />
-        <CancelMoveBtn />
-        <CurrentScore />
-        <BestScore />
-        <ResetBtn />
+      <div style={{ position: "fixed", zIndex: 2, display: "flex" }}>
+        <div style={{ marginRight: "3em" }}>
+          <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
+          <RotateButtons />
+          <CancelMoveBtn />
+        </div>
+        <div>
+          <CurrentScore />
+          <BestScore />
+        </div>
+
       </div>
-      <Canvas camera={{ fov: 90, position: [-0.266, -0.485, 3.51] }}>
+      <Canvas camera={{ fov: 45, position: [-2, -2.1, 5.6], up: [0, 0, 1] }}>
         <Sound url={audioUrl} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />

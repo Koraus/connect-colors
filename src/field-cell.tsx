@@ -1,10 +1,12 @@
-import { Mesh } from 'three';
+import { Group } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from './data-recoil/playing-data';
-
+import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameDecorationsRecoil } from './data-recoil/playing-data';
 import { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { Tree } from './tree';
+import { Pumpkin } from './pumpkin';
+import { Bucket } from './bucket';
 
 
 export const FieldCell = ({
@@ -23,8 +25,9 @@ export const FieldCell = ({
 
   const pointerFigureIndex = useRecoilValue(figureOnPointerIndexRecoil);
   const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
+  const decorations = useRecoilValue(gameDecorationsRecoil)
 
-  const cellRef = useRef<Mesh>(null!);
+  const cellRef = useRef<Group>(null!);
 
   const [time, setTime] = useState<number>();
   useEffect(() => {
@@ -46,8 +49,7 @@ export const FieldCell = ({
   },)
 
   return (
-    <mesh
-      ref={cellRef}
+    <group ref={cellRef}
       position={position}
       onPointerUp={() => { putPointerFigure(coords); }}
       onPointerOver={() => setFigureCoords(
@@ -58,11 +60,25 @@ export const FieldCell = ({
             position[2],
           ]
           : [0, 0, 0])
-      }
-    >
-      <RoundedBox args={[size[0], size[1], size[2]]}>
-        <meshLambertMaterial attach="material" color={cellColors[value]} />
-      </RoundedBox>
-    </mesh >
+      }>
+      {value === 0
+        && <mesh>
+          <RoundedBox args={[size[0], size[1], size[2]]}>
+            <meshLambertMaterial attach="material" color={cellColors[value]} />
+          </RoundedBox>
+        </mesh >}
+      {value !== 0 && decorations === "simple"
+        && <mesh>
+          <RoundedBox args={[size[0], size[1], size[2]]}>
+            <meshLambertMaterial attach="material" color={cellColors[value]} />
+          </RoundedBox>
+        </mesh >}
+      {decorations === "figures" && value === 1
+        && <Tree value={value} isGhost={false} />}
+      {decorations === "figures" && value === 2
+        && <Pumpkin isGhost={false} />}
+      {decorations === "figures" && value === 3
+        && <Bucket isGhost={false} />}
+    </group >
   );
 };

@@ -1,4 +1,6 @@
-import { AtomEffect, atom } from "recoil";
+import { atom } from "recoil";
+import { localStorageAtomEffect } from "./local-storage-atom-effect";
+
 
 export const playingFieldRecoil = atom({
     key: 'playingField',
@@ -57,35 +59,32 @@ export const figureGhostCoordsRecoil = atom({
     default: [0, 0, 0] as [number, number, number]
 })
 
-
-const localStorageEffect = (key: string): AtomEffect<number> => ({ setSelf, onSet }) => {
-    const savedValue = localStorage.getItem(key)
-    if (savedValue != null) {
-        setSelf(JSON.parse(savedValue));
-    }
-
-    onSet((newValue, _, isReset) => {
-        isReset
-            ? localStorage.removeItem(key)
-            : localStorage.setItem(key, JSON.stringify(newValue));
-    });
-};
-
 export const bestScoreRecoil = atom({
     key: 'bestScore',
     default: 0,
     effects: [
-        localStorageEffect('best_score'),
+        localStorageAtomEffect(),
     ]
 });
 
 export const cellColors = ['#b7b7b7', '#6AA6FF', '#fa7fe9', '#4ee63a']
 
-export const cellSize = [0.3, 0.3, 0.2];
+export const cellSize = [0.3, 0.3, 0.1];
 
 export const cellGap = 0.08;
 
 export const isSounOnRecoil = atom({
     key: 'isSoundOn',
     default: true,
+    effects: [
+        localStorageAtomEffect(),
+    ]
+});
+
+export const gameDecorationsRecoil = atom({
+    key: 'gameDecorations',
+    default: "simple" as "simple" | "figures",
+    effects: [
+        localStorageAtomEffect(),
+    ]
 });

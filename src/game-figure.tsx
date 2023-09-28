@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil"
 import { Figure, cellGap, cellSize, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./data-recoil/playing-data"
-import { Cell } from "./Cell"
+import { Cell } from "./figure-cell";
 
 
 
@@ -50,7 +50,6 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
     const [xGhost, yGhost, zGhost] = isGhost
         ? [xItem, yItem, zItem]
         : [1.5, sequenceNumber * 1.5, 0]
-
 
     return (
         <group

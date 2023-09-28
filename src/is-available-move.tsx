@@ -1,4 +1,4 @@
-import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
+import { canPlaceFigureInCoords } from "./can-place-figure-in-coords";
 import { Figure } from "./data-recoil/playing-data";
 import { rotateFigure } from "./rotate-figure";
 

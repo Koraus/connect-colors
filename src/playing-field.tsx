@@ -2,7 +2,7 @@ import { cellSize, cellGap, playingFieldRecoil, bestScoreRecoil } from './data-r
 import { FieldCell } from './field-cell';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
-import { canPlaceFigureInCoords } from "./can-place-figureIn-coords";
+import { canPlaceFigureInCoords } from "./can-place-figure-in-coords";
 import { fieldWithDestroyedMatches } from './field-with-destroyed-matches';
 import { calculateScore } from './calculate-score';
 
@@ -78,7 +78,5 @@ export const PlayingField = () => {
     })]
   });
 
-  return <group>
-    {cells}
-  </group>;
+  return <group> {cells} </group>;
 };

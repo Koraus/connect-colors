@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { PlayFill } from "@emotion-icons/bootstrap/PlayFill";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { bestScoreRecoil, isSounOnRecoil, playingFieldRecoil } from "./data-recoil/playing-data";
+import { bestScoreRecoil, gameDecorationsRecoil, isSounOnRecoil, playingFieldRecoil } from "./data-recoil/playing-data";
 import { Sound } from "@emotion-icons/entypo/Sound";
 import { SoundMute } from "@emotion-icons/entypo/SoundMute";
 import { ResetBtn } from "./reset-btn";
@@ -24,7 +24,7 @@ export const MenuWindow = ({
     const [isSoundOn, setIsSoundOn] = useRecoilState(isSounOnRecoil)
     const crtScore = useRecoilValue(playingFieldRecoil).score;
     const bestScore = useRecoilValue(bestScoreRecoil)
-
+    const [decorations, setDecorations] = useRecoilState(gameDecorationsRecoil)
     return (
         isOpen && <div
             style={{
@@ -36,6 +36,7 @@ export const MenuWindow = ({
                 inset: 0,
                 backgroundColor: "rgba(122, 127, 132, 0.61)",
             }}
+            onClick={(e) => setIsOpen(false)}
         >
             <div
                 style={{
@@ -49,6 +50,7 @@ export const MenuWindow = ({
                     flexDirection: "column",
                     alignItems: "center"
                 }}
+                onClick={(e) => e.stopPropagation()}
             >
                 <h1 style={{ textAlign: "center", marginTop: "0" }}>Menu</h1>
                 <h2 style={{ textAlign: "center", marginTop: "0" }}>Current score: {crtScore}</h2>
@@ -73,11 +75,28 @@ export const MenuWindow = ({
                     </span>
                 </button >
                 <ResetBtn style={btnStyle} clothMenue={setIsOpen} />
-
-
-
+                <div >
+                    <p style={{ textAlign: "center" }}> Choose game scenery: </p>
+                    <button
+                        disabled={decorations === "simple"}
+                        onClick={() => setDecorations("simple")}
+                        style={{
+                            fontSize: "16px",
+                            width: "10em",
+                            padding: "2em",
+                            borderRadius: "0.3rem",
+                            marginRight: "1rem"
+                        }}>Simple </button>
+                    <button onClick={() => setDecorations("figures")}
+                        disabled={decorations === "figures"}
+                        style={{
+                            fontSize: "16px",
+                            width: "10em",
+                            padding: "2em",
+                            borderRadius: "0.3rem",
+                        }}>Figures</button>
+                </div>
             </div>
-
         </div >
     )
 }
