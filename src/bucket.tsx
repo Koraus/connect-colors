@@ -1,10 +1,10 @@
 import { useGLTF } from "@react-three/drei";
-
+import bucketFilePath from "./assets/3d/bucket-3d.glb";
 
 export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.IntrinsicElements['group']) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const { nodes, materials } = useGLTF("src/assets/3d/bucket-3d.glb");
+    const { nodes } = useGLTF(bucketFilePath);
 
     const waterColor = isGhost ? "#acc2e3" : "#4988e6";
     const woodColor = isGhost ? "#aa9d87" : "rgb(111, 102, 71)";
@@ -86,4 +86,4 @@ export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.Intrin
     );
 }
 
-useGLTF.preload("/bucket-3d.glb");
+useGLTF.preload(bucketFilePath);
