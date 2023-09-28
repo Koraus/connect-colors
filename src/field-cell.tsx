@@ -74,7 +74,7 @@ export const FieldCell = ({
           </RoundedBox>
         </mesh >}
       {decorations === "figures" && value === 1
-        && <Tree value={value} isGhost={false} />}
+        && <Tree isGhost={false} />}
       {decorations === "figures" && value === 2
         && <Pumpkin isGhost={false} />}
       {decorations === "figures" && value === 3

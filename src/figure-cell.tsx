@@ -25,7 +25,7 @@ export const Cell = ({
         </mesh>}
       {
         decorations === "figures" && value === 1 &&
-        <Tree value={value} isGhost={isGhost} />
+        <Tree isGhost={isGhost} />
       }
       {
         decorations === "figures" && value === 2 &&

@@ -2,17 +2,13 @@ import { RoundedBox } from "@react-three/drei"
 
 
 export const Tree = ({
-    value, isGhost
+    isGhost
 }: {
-    value: number, isGhost?: boolean
+    isGhost?: boolean
 }) => {
-    const colors = ["#FFFFFF", "#21b433", "#ffaf5f", "#f6e825"];
-    const ghostColors = ["#FFFFFF", "#5db867", "#f7c28e", "#f6ed6a"];
-    const secondaryСolor = ["#FFFFFF", "#29e63f", "#e9762a", "#c8bd24"];
-    const secondaryGhostСolor = ["#FFFFFF", "#5ee36e", "#db9c5d", "#c4bd5b"]
 
-    const color = isGhost ? ghostColors[value] : colors[value];
-    const secondColor = isGhost ? secondaryGhostСolor[value] : secondaryСolor[value];
+    const color = isGhost ? "#7cba83" : "#21b433";
+    const secondColor = isGhost ? "#7ae286" : "#29e63f";
 
     return (
         <group >
