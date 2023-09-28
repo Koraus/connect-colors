@@ -36,7 +36,7 @@ export const MenuWindow = ({
                 inset: 0,
                 backgroundColor: "rgba(122, 127, 132, 0.61)",
             }}
-            onClick={(e) => setIsOpen(false)}
+            onClick={() => setIsOpen(false)}
         >
             <div
                 style={{
