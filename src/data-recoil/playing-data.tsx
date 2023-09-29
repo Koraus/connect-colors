@@ -83,7 +83,7 @@ export const isSounOnRecoil = atom({
 
 export const gameDecorationsRecoil = atom({
     key: 'gameDecorations',
-    default: "simple" as "simple" | "figures",
+    default: "figures" as "simple" | "figures",
     effects: [
         localStorageAtomEffect(),
     ]
