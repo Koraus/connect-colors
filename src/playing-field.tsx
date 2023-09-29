@@ -1,4 +1,4 @@
-import { cellSize, cellGap, playingFieldRecoil, bestScoreRecoil, Figure } from './data-recoil/playing-data';
+import { cellSize, cellGap, playingFieldRecoil, bestScoreRecoil } from './data-recoil/playing-data';
 import { FieldCell } from './field-cell';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
@@ -45,7 +45,7 @@ export const PlayingField = () => {
             return generateGameFigure(lvl)
           } else { return el }
         }))
-        
+
       setPointerFigureIndex(undefined)
 
       setField({
