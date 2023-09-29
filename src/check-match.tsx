@@ -1,4 +1,4 @@
-import { hasMinTwoSameNeighbors } from "./has-min-two-same-neighbors";
+import { coorsOfCellWithMinTwoSameNeighbors } from "./coors-of-cell-with-min-two-same-neighbors";
 
 export const checkMatch = (field: number[][]) => {
 
@@ -6,7 +6,7 @@ export const checkMatch = (field: number[][]) => {
 
     for (let x = 0; x < field.length; x++) {
         for (let y = 0; y < field[x].length; y++) {
-            const machedCells = hasMinTwoSameNeighbors(x, y, field);
+            const machedCells = coorsOfCellWithMinTwoSameNeighbors(x, y, field);
             if (machedCells.length > 0) { maches.push(machedCells) }
         }
     }

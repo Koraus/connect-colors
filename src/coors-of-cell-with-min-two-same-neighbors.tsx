@@ -1,4 +1,4 @@
-export const hasMinTwoSameNeighbors = (
+export const coorsOfCellWithMinTwoSameNeighbors = (
     x: number, y: number, field: number[][]) => {
 
     const value = field[x][y];
@@ -13,10 +13,10 @@ export const hasMinTwoSameNeighbors = (
 
     const neighbors = [];
 
-    if (right && right === value) neighbors.push([x, y + 1]);
-    if (left && left === value) neighbors.push([x, y - 1]);
-    if (top !== undefined && top === value) neighbors.push([x + 1, y]);
-    if (bottom && bottom === value) neighbors.push([x - 1, y]);
+    if (right && right === value && value !== 0) neighbors.push([x, y + 1]);
+    if (left && left === value && value !== 0) neighbors.push([x, y - 1]);
+    if (top !== undefined && top === value && value !== 0) neighbors.push([x + 1, y]);
+    if (bottom && bottom === value && value !== 0) neighbors.push([x - 1, y]);
 
     if (neighbors.length >= 2) { neighbors.push([x, y]); }
 
