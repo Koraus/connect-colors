@@ -69,10 +69,8 @@ export const typicalFigures = [
 ];
 
 export const selectValues = (differentValues: 1 | 2 | 3) => {
-
     const totalValues = 3;
     const values: number[] = [];
-
     do {
         const value = Math.floor(Math.random() * totalValues + 1);
 
@@ -81,11 +79,7 @@ export const selectValues = (differentValues: 1 | 2 | 3) => {
         }
 
     } while (values.length < differentValues)
-
-
-    console.log(values)
     return values;
-
 }
 
 export const fillFigureBlank = (blankFigure: number[][], valuesNamber: number[]) => {

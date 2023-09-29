@@ -6,6 +6,8 @@ import { canPlaceFigureInCoords } from "./can-place-figure-in-coords";
 import { fieldWithDestroyedMatches } from './field-with-destroyed-matches';
 import { calculateScore } from './calculate-score';
 import { generateGameFigure } from './generate-game-figure';
+import { useEffect, useState } from 'react';
+import { isAvailableMove } from './is-available-move';
 
 
 export const PlayingField = () => {
@@ -65,6 +67,12 @@ export const PlayingField = () => {
     }
   }
 
+  const [gameOver, setGameOver] = useState(false);
+
+  useEffect(() => {
+    setGameOver(!isAvailableMove(gameFigures, field.field))
+  }, [field])
+
   const cells = playingField.map((el, index1) => {
 
     return [el.map((el, index) => {
@@ -74,8 +82,10 @@ export const PlayingField = () => {
         0
       ]
 
+
       return (
         <FieldCell
+          gameOver={gameOver}
           value={el}
           key={index}
           coords={[index1, index]}

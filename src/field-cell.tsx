@@ -10,12 +10,14 @@ import { Bucket } from './bucket';
 
 
 export const FieldCell = ({
+  gameOver,
   position,
   size,
   coords,
   value,
   putPointerFigure
 }: {
+  gameOver: boolean,
   position: [number, number, number];
   size: number[],
   coords: [number, number],
@@ -64,7 +66,7 @@ export const FieldCell = ({
       {value === 0
         && <mesh>
           <RoundedBox args={[size[0], size[1], size[2]]}>
-            <meshLambertMaterial attach="material" color={cellColors[value]} />
+            <meshLambertMaterial attach="material" color={gameOver ? "red" : cellColors[value]} />
           </RoundedBox>
         </mesh >}
       {value !== 0 && decorations === "simple"
