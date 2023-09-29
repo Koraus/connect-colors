@@ -96,6 +96,8 @@ export const MenuWindow = ({
                             borderRadius: "0.3rem",
                         }}>Figures</button>
                 </div>
+                <h3 style={{ marginBottom: 0 }}>Hot keys:</h3>
+                <p> Cancel selection : " Esc " / Rotate the figure : " r " </p>
             </div>
         </div >
     )
