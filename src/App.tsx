@@ -25,10 +25,10 @@ function App() {
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && pointerFigure) {
+      if (event.key === 'Escape' && pointerFigure !== undefined) {
         setPointerFigure(undefined);
       }
-      if (event.key === 'r' && pointerFigure) {
+      if (event.key === 'r' && pointerFigure !== undefined) {
         setGameFigures(gameFigures.map((el, i) => {
           return i === pointerFigure ? rotateFigure(el) : el
         }
