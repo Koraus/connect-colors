@@ -16,7 +16,7 @@ const rotatedFigure = (figure: Figure) => {
 };
 
 export const rotateFigure = (figure: Figure, rotation = 1): Figure => {
-    if (rotation !== rotation >>> 0) { throw new Error("Position must be integer"); }
+    if (rotation !== rotation >>> 0) { throw new Error("rotation must be integer"); }
 
     rotation = rotation % 4;
     if (rotation < 0) { rotation += 4; }
