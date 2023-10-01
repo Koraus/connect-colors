@@ -1,5 +1,4 @@
-import { Canvas } from '@react-three/fiber'
-import './App.css'
+import { Canvas } from '@react-three/fiber';
 import { PlayingField } from './playing-field';
 import { GameFiguresArea } from './game-figures-area';
 import { RotateButtons } from './rotate-buttons';
@@ -42,7 +41,13 @@ function App() {
   }, [pointerFigure, gameFigures, setPointerFigure, setGameFigures]);
 
   return (
-    <>
+    <div css={{
+      position: "fixed",
+      inset: 0,
+      fontFamily: "Arial, Helvetica, sans-serif",
+      backgroundColor: "#f7e4d7",
+      padding: "2rem",
+    }}>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
       <div css={{ position: "fixed", zIndex: 2, display: "flex" }}>
         <div css={{ marginRight: "3em" }}>
@@ -63,7 +68,7 @@ function App() {
         <PlayingField />
         <GameFiguresArea />
       </Canvas >
-    </>
+    </div>
   )
 }
 
