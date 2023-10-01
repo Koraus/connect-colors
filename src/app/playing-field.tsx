@@ -98,5 +98,5 @@ export const PlayingField = () => {
     })];
   });
 
-  return <group> {cells} </group>;
+  return <group>{cells}</group>;
 };
