@@ -44,8 +44,8 @@ function App() {
   return (
     <>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-      <div style={{ position: "fixed", zIndex: 2, display: "flex" }}>
-        <div style={{ marginRight: "3em" }}>
+      <div css={{ position: "fixed", zIndex: 2, display: "flex" }}>
+        <div css={{ marginRight: "3em" }}>
           <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
           <RotateButtons />
           <CancelMoveBtn />
