@@ -13,6 +13,7 @@ import audioUrl from "../assetsx/put-figure.wav";
 import { useRecoilState } from "recoil";
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from "./playing-data";
 import { rotateFigure } from "../model/rotate-figure";
+import { useWindowEvent } from "../utils/use-window-event";
 
 
 function App() {
@@ -20,25 +21,23 @@ function App() {
   const [isMenuOpen, setIsmenueOpen] = useState(false);
 
   const [pointerFigure, setPointerFigure] = useRecoilState(figureOnPointerIndexRecoil);
-  const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
+  useWindowEvent("keydown", (event: KeyboardEvent) => {
+    if (event.code !== "Escape") { return; }
+    if (pointerFigure === undefined) { return; }
 
-  useEffect(() => {
-    const keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && pointerFigure !== undefined) {
-        setPointerFigure(undefined);
-      }
-      if (event.key === "r" && pointerFigure !== undefined) {
-        setGameFigures(gameFigures.map((el, i) => {
-          return i === pointerFigure ? rotateFigure(el) : el;
-        },
-        ));
-      }
-    };
-    document.addEventListener("keydown", keyDownHandler);
-    return () => {
-      document.removeEventListener("keydown", keyDownHandler);
-    };
-  }, [pointerFigure, gameFigures, setPointerFigure, setGameFigures]);
+    setPointerFigure(undefined);
+  }, [pointerFigure, setPointerFigure]);
+
+  const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
+  useWindowEvent("keydown", (event: KeyboardEvent) => {
+    if (event.code !== "KeyR") { return; }
+    if (pointerFigure === undefined) { return; }
+
+    setGameFigures(gameFigures.map((el, i) =>
+      i === pointerFigure
+        ? rotateFigure(el)
+        : el));
+  }, [gameFigures, setGameFigures]);
 
   return (
     <div css={{
