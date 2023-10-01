@@ -1,8 +1,8 @@
-import { RoundedBox } from "@react-three/drei"
+import { RoundedBox } from "@react-three/drei";
 
 
 export const Tree = ({
-    isGhost
+    isGhost,
 }: {
     isGhost?: boolean
 }) => {
@@ -33,5 +33,5 @@ export const Tree = ({
                 </mesh>
             </mesh>
         </group>
-    )
-}
+    );
+};

@@ -9,7 +9,7 @@ import { ResetBtn } from "./reset-btn";
 
 
 export const MenuWindow = ({
-    isOpen, setIsOpen
+    isOpen, setIsOpen,
 }: {
     isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -19,13 +19,13 @@ export const MenuWindow = ({
         borderRadius: "0.3em",
         padding: "2em 2em",
         marginBottom: "1rem",
-        width: "30%"
-    }
+        width: "30%",
+    };
 
-    const [isSoundOn, setIsSoundOn] = useRecoilState(isSounOnRecoil)
+    const [isSoundOn, setIsSoundOn] = useRecoilState(isSounOnRecoil);
     const crtScore = useRecoilValue(playingFieldRecoil).score;
-    const bestScore = useRecoilValue(bestScoreRecoil)
-    const [decorations, setDecorations] = useRecoilState(gameDecorationsRecoil)
+    const bestScore = useRecoilValue(bestScoreRecoil);
+    const [decorations, setDecorations] = useRecoilState(gameDecorationsRecoil);
     return (
         isOpen && <div
             style={{
@@ -49,7 +49,7 @@ export const MenuWindow = ({
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
-                    alignItems: "center"
+                    alignItems: "center",
                 }}
                 onClick={(e) => e.stopPropagation()}
             >
@@ -60,7 +60,7 @@ export const MenuWindow = ({
                     onClick={() => setIsOpen(false)}
                     style={btnStyle}
                 >
-                    <span style={{ display: "inline-block", height: "1.5em", }}>
+                    <span style={{ display: "inline-block", height: "1.5em" }}>
                         Return <PlayFill height={"100%"} />
                     </span>
                 </button>
@@ -86,7 +86,7 @@ export const MenuWindow = ({
                             width: "10em",
                             padding: "2em",
                             borderRadius: "0.3rem",
-                            marginRight: "1rem"
+                            marginRight: "1rem",
                         }}>Simple </button>
                     <button onClick={() => setDecorations("figures")}
                         disabled={decorations === "figures"}
@@ -101,5 +101,5 @@ export const MenuWindow = ({
                 <p> Cancel selection : " Esc " / Rotate the figure : " r " </p>
             </div>
         </div>
-    )
-}
+    );
+};

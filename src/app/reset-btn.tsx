@@ -4,7 +4,7 @@ import { playingFieldRecoil } from "./playing-data";
 import { Refresh } from "@emotion-icons/evil/Refresh";
 import { CSSProperties } from "react";
 
-export const ResetBtn = ({ style, clothMenue
+export const ResetBtn = ({ style, clothMenue,
 }: {
     style?: CSSProperties, clothMenue?: (isOpen: boolean) => void | undefined
 }) => {
@@ -15,22 +15,22 @@ export const ResetBtn = ({ style, clothMenue
     const resetFigureCoords = useResetRecoilState(figureGhostCoordsRecoil);
 
     const reset = () => {
-        resetField()
-        resetFigure()
-        resetHeldFigure()
-        resetFigureCoords()
-    }
+        resetField();
+        resetFigure();
+        resetHeldFigure();
+        resetFigureCoords();
+    };
     const btnStyle = style ? style : {
         fontSize: "14px",
-        height: '2em',
+        height: "2em",
         borderRadius: "0.3rem",
-    }
+    };
 
     return <button
         onClick={
             () => {
                 reset();
-                if (clothMenue) { clothMenue(false) }
+                if (clothMenue) { clothMenue(false); }
             }
         }
         style={btnStyle}
@@ -38,8 +38,8 @@ export const ResetBtn = ({ style, clothMenue
         <span style={{ display: "inline-block", height: "1.5em" }} >
             <Refresh height={"100%"} />
         </span>
-    </button>
-}
+    </button>;
+};
 
 
 

@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import { playingFieldRecoil } from "./playing-data";
-import { Undo } from "@emotion-icons/boxicons-regular/Undo"
+import { Undo } from "@emotion-icons/boxicons-regular/Undo";
 
 export const CancelMoveBtn = () => {
 
@@ -17,12 +17,12 @@ export const CancelMoveBtn = () => {
             }}
             disabled={field.prevMove === undefined}
             onClick={() => {
-                if (field.prevMove === undefined) return
+                if (field.prevMove === undefined) return;
                 setField({
                     field: field.prevMove.field,
                     score: field.prevMove.score,
-                    prevMove: undefined
-                })
+                    prevMove: undefined,
+                });
             }}
         > Undo
             <span style={{ display: "inline-block", height: "1.5em" }} >
@@ -30,5 +30,5 @@ export const CancelMoveBtn = () => {
             </span>
 
         </button >
-    )
-}
+    );
+};

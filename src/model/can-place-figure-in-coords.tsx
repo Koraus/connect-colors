@@ -2,7 +2,7 @@ import { Figure } from "./figure";
 
 
 export const canPlaceFigureInCoords = (
-    figure: Figure, field: number[][], coords: [number, number]
+    figure: Figure, field: number[][], coords: [number, number],
 ) => {
 
     const maxHeightIndex = field.length - 1;

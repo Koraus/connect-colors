@@ -1,7 +1,7 @@
 import { useGLTF } from "@react-three/drei";
 import bucketFilePath from "./bucket-3d.glb";
 
-export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.IntrinsicElements['group']) {
+export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.IntrinsicElements["group"]) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { nodes } = useGLTF(bucketFilePath);

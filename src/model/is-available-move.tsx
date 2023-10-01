@@ -10,7 +10,7 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return arr.map((e, i) => rotateFigure(figure, i));
-    }
+    },
     ).flat() as Figure[];
 
     const allEmptyFieldCoords = field
@@ -19,7 +19,7 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
 
     return allVariantsOfFigures
         .some(figure => allEmptyFieldCoords
-            .some(coord => canPlaceFigureInCoords(figure, field, coord)
-            ))
+            .some(coord => canPlaceFigureInCoords(figure, field, coord),
+            ));
 
 };

@@ -1,9 +1,9 @@
-import { Group } from 'three';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from './playing-data';
-import { useEffect, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { CellDecoration } from './cell-decoration';
+import { Group } from "three";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
+import { useEffect, useRef, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import { CellDecoration } from "./cell-decoration";
 
 
 export const FieldCell = ({
@@ -11,7 +11,7 @@ export const FieldCell = ({
     position,
     coords,
     value,
-    putPointerFigure
+    putPointerFigure,
 }: {
     gameOver: boolean,
     position: [number, number, number];
@@ -29,20 +29,20 @@ export const FieldCell = ({
     const [time, setTime] = useState<number>();
     useEffect(() => {
         if (value === 0) {
-            setTime(Date.now())
+            setTime(Date.now());
         }
-    }, [value])
+    }, [value]);
 
     // todo: make animation of CellDecoration
     useFrame(() => {
         if (time === undefined) { return; }
         const t = Date.now() - time;
-        const y = Math.max(0, 1 - t / 500)
-        cellRef.current?.scale.set(y, y, y)
-        cellRef.current?.rotation.set(y * 0.4, y * 0.4, y * 0.4)
+        const y = Math.max(0, 1 - t / 500);
+        cellRef.current?.scale.set(y, y, y);
+        cellRef.current?.rotation.set(y * 0.4, y * 0.4, y * 0.4);
 
         if (y === 0) {
-            cellRef.current?.scale.set(1, 1, 1)
+            cellRef.current?.scale.set(1, 1, 1);
         }
     });
 

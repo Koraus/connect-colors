@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import { rotateFigure } from "../model/rotate-figure";
 import { gameFiguresRecoil } from "./playing-data";
-import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw"
+import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw";
 
 export function RotateButtons() {
 
@@ -18,13 +18,13 @@ export function RotateButtons() {
             key={i}
             onClick={() => {
                 setGameFigures(gameFigures.map(
-                    (el, j) => i === j ? rotateFigure(el) : el
-                ))
+                    (el, j) => i === j ? rotateFigure(el) : el,
+                ));
             }}>
             Rotate {i}&nbsp;
             <span style={{ display: "inline-block", height: "1.5em" }} >
                 <Rotate90DegreesCcw height={"100%"} />
             </span>
         </button>)
-    }</div >
+    }</div >;
 }

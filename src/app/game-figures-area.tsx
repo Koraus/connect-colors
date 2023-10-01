@@ -16,6 +16,6 @@ export const GameFiguresArea = () => {
             ctrGameFigure={el}
             sequenceNumber={index % 3}
             figureIndex={index}
-        />
-    })
-}
+        />;
+    });
+};

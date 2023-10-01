@@ -1,8 +1,8 @@
-import { Box, Sphere } from "@react-three/drei"
+import { Box, Sphere } from "@react-three/drei";
 
 
 export const Pumpkin = ({
-    isGhost
+    isGhost,
 }: {
     isGhost?: boolean
 }) => {
@@ -36,10 +36,10 @@ export const Pumpkin = ({
                                     />
                                 </Box>
                             </mesh>
-                        )
-                    }
+                        );
+                    },
                 )}
             </group>
         </group>
-    )
-}
+    );
+};

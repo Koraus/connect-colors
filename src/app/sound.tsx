@@ -1,7 +1,7 @@
-import { useLoader, useThree } from "@react-three/fiber"
-import { useEffect, useRef, useState } from "react"
+import { useLoader, useThree } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { AudioListener, AudioLoader, PositionalAudio } from "three"
+import { AudioListener, AudioLoader, PositionalAudio } from "three";
 import { isSounOnRecoil } from "./playing-data";
 import { playingFieldRecoil } from "./playing-data";
 
@@ -22,22 +22,22 @@ export const Sound = ({ url }: { url: string }) => {
     useEffect(() => {
 
         if (sound.current !== null) {
-            sound.current.setBuffer(buffer)
-            sound.current.setRefDistance(1)
-            sound.current.setLoop(false)
-            sound.current.stop()
+            sound.current.setBuffer(buffer);
+            sound.current.setRefDistance(1);
+            sound.current.setLoop(false);
+            sound.current.stop();
             if (isSounOn) {
-                sound.current.play()
+                sound.current.play();
             }
         }
 
-        camera.add(listener)
+        camera.add(listener);
 
-        return () => camera.remove(listener)
+        return () => camera.remove(listener);
 
-    }, [field.prevMove?.field])
+    }, [field.prevMove?.field]);
 
-    return <positionalAudio ref={sound} args={[listener]} />
+    return <positionalAudio ref={sound} args={[listener]} />;
 
 
-}
+};

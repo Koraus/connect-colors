@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cellGap, cellSize, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
 import { Figure } from "../model/figure";
 import { CellDecoration } from "./cell-decoration";
@@ -45,4 +45,4 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
                     isGhost={isGhost}
                 />))}
     </group>;
-}
+};

@@ -1,18 +1,18 @@
-import { Canvas } from '@react-three/fiber';
-import { PlayingField } from './playing-field';
-import { GameFiguresArea } from './game-figures-area';
-import { RotateButtons } from './rotate-buttons';
-import { CurrentScore } from './current-score'
-import { CancelMoveBtn } from './cancel-move-btn';
-import { BestScore } from './best-score';
-import { MenuWindow } from './menu-window';
-import { useEffect, useState } from 'react';
-import { MenuBtn } from './menu-btn';
-import { Sound } from './sound';
+import { Canvas } from "@react-three/fiber";
+import { PlayingField } from "./playing-field";
+import { GameFiguresArea } from "./game-figures-area";
+import { RotateButtons } from "./rotate-buttons";
+import { CurrentScore } from "./current-score";
+import { CancelMoveBtn } from "./cancel-move-btn";
+import { BestScore } from "./best-score";
+import { MenuWindow } from "./menu-window";
+import { useEffect, useState } from "react";
+import { MenuBtn } from "./menu-btn";
+import { Sound } from "./sound";
 import audioUrl from "../assetsx/put-figure.wav";
-import { useRecoilState } from 'recoil';
-import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './playing-data';
-import { rotateFigure } from '../model/rotate-figure';
+import { useRecoilState } from "recoil";
+import { figureOnPointerIndexRecoil, gameFiguresRecoil } from "./playing-data";
+import { rotateFigure } from "../model/rotate-figure";
 
 
 function App() {
@@ -24,19 +24,19 @@ function App() {
 
   useEffect(() => {
     const keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && pointerFigure !== undefined) {
+      if (event.key === "Escape" && pointerFigure !== undefined) {
         setPointerFigure(undefined);
       }
-      if (event.key === 'r' && pointerFigure !== undefined) {
+      if (event.key === "r" && pointerFigure !== undefined) {
         setGameFigures(gameFigures.map((el, i) => {
-          return i === pointerFigure ? rotateFigure(el) : el
-        }
-        ))
+          return i === pointerFigure ? rotateFigure(el) : el;
+        },
+        ));
       }
     };
-    document.addEventListener('keydown', keyDownHandler);
+    document.addEventListener("keydown", keyDownHandler);
     return () => {
-      document.removeEventListener('keydown', keyDownHandler);
+      document.removeEventListener("keydown", keyDownHandler);
     };
   }, [pointerFigure, gameFigures, setPointerFigure, setGameFigures]);
 
@@ -69,7 +69,7 @@ function App() {
         <GameFiguresArea />
       </Canvas>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

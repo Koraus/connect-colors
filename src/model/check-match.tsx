@@ -2,12 +2,12 @@ import { coorsOfCellWithMinTwoSameNeighbors } from "./coors-of-cell-with-min-two
 
 export const checkMatch = (field: number[][]) => {
 
-    const maches = []
+    const maches = [];
 
     for (let x = 0; x < field.length; x++) {
         for (let y = 0; y < field[x].length; y++) {
             const machedCells = coorsOfCellWithMinTwoSameNeighbors(x, y, field);
-            if (machedCells.length > 0) { maches.push(machedCells) }
+            if (machedCells.length > 0) { maches.push(machedCells); }
         }
     }
 
@@ -28,4 +28,4 @@ export const checkMatch = (field: number[][]) => {
         }
     }
     return uniqueCoords;
-}
+};

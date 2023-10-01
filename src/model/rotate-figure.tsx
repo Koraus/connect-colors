@@ -15,7 +15,7 @@ export const rotateFigure = (figure: Figure, position?: number) => {
             }
         }
         return rotatedFigure as Figure;
-    }
+    };
 
     if (position === 0) return figure;
     if (position === 1 || position === undefined) return rotatedFigure(figure);
@@ -23,4 +23,4 @@ export const rotateFigure = (figure: Figure, position?: number) => {
     if (position === 3) return rotatedFigure(rotatedFigure(rotatedFigure(figure)));
     return figure;
 
-}
+};
