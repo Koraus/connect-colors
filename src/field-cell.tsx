@@ -1,64 +1,57 @@
-import { Color } from 'three';
+import { Group } from 'three';
 import { RoundedBox } from '@react-three/drei';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { color, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil, playingFieldRecoil } from './data-recoil/playing-data';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameDecorationsRecoil } from './data-recoil/playing-data';
+import { useEffect, useRef, useState } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Tree } from './tree';
+import { Pumpkin } from './pumpkin';
+import { Bucket } from './bucket';
 
 
 export const FieldCell = ({
-  value, position, size, coords
+  gameOver,
+  position,
+  size,
+  coords,
+  value,
+  putPointerFigure
 }: {
-  value: number; position: [number, number, number]; size: number[], coords?: [number, number]
+  gameOver: boolean,
+  position: [number, number, number];
+  size: number[],
+  coords: [number, number],
+  value: number,
+  putPointerFigure: (coords: [number, number] | undefined) => void
 }) => {
-  const cellColor = new Color(color[value]);
 
+  const pointerFigureIndex = useRecoilValue(figureOnPointerIndexRecoil);
   const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
+  const decorations = useRecoilValue(gameDecorationsRecoil)
 
-  const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
-  const [field, setField] = useRecoilState(playingFieldRecoil);
-  const gameFigures = useRecoilValue(gameFiguresRecoil);
+  const cellRef = useRef<Group>(null!);
 
-
-  const putPointerFigure = (coords: [number, number] | undefined) => {
-    if (!coords) return
-    if (pointerFigureIndex === undefined) return
-
-    const pointerFigure = gameFigures[pointerFigureIndex]
-    const [x, y] = coords;
-
-    const fieldWithFigure = [...field.map(el => [...el])];
-
-    let canPut = true;
-
-    if (pointerFigure) {
-      for (let i = 0; i < pointerFigure?.length; i++) {
-        for (let j = 0; j < pointerFigure[i].length; j++) {
-          if (field[x + i][y + j] !== 0 && pointerFigure[i][j] !== 0
-            || x + i > 9 || y + j > 9 || x + i < 0 || y + j < 0) {
-            canPut = false
-            console.log('cant put')
-            return
-          }
-        }
-      }
+  const [time, setTime] = useState<number>();
+  useEffect(() => {
+    if (value === 0) {
+      setTime(Date.now())
     }
+  }, [value])
 
-    if (pointerFigure && canPut) {
-      for (let i = 0; i < pointerFigure?.length; i++) {
-        for (let j = 0; j < pointerFigure[i].length; j++) {
-          if (pointerFigure[i][j] !== 0) {
-            fieldWithFigure[x + i][y + j] = pointerFigure[i][j]
-          }
-        }
-      }
-      setPointerFigureIndex(undefined)
+  useFrame(() => {
+    if (time === undefined) return
+    const t = Date.now() - time;
+    const y = Math.max(0, 1 - t / 500)
+    cellRef.current?.scale.set(y, y, y)
+    cellRef.current?.rotation.set(y * 0.4, y * 0.4, y * 0.4)
+
+    if (y === 0) {
+      cellRef.current?.scale.set(1, 1, 1)
     }
-    setField(fieldWithFigure)
-
-  }
-
+  },)
 
   return (
-    <mesh
+    <group ref={cellRef}
       position={position}
       onPointerUp={() => { putPointerFigure(coords); }}
       onPointerOver={() => setFigureCoords(
@@ -69,11 +62,25 @@ export const FieldCell = ({
             position[2],
           ]
           : [0, 0, 0])
-      }
-    >
-      <RoundedBox args={[size[0], size[1], size[2]]}>
-        <meshLambertMaterial attach="material" color={cellColor} />
-      </RoundedBox>
-    </mesh >
+      }>
+      {value === 0
+        && <mesh>
+          <RoundedBox args={[size[0], size[1], size[2]]}>
+            <meshLambertMaterial attach="material" color={gameOver ? "red" : cellColors[value]} />
+          </RoundedBox>
+        </mesh >}
+      {value !== 0 && decorations === "simple"
+        && <mesh>
+          <RoundedBox args={[size[0], size[1], size[2]]}>
+            <meshLambertMaterial attach="material" color={cellColors[value]} />
+          </RoundedBox>
+        </mesh >}
+      {decorations === "figures" && value === 1
+        && <Tree isGhost={false} />}
+      {decorations === "figures" && value === 2
+        && <Pumpkin isGhost={false} />}
+      {decorations === "figures" && value === 3
+        && <Bucket isGhost={false} />}
+    </group >
   );
 };
