@@ -1,15 +1,10 @@
-import { checkMatch } from "./check-match";
+import { findMatches } from "./find-matches";
 
 
-export const fieldWithDestroyedMatches = (field: number[][],
-) => {
-
-    const machesIndexes = checkMatch(field);
-    const cleanedField = [...field.map(el => [...el])];
-    machesIndexes.map(
-        (i) => {
-            cleanedField[i[0]][i[1]] = 0;
-        },
-    );
-    return cleanedField;
+export const fieldWithDestroyedMatches = (field: number[][]) => {
+    const field1 = structuredClone(field);
+    for (const [x, y] of findMatches(field)) {
+        field1[x][y] = 0;
+    }
+    return field1;
 };

@@ -1,17 +1,11 @@
-import { checkMatch } from "./check-match";
+import { findMatches } from "./find-matches";
 
 
 export const calculateScore = (field: number[][]) => {
-    const machesIndexes = checkMatch(field);
-    let score = 0;
-    if (machesIndexes.length <= 3) {
-        score = machesIndexes.length * 2;
-    }
-    if (machesIndexes.length > 3 && machesIndexes.length <= 5) {
-        score = machesIndexes.length * 3;
-    }
-    if (machesIndexes.length > 5) {
-        score = machesIndexes.length * 4;
-    }
-    return score;
+    const machesIndexes = findMatches(field);
+    const len = machesIndexes.length;
+
+    if (machesIndexes.length > 5) { return len * 4; }
+    if (machesIndexes.length > 3) { return len * 3; }
+    return len * 2;
 };

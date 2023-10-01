@@ -6,7 +6,7 @@ import { CurrentScore } from "./current-score";
 import { CancelMoveBtn } from "./cancel-move-btn";
 import { BestScore } from "./best-score";
 import { MenuWindow } from "./menu-window";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MenuBtn } from "./menu-btn";
 import { Sound } from "./sound";
 import audioUrl from "../assetsx/put-figure.wav";
