@@ -60,7 +60,7 @@ function App() {
         </div>
 
       </div>
-      <Canvas camera={{ fov: 45, position: [-2, -2.1, 5.6], up: [0, 0, 1] }}>
+      <Canvas camera={{ fov: 35, position: [10, 28, -10.5] }}>
         <Sound url={audioUrl} />
         <ambientLight />
         <pointLight position={[10, 10, 10]} />

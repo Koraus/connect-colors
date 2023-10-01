@@ -4,22 +4,22 @@ import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-d
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CellDecoration } from "./cell-decoration";
+import { jsx } from "@emotion/react";
+import { usePutPointerFigure } from "./use-put-pointer-figure";
 
 
 export const FieldCell = ({
     gameOver,
-    position,
     coords,
     value,
-    putPointerFigure,
-}: {
+    ...props
+}: jsx.JSX.IntrinsicElements["group"] & {
     gameOver: boolean,
     position: [number, number, number];
-    size: number[],
     coords: [number, number],
     value: number,
-    putPointerFigure: (coords: [number, number] | undefined) => void
 }) => {
+    const putPointerFigure = usePutPointerFigure();
 
     const pointerFigureIndex = useRecoilValue(figureOnPointerIndexRecoil);
     const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
@@ -50,12 +50,12 @@ export const FieldCell = ({
         value={value}
         gameOver={gameOver}
         ref={cellRef}
-        position={position}
         onPointerUp={() => { putPointerFigure(coords); }}
         onPointerOver={() => setFigureCoords(
             pointerFigureIndex !== undefined
-                ? position
-                : [0, 0, 0])
+                ? coords
+                : [0, 0])
         }
+        {...props}
     />;
 };

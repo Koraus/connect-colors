@@ -40,12 +40,11 @@ export const gameFiguresRecoil = atom({
 export const figureOnPointerIndexRecoil = atom({
     key: "figureOnPointerIndex",
     default: undefined as number | undefined,
-
 });
 
 export const figureGhostCoordsRecoil = atom({
     key: "figureGhostCoords",
-    default: [0, 0, 0] as [number, number, number],
+    default: [0, 0] as [number, number],
 });
 
 export const bestScoreRecoil = atom({
@@ -55,11 +54,6 @@ export const bestScoreRecoil = atom({
         localStorageAtomEffect(),
     ],
 });
-
-
-export const cellSize = [0.3, 0.3, 0.1] as [number, number, number];
-
-export const cellGap = 0.08;
 
 export const isSounOnRecoil = atom({
     key: "isSoundOn",

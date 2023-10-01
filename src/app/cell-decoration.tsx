@@ -9,7 +9,7 @@ import { ForwardedRef, forwardRef } from "react";
 import { Group } from "three";
 
 
-const cellColors = ["#b7b7b7", "#6AA6FF", "#fa7fe9", "#4ee63a"];
+const cellColors = ["#fff1e4", "#6AA6FF", "#fa7fe9", "#4ee63a"];
 const lightColors = ["#b7b7b7", "#80b4fd", "#ff8ff0", "#95f988"];
 
 export const CellDecoration = forwardRef(({
@@ -27,8 +27,8 @@ export const CellDecoration = forwardRef(({
 
     return <group {...props} ref={ref} >{(() => {
         if (value === 0) {
-            return <RoundedBox args={[0.3, 0.3, 0.1]}>
-                <meshLambertMaterial attach="material" color={gameOver ? "red" : color} />
+            return <RoundedBox args={[0.9, 0.1, 0.9]}>
+                <meshLambertMaterial color={gameOver ? "red" : color} />
             </RoundedBox>;
         }
 
@@ -38,8 +38,8 @@ export const CellDecoration = forwardRef(({
             ][value - 1]({ isGhost });
         }
 
-        return <RoundedBox args={[0.3, 0.3, 0.1]}>
-            <meshLambertMaterial attach="material" color={color} />
+        return <RoundedBox args={[0.9, 0.1, 0.9]}>
+            <meshLambertMaterial color={color} />
         </RoundedBox>;
     })()}</group>;
 });

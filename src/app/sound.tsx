@@ -1,5 +1,5 @@
 import { useLoader, useThree } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useMemo, useLayoutEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { AudioListener, AudioLoader, PositionalAudio } from "three";
 import { isSounOnRecoil } from "./playing-data";
@@ -12,32 +12,29 @@ export const Sound = ({ url }: { url: string }) => {
     const sound = useRef<PositionalAudio | null>(null);
 
     const { camera } = useThree();
-    const [listener] = useState(() => new AudioListener());
+    const listener = useMemo(() => new AudioListener(), []);
+    useLayoutEffect(() => {
+        camera.add(listener);
+        return () => { camera.remove(listener); };
+    }, [camera, listener]);
 
-    // @ts-ignore
     const buffer = useLoader(AudioLoader, url);
+    useLayoutEffect(() => {
+        if (!sound.current) { return; }
+
+        sound.current.setBuffer(buffer);
+        sound.current.setRefDistance(10);
+        sound.current.setLoop(false);
+        sound.current.stop();
+    }, [buffer]);
 
     const field = useRecoilValue(playingFieldRecoil);
-    // @ts-ignore
-    useEffect(() => {
+    useLayoutEffect(() => {
+        if (!sound.current) { return; }
+        if (!isSounOn) { return; }
 
-        if (sound.current !== null) {
-            sound.current.setBuffer(buffer);
-            sound.current.setRefDistance(1);
-            sound.current.setLoop(false);
-            sound.current.stop();
-            if (isSounOn) {
-                sound.current.play();
-            }
-        }
-
-        camera.add(listener);
-
-        return () => camera.remove(listener);
-
-    }, [field.prevMove?.field]);
+        sound.current.play();
+    }, [field.prevMove?.field]); // intentionally no isSoundOn in deps
 
     return <positionalAudio ref={sound} args={[listener]} />;
-
-
 };

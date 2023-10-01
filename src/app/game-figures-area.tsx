@@ -8,7 +8,7 @@ export const GameFiguresArea = () => {
     const gameFigures = useRecoilValue(gameFiguresRecoil);
 
     const { camera } = useThree();
-    useLayoutEffect(() => camera.lookAt(-0.2, 1.2, 0), [camera]);
+    useLayoutEffect(() => camera.lookAt(3, 0, 4), [camera]);
 
     return gameFigures.map((el, index) => {
         return <GameFigure

@@ -14,8 +14,7 @@ export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.Intrin
         <group
             {...props}
             dispose={null}
-            scale={[0.12, 0.12, 0.12]}
-            rotation={[Math.PI / 2, 0, 0]}
+            scale={[0.3, 0.3, 0.3]}
         >
             <group position={[-0.343, 0.999, 0.508]}>
                 <mesh
