@@ -10,7 +10,7 @@ import { Group } from "three";
 
 
 const cellColors = ["#b7b7b7", "#6AA6FF", "#fa7fe9", "#4ee63a"];
-const lightСolors = ["#b7b7b7", "#80b4fd", "#ff8ff0", "#95f988"];
+const lightColors = ["#b7b7b7", "#80b4fd", "#ff8ff0", "#95f988"];
 
 export const CellDecoration = forwardRef(({
     value,
@@ -23,7 +23,7 @@ export const CellDecoration = forwardRef(({
     gameOver?: boolean;
 }, ref: ForwardedRef<Group | null>) => {
     const theme = useRecoilValue(gameDecorationsRecoil); // todo: make prop
-    const color = isGhost ? lightСolors[value] : cellColors[value];
+    const color = isGhost ? lightColors[value] : cellColors[value];
 
     return <group {...props} ref={ref} >{(() => {
         if (value === 0) {
