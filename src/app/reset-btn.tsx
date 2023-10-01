@@ -1,5 +1,6 @@
 import { useResetRecoilState } from "recoil";
-import { figureGhostCoordsRecoil, gameFiguresRecoil, figureOnPointerIndexRecoil, playingFieldRecoil } from "./data-recoil/playing-data";
+import { figureGhostCoordsRecoil, gameFiguresRecoil, figureOnPointerIndexRecoil } from "./playing-data";
+import { playingFieldRecoil } from "./playing-data";
 import { Refresh } from "@emotion-icons/evil/Refresh";
 import { CSSProperties } from "react";
 

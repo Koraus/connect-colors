@@ -1,13 +1,14 @@
-import { cellSize, cellGap, playingFieldRecoil, bestScoreRecoil } from './data-recoil/playing-data';
+import { cellSize, cellGap, bestScoreRecoil } from './playing-data';
+import { playingFieldRecoil } from './playing-data';
 import { FieldCell } from './field-cell';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
-import { canPlaceFigureInCoords } from "./can-place-figure-in-coords";
-import { fieldWithDestroyedMatches } from './field-with-destroyed-matches';
-import { calculateScore } from './calculate-score';
-import { generateGameFigure } from './generate-game-figure';
+import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './playing-data';
+import { canPlaceFigureInCoords } from "../model/can-place-figure-in-coords";
+import { fieldWithDestroyedMatches } from '../model/field-with-destroyed-matches';
+import { calculateScore } from '../model/calculate-score';
+import { generateGameFigure } from '../model/generate-game-figure';
 import { useEffect, useState } from 'react';
-import { isAvailableMove } from './is-available-move';
+import { isAvailableMove } from '../model/is-available-move';
 
 
 export const PlayingField = () => {

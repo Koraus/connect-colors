@@ -1,5 +1,5 @@
 import { RoundedBox } from '@react-three/drei';
-import { cellColors, gameDecorationsRecoil } from './data-recoil/playing-data';
+import { cellColors, gameDecorationsRecoil } from './playing-data';
 import { useRecoilValue } from 'recoil';
 import { Tree } from './tree';
 import { Pumpkin } from './pumpkin';

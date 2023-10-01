@@ -2,7 +2,8 @@ import { useLoader, useThree } from "@react-three/fiber"
 import { useEffect, useRef, useState } from "react"
 import { useRecoilValue } from "recoil";
 import { AudioListener, AudioLoader, PositionalAudio } from "three"
-import { isSounOnRecoil, playingFieldRecoil } from "./data-recoil/playing-data";
+import { isSounOnRecoil } from "./playing-data";
+import { playingFieldRecoil } from "./playing-data";
 
 export const Sound = ({ url }: { url: string }) => {
 

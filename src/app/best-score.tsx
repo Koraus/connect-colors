@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil"
-import { bestScoreRecoil } from "./data-recoil/playing-data"
+import { bestScoreRecoil } from "./playing-data"
 import { Trophy } from "@emotion-icons/evil/Trophy"
 
 

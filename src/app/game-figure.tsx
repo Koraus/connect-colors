@@ -1,6 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil"
-import { Figure, cellGap, cellSize, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./data-recoil/playing-data"
+import { cellGap, cellSize, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data"
 import { Cell } from "./figure-cell";
+import { Figure } from "../model/figure";
 
 
 

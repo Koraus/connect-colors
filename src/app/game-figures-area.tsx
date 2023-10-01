@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { gameFiguresRecoil } from "./data-recoil/playing-data";
+import { gameFiguresRecoil } from "./playing-data";
 import { GameFigure } from "./game-figure";
 import { useThree } from "@react-three/fiber";
 import { useLayoutEffect } from "react";

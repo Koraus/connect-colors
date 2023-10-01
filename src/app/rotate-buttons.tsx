@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
-import { rotateFigure } from "./rotate-figure";
-import { gameFiguresRecoil } from "./data-recoil/playing-data";
+import { rotateFigure } from "../model/rotate-figure";
+import { gameFiguresRecoil } from "./playing-data";
 import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw"
 
 export function RotateButtons() {

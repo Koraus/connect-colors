@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { playingFieldRecoil } from "./data-recoil/playing-data";
+import { playingFieldRecoil } from "./playing-data";
 import { Undo } from "@emotion-icons/boxicons-regular/Undo"
 
 export const CancelMoveBtn = () => {

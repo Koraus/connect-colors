@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil"
-import { playingFieldRecoil } from "./data-recoil/playing-data"
+import { playingFieldRecoil } from "./playing-data"
 import { Chart } from "@emotion-icons/evil/Chart"
 
 export const CurrentScore = () => {

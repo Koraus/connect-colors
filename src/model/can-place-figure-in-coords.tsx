@@ -1,4 +1,4 @@
-import { Figure } from "./data-recoil/playing-data";
+import { Figure } from "./figure";
 
 
 export const canPlaceFigureInCoords = (

@@ -12,8 +12,8 @@ import { MenuBtn } from './menu-btn';
 import { Sound } from './sound';
 import audioUrl from "./assets/audio/put-figure.wav";
 import { useRecoilState } from 'recoil';
-import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './data-recoil/playing-data';
-import { rotateFigure } from './rotate-figure';
+import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './playing-data';
+import { rotateFigure } from '../model/rotate-figure';
 
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
     return () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
-  }, [pointerFigure, gameFigures]);
+  }, [pointerFigure, gameFigures, setPointerFigure, setGameFigures]);
 
   return (
     <>

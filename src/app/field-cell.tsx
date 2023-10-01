@@ -1,7 +1,7 @@
 import { Group } from 'three';
 import { RoundedBox } from '@react-three/drei';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameDecorationsRecoil } from './data-recoil/playing-data';
+import { cellColors, figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameDecorationsRecoil } from './playing-data';
 import { useEffect, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Tree } from './tree';

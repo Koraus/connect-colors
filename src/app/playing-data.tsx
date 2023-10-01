@@ -1,5 +1,6 @@
 import { atom } from "recoil";
-import { localStorageAtomEffect } from "./local-storage-atom-effect";
+import { localStorageAtomEffect } from "../utils/local-storage-atom-effect";
+import { Figure } from "../model/figure";
 
 
 export const playingFieldRecoil = atom({
@@ -25,8 +26,6 @@ export const playingFieldRecoil = atom({
         }
     }
 });
-
-export type Figure = number[][];
 
 export const gameFiguresRecoil = atom({
     key: 'gameFigures',
