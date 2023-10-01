@@ -11,7 +11,7 @@ export const Pumpkin = ({
     const secondColor = isGhost ? "#685829" : "#6e5300";
 
     return (
-        <group >
+        <group>
             <mesh position={[0, 0, 0.05]} >
                 <Sphere args={[0.14, 16, 16]} scale={[1, 1, 0.8]}>
                     <meshBasicMaterial
@@ -29,7 +29,7 @@ export const Pumpkin = ({
                         const y = i > 1 ? -(i * 0.001) : i * 0.02;
                         return (
                             <mesh position={[0, y, i * size]} key={i}>
-                                <Box args={[size, size, size]} >
+                                <Box args={[size, size, size]}>
                                     <meshBasicMaterial
                                         attach="material"
                                         color={secondColor}
@@ -40,6 +40,6 @@ export const Pumpkin = ({
                     }
                 )}
             </group>
-        </group >
+        </group>
     )
 }

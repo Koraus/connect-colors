@@ -60,10 +60,10 @@ export const MenuWindow = ({
                     onClick={() => setIsOpen(false)}
                     style={btnStyle}
                 >
-                    <span style={{ display: "inline-block", height: "1.5em", }} >
+                    <span style={{ display: "inline-block", height: "1.5em", }}>
                         Return <PlayFill height={"100%"} />
                     </span>
-                </button >
+                </button>
                 <button
                     onClick={() => setIsSoundOn(!isSoundOn)}
                     style={btnStyle}
@@ -74,9 +74,9 @@ export const MenuWindow = ({
                         {isSoundOn ? < Sound height={"100%"} /> :
                             <SoundMute height={"100%"} />}
                     </span>
-                </button >
+                </button>
                 <ResetBtn style={btnStyle} clothMenue={setIsOpen} />
-                <div >
+                <div>
                     <p style={{ textAlign: "center" }}> Choose game scenery: </p>
                     <button
                         disabled={decorations === "simple"}
@@ -100,6 +100,6 @@ export const MenuWindow = ({
                 <h3 style={{ marginBottom: 0 }}>Hot keys:</h3>
                 <p> Cancel selection : " Esc " / Rotate the figure : " r " </p>
             </div>
-        </div >
+        </div>
     )
 }

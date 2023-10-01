@@ -1,5 +1,5 @@
 import { useGLTF } from "@react-three/drei";
-import bucketFilePath from "./assets/3d/bucket-3d.glb";
+import bucketFilePath from "./bucket-3d.glb";
 
 export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.IntrinsicElements['group']) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -82,7 +82,7 @@ export function Bucket({ isGhost, ...props }: { isGhost?: boolean } & JSX.Intrin
                     />
                 </mesh>
             </group>
-        </group >
+        </group>
     );
 }
 

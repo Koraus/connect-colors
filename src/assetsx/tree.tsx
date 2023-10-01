@@ -11,7 +11,7 @@ export const Tree = ({
     const secondColor = isGhost ? "#7ae286" : "#29e63f";
 
     return (
-        <group >
+        <group>
             <mesh position={[0, 0, 0]} >
                 <RoundedBox args={[0.15, 0.15, 0.2]} >
                     <meshLambertMaterial attach="material" color={"brown"} />
@@ -32,6 +32,6 @@ export const Tree = ({
                     </RoundedBox>
                 </mesh>
             </mesh>
-        </group >
+        </group>
     )
 }

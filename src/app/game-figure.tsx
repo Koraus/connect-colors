@@ -2,6 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil"
 import { cellGap, cellSize, figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data"
 import { Cell } from "./figure-cell";
 import { Figure } from "../model/figure";
+import { CellDecoration } from "./cell-decoration";
 
 
 
@@ -36,11 +37,10 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
 
 
             return (el === 0 ? null :
-                <Cell
-                    value={el}
+                <CellDecoration
                     key={index}
+                    value={el}
                     position={position}
-                    size={currentCellSize}
                     isGhost={isGhost}
                 />
             )
@@ -60,6 +60,6 @@ export const GameFigure = ({ ctrGameFigure, sequenceNumber, figureIndex,
                 setPointerFigureIndex(figureIndex);
             }} >
             {figuraСells}
-        </group >)
+        </group>)
 
 }

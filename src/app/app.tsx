@@ -9,7 +9,7 @@ import { MenuWindow } from './menu-window';
 import { useEffect, useState } from 'react';
 import { MenuBtn } from './menu-btn';
 import { Sound } from './sound';
-import audioUrl from "./assets/audio/put-figure.wav";
+import audioUrl from "../assetsx/put-figure.wav";
 import { useRecoilState } from 'recoil';
 import { figureOnPointerIndexRecoil, gameFiguresRecoil } from './playing-data';
 import { rotateFigure } from '../model/rotate-figure';
@@ -67,7 +67,7 @@ function App() {
         <pointLight position={[10, 10, 10]} />
         <PlayingField />
         <GameFiguresArea />
-      </Canvas >
+      </Canvas>
     </div>
   )
 }
