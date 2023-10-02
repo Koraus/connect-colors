@@ -14,6 +14,7 @@ export const PlayingField = () => {
 
   const [gameOver, setGameOver] = useState(false);
 
+  // todo: useMemo instead of useEffect+useState
   useEffect(() => {
     setGameOver(!isAvailableMove(gameFigures, field.field));
   }, [field, gameFigures]);
