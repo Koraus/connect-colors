@@ -10,12 +10,12 @@ export const GameFiguresArea = () => {
     const { camera } = useThree();
     useLayoutEffect(() => camera.lookAt(3, 0, 4), [camera]);
 
-    return gameFigures.map((el, index) => {
-        return <GameFigure
-            key={index}
-            ctrGameFigure={el}
-            sequenceNumber={index % 3}
+    return gameFigures.map((el, index) => <group
+        key={index}
+        position={[-4, 0, index * 4]}
+    >
+        <GameFigure
             figureIndex={index}
-        />;
-    });
+        />
+    </group>);
 };

@@ -19,11 +19,6 @@ export const FieldCell = ({
     coords: [number, number],
     value: number,
 }) => {
-    const putPointerFigure = usePutPointerFigure();
-
-    const pointerFigureIndex = useRecoilValue(figureOnPointerIndexRecoil);
-    const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
-
     const cellRef = useRef<Group>(null);
 
     const [time, setTime] = useState<number>();
@@ -50,12 +45,6 @@ export const FieldCell = ({
         value={value}
         gameOver={gameOver}
         ref={cellRef}
-        onPointerUp={() => { putPointerFigure(coords); }}
-        onPointerOver={() => setFigureCoords(
-            pointerFigureIndex !== undefined
-                ? coords
-                : [0, 0])
-        }
         {...props}
     />;
 };

@@ -1,7 +1,7 @@
 import { bestScoreRecoil } from "./playing-data";
 import { playingFieldRecoil } from "./playing-data";
 import { useRecoilState } from "recoil";
-import { figureOnPointerIndexRecoil, gameFiguresRecoil } from "./playing-data";
+import { gameFiguresRecoil } from "./playing-data";
 import { canPlaceFigureInCoords } from "../model/can-place-figure-in-coords";
 import { fieldWithDestroyedMatches } from "../model/field-with-destroyed-matches";
 import { calculateScore } from "../model/calculate-score";
@@ -10,16 +10,17 @@ import { generateGameFigure } from "../model/generate-game-figure";
 
 
 export const usePutPointerFigure = () => {
-  const [pointerFigureIndex, setPointerFigureIndex] = useRecoilState(figureOnPointerIndexRecoil);
   const [field, setField] = useRecoilState(playingFieldRecoil);
   const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
   const [bestScore, setBestScore] = useRecoilState(bestScoreRecoil);
 
-  return (coords: [number, number] | undefined) => {
-
-    if (!coords) return;
-    if (pointerFigureIndex === undefined) return;
-
+  return ({
+    pointerFigureIndex,
+    coords,
+  }: {
+    pointerFigureIndex: number,
+    coords: [number, number]
+  }) => {
     const pointerFigure = gameFigures[pointerFigureIndex];
     const [x, y] = coords;
 
@@ -41,8 +42,6 @@ export const usePutPointerFigure = () => {
             return generateGameFigure(lvl);
           } else { return el; }
         }));
-
-      setPointerFigureIndex(undefined);
 
       setField({
         field: fieldWithFigure,

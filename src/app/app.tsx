@@ -60,10 +60,13 @@ function App() {
         </div>
 
       </div>
-      <Canvas camera={{ fov: 35, position: [10, 28, -10.5] }}>
+      <Canvas
+        camera={{ fov: 35, position: [10, 28, -10.5] }}
+        gl={{ useLegacyLights: true }}
+      >
         <Sound url={audioUrl} />
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
+        <ambientLight intensity={0.6} />
+        <pointLight position={[10, 10, 10]} intensity={0.5} />
         <PlayingField />
         <GameFiguresArea />
       </Canvas>
