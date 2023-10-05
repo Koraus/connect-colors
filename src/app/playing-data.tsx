@@ -75,8 +75,8 @@ export const levelsRecoil = atom({
     key: "levels",
     default: [{
         level: 1,
-        stock: 4,
-        stockCounter: 4,
+        stock: 10,
+        stockCounter: 10,
         isCompleted: false,
         currentScore: 0,
         bestScore: 0,

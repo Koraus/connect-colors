@@ -6,6 +6,7 @@ import { canPlaceFigureInCoords } from "../model/can-place-figure-in-coords";
 import { fieldWithDestroyedMatches } from "../model/field-with-destroyed-matches";
 import { calculateScore } from "../model/calculate-score";
 import { generateGameFigure } from "../model/generate-game-figure";
+import { croppingModeOnPlacementRecoil } from "./cropping-mode-on-placement-recoil";
 
 
 
@@ -15,6 +16,8 @@ export const usePutPointerFigure = () => {
   const [bestScore, setBestScore] = useRecoilState(bestScoreRecoil);
 
   const [levels, setLevels] = useRecoilState(levelsRecoil);
+
+  const [isCroppingActive, setIsCroppingActive] = useRecoilState(croppingModeOnPlacementRecoil)
 
   return ({
     pointerFigureIndex,
@@ -28,7 +31,23 @@ export const usePutPointerFigure = () => {
 
     const fieldWithFigure = [...field.field.map(el => [...el])];
 
-    if (pointerFigure && canPlaceFigureInCoords(pointerFigure, field.field, coords)) {
+    if (isCroppingActive && pointerFigure) {
+      for (let i = 0; i < pointerFigure?.length; i++) {
+        for (let j = 0; j < pointerFigure[i].length; j++) {
+          if (pointerFigure[i][j] === 0) { continue }
+          if (field.field[x + i][y + j] === 0) {
+            fieldWithFigure[x + i][y + j] = pointerFigure[i][j]
+          } else {
+            fieldWithFigure[x + i][y + j] = fieldWithFigure[x + i][y + j]
+          }
+        }
+      }
+      setIsCroppingActive(false)
+    }
+
+    if (!isCroppingActive
+      && pointerFigure
+      && canPlaceFigureInCoords(pointerFigure, field.field, coords)) {
       for (let i = 0; i < pointerFigure?.length; i++) {
         for (let j = 0; j < pointerFigure[i].length; j++) {
           if (pointerFigure[i][j] !== 0) {
@@ -36,36 +55,48 @@ export const usePutPointerFigure = () => {
           }
         }
       }
+    }
 
-      setLevels(
-        levels.map((el) => {
-          if (el.level === 1 && el.stockCounter === 1) {
+    setLevels(
+      levels.map(
+        (lvl) => {
+          //if current level
+          console.log(lvl.level, lvl.stockCounter)
+          if (lvl.level === 1 && lvl.stockCounter === 1) {
             return {
-              ...el,
-              stockCounter: el.stockCounter - 1,
-              isCompleted: true
+              ...lvl,
+              stockCounter: lvl.stockCounter - 1,
+              isCompleted: true,
+              currentScore: lvl.currentScore + calculateScore(fieldWithFigure)
             }
           }
-          return el.level === 1
-            ? { ...el, stockCounter: el.stockCounter - 1, currentScore: el.currentScore + calculateScore(fieldWithFigure) }
-            : { ...el }
+          if (lvl.level === 1 && lvl.stockCounter > 1) {
+            return {
+              ...lvl,
+              stockCounter: lvl.stockCounter - 1,
+              currentScore: lvl.currentScore + calculateScore(fieldWithFigure)
+            }
+          }
+          return { ...lvl }
+        }
+      )
+    )
+
+    //levels[0] is current level
+    if (levels[0].stockCounter > 3) {
+      setGameFigures(gameFigures.map(
+        (el, index) => {
+          if (index === pointerFigureIndex) {
+            const lvl = index === 0 ? 1 : index === 1 ? 2 : 3;
+            return generateGameFigure(lvl);
+          } else { return el; }
         }));
+    }
 
-      if (levels[0].stockCounter > 3) {
-        setGameFigures(gameFigures.map(
-          (el, index) => {
-            if (index === pointerFigureIndex) {
-              const lvl = index === 0 ? 1 : index === 1 ? 2 : 3;
-              return generateGameFigure(lvl);
-            } else { return el; }
-          }));
-      }
-
-      if (levels[0].stockCounter <= 3) {
-        setGameFigures(gameFigures.filter(
-          (el, index) => index !== pointerFigureIndex)
-        )
-      }
+    if (levels[0].stockCounter <= 3) {
+      setGameFigures(gameFigures.filter(
+        (el, index) => index !== pointerFigureIndex)
+      )
     }
 
     setField({

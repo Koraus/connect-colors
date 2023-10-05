@@ -14,7 +14,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { figureOnPointerIndexRecoil, gameFiguresRecoil, levelsRecoil } from "./playing-data";
 import { rotateFigure } from "../model/rotate-figure";
 import { useWindowEvent } from "../utils/use-window-event";
-import { DestroySameColorCellsBooster } from "./destroy-same-color-cells-booster";
+import { DestroySameTypeCellsBooster } from "./destroy-same-color-cells-booster";
+import { CroppingModeOnPlacementBooster } from "./cropping-mode-on-placement-booster.tsx";
 
 
 function App() {
@@ -50,25 +51,30 @@ function App() {
       padding: "2rem",
     }}>
       <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-      <div css={{ position: "fixed", zIndex: 2, display: "flex" }}>
-        <div css={{ marginRight: "3em" }}>
+      <div css={{
+        position: "fixed",
+        zIndex: 2,
+        display: "flex",
+        flexDirection: "column",
+        maxWidth: "30vw"
+      }}>
+        <div css={{ marginRight: "1em" }}>
           <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
           <RotateButtons />
           <CancelMoveBtn />
-          <DestroySameColorCellsBooster type={1}/>
-          <DestroySameColorCellsBooster type={2}/>
-          <DestroySameColorCellsBooster type={3}/>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <DestroySameTypeCellsBooster type={1} />
+          <DestroySameTypeCellsBooster type={2} />
+          <DestroySameTypeCellsBooster type={3} />
+          <CroppingModeOnPlacementBooster />
         </div>
         <div>
           <CurrentScore />
           <BestScore />
         </div>
         <div style={{
-          rotate: "341deg",
-          transform: "translate(0vh, 20vh)",
           fontSize: "2rem",
-          height: "fit-content",
-          pointerEvents: "none",
         }}> level&nbsp;{lvl.level}&nbsp;{lvl.isCompleted ? "completed" : ""}
         </div>
         {lvl.isCompleted
@@ -85,12 +91,13 @@ function App() {
         }
         <div style={{
           rotate: "336deg",
-          transform: "translate(-30vh, 60vh)",
+          transform: "translate(35vh, 37vh)",
           fontSize: "2rem",
           height: "fit-content",
         }}> You need to place {lvl.stock} figures. {lvl.stockCounter}  left to place
         </div>
       </div>
+
       <Canvas
         camera={{ fov: 35, position: [10, 28, -10.5] }}
         gl={{ useLegacyLights: true }}
