@@ -68,8 +68,12 @@ export const selectValues = (
     return values;
 };
 
-export const fillFigureBlank = (blankFigure: number[][], valuesNamber: number[]) => {
-    const vals = valuesNamber;
+export const fillFigureBlank = (
+    blankFigure: number[][],
+    valuesNumber: number[],
+    random01: () => number,
+) => {
+    const vals = valuesNumber;
     const figure: number[][] =
         Array.from(Array(blankFigure.length),
             () => new Array(
@@ -79,7 +83,7 @@ export const fillFigureBlank = (blankFigure: number[][], valuesNamber: number[])
     for (let i = 0; i < blankFigure.length; i++) {
         for (let j = 0; j < blankFigure[i].length; j++) {
             if (blankFigure[i][j] !== 0) {
-                const val = vals[Math.floor(Math.random() * vals.length)];
+                const val = vals[Math.floor(random01() * vals.length)];
                 figure[i][j] = val;
             }
         }
@@ -95,16 +99,16 @@ export const generateGameFigure = (
     if (lvl === "0") {
         const index = Math.floor(Math.random() * 10);
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3, random01);
-        const figure = fillFigureBlank(blankFigure, valuesNamber);
+        const valuesNumber = selectValues(3, random01);
+        const figure = fillFigureBlank(blankFigure, valuesNumber, random01);
         return figure;
     }
     if (lvl === "1") {
         const complexityFiguresLevel = 5;
         const index = Math.floor(Math.random() * 7) + complexityFiguresLevel;
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3, random01);
-        const figure = fillFigureBlank(blankFigure, valuesNamber);
+        const valuesNumber = selectValues(3, random01);
+        const figure = fillFigureBlank(blankFigure, valuesNumber, random01);
         return figure;
     }
 
@@ -112,8 +116,8 @@ export const generateGameFigure = (
         const complexityFiguresLevel = 10;
         const index = Math.floor(Math.random() * 5) + complexityFiguresLevel;
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3, random01);
-        const figure = fillFigureBlank(blankFigure, valuesNamber);
+        const valuesNumber = selectValues(3, random01);
+        const figure = fillFigureBlank(blankFigure, valuesNumber, random01);
         return figure;
     }
 

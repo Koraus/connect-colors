@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { fieldWithoutCellsOfTheSameType } from "./field-without-cells-of-the-same-type";
+import { fieldWithoutCellsOfTheSameType } from "../level-model/field-without-cells-of-the-same-type";
 import { playingFieldRecoil } from "./playing-data";
 
 export const DestroySameTypeCellsBooster = ({ type }: { type: number }) => {

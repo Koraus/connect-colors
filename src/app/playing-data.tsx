@@ -3,7 +3,7 @@ import { localStorageAtomEffect } from "../utils/local-storage-atom-effect";
 import { Figure } from "../level-model/figure";
 import { generateGameFigure } from "../level-model/generate-game-figure";
 
-
+/** @deprecated Use `levelRecoil` instead */
 export const playingFieldRecoil = atom({
     key: "playingField",
     default: {
@@ -28,6 +28,7 @@ export const playingFieldRecoil = atom({
     },
 });
 
+/** @deprecated Use `levelRecoil` instead */
 export const gameFiguresRecoil = atom({
     key: "gameFigures",
     default: [
@@ -71,6 +72,7 @@ export const gameDecorationsRecoil = atom({
     ],
 });
 
+/** @deprecated Use `levelRecoil` and `levels` instead */
 export const levelsRecoil = atom({
     key: "levels",
     default: [{

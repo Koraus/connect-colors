@@ -1,4 +1,4 @@
-import { canPlaceFigureInCoords } from "./can-place-figure-in-coords";
+import { canPutFigure0 } from "./can-put-figure";
 import { Figure } from "./figure";
 import { rotateFigure } from "./rotate-figure";
 
@@ -19,7 +19,7 @@ export const isAvailableMove = (availableFigures: Figure[], field: number[][]) =
 
     return allVariantsOfFigures
         .some(figure => allEmptyFieldCoords
-            .some(coord => canPlaceFigureInCoords(figure, field, coord),
+            .some(coord => canPutFigure0(figure, field, coord),
             ));
 
 };

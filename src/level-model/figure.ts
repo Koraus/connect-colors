@@ -1,2 +1,3 @@
+import { CellColor } from ".";
 
-export type Figure = number[][];
+export type Figure = CellColor[][];

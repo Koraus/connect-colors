@@ -7,7 +7,7 @@ import { levels } from "./levels";
 import { actPutFigure } from "./act-put-figure";
 
 
-export type CellColor = 0 | 1 | 2 | 3;
+export type CellColor = number; // todo: 0 | 1 | 2 | 3;
 
 export type LevelState = {
     seed32: number;
@@ -19,7 +19,7 @@ export type LevelState = {
 }
 
 export type LevelTransition = {
-    //
+    // todo
 };
 
 export type LevelAction =
@@ -35,7 +35,7 @@ export const createLevelState = ({
     level: typeof levels[string];
 }): LevelState => {
     const random32 = createRandomMulberry32(seed32);
-    const random01 = () => random32() / (1 << 32);
+    const random01 = () => random32() / 0x100000000;
 
     if (level.figureStock < 3) {
         throw new Error("level.figureStock must be >= 3");
@@ -72,7 +72,7 @@ export const createLevelState = ({
 export const actOnLevelState = (
     state: LevelState,
     action: LevelAction,
-): [LevelTransition, LevelState] => {
+) => {
     switch (action.action) {
         case "putFigure": return actPutFigure(state, action);
         case "clearColors": return actClearColors(state, action);
