@@ -14,6 +14,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { figureOnPointerIndexRecoil, gameFiguresRecoil, levelsRecoil } from "./playing-data";
 import { rotateFigure } from "../model/rotate-figure";
 import { useWindowEvent } from "../utils/use-window-event";
+import { DestroySameColorCellsBooster } from "./destroy-same-color-cells-booster";
 
 
 function App() {
@@ -54,6 +55,9 @@ function App() {
           <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
           <RotateButtons />
           <CancelMoveBtn />
+          <DestroySameColorCellsBooster type={1}/>
+          <DestroySameColorCellsBooster type={2}/>
+          <DestroySameColorCellsBooster type={3}/>
         </div>
         <div>
           <CurrentScore />
