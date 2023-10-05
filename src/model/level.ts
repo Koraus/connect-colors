@@ -51,6 +51,16 @@ export const createLevelState = ({
                 level.figureDifficulties,
                 random01),
             random01),
+        generateGameFigure(
+            weightedRandom01(
+                level.figureDifficulties,
+                random01),
+            random01),
+        generateGameFigure(
+            weightedRandom01(
+                level.figureDifficulties,
+                random01),
+            random01),
     ];
 
     return {
