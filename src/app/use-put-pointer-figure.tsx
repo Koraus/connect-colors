@@ -87,8 +87,8 @@ export const usePutPointerFigure = () => {
       setGameFigures(gameFigures.map(
         (el, index) => {
           if (index === pointerFigureIndex) {
-            const lvl = index === 0 ? 1 : index === 1 ? 2 : 3;
-            return generateGameFigure(lvl);
+            const lvl = index === 0 ? "0" : index === 1 ? "1" : "2";
+            return generateGameFigure(lvl, Math.random);
           } else { return el; }
         }));
     }

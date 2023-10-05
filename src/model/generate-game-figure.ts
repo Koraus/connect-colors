@@ -51,11 +51,14 @@ export const typicalFigures = [[
     [1, 1, 1],
 ]];
 
-export const selectValues = (differentValues: 1 | 2 | 3) => {
+export const selectValues = (
+    differentValues: 1 | 2 | 3,
+    random01: () => number,
+) => {
     const totalValues = 3;
     const values: number[] = [];
     do {
-        const value = Math.floor(Math.random() * totalValues + 1);
+        const value = Math.floor(random01() * totalValues + 1);
 
         if (!values.includes(value)) {
             values.push(value);
@@ -84,29 +87,32 @@ export const fillFigureBlank = (blankFigure: number[][], valuesNamber: number[])
     return figure;
 };
 
-export const generateGameFigure = (lvl: 1 | 2 | 3): Figure => {
+export const generateGameFigure = (
+    lvl: "0" | "1" | "2",
+    random01: () => number,
+): Figure => {
 
-    if (lvl === 1) {
+    if (lvl === "0") {
         const index = Math.floor(Math.random() * 10);
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3);
+        const valuesNamber = selectValues(3, random01);
         const figure = fillFigureBlank(blankFigure, valuesNamber);
         return figure;
     }
-    if (lvl === 2) {
+    if (lvl === "1") {
         const complexityFiguresLevel = 5;
         const index = Math.floor(Math.random() * 7) + complexityFiguresLevel;
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3);
+        const valuesNamber = selectValues(3, random01);
         const figure = fillFigureBlank(blankFigure, valuesNamber);
         return figure;
     }
 
-    if (lvl === 3) {
+    if (lvl === "2") {
         const complexityFiguresLevel = 10;
         const index = Math.floor(Math.random() * 5) + complexityFiguresLevel;
         const blankFigure = typicalFigures[index];
-        const valuesNamber = selectValues(3);
+        const valuesNamber = selectValues(3, random01);
         const figure = fillFigureBlank(blankFigure, valuesNamber);
         return figure;
     }

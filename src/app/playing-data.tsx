@@ -31,9 +31,9 @@ export const playingFieldRecoil = atom({
 export const gameFiguresRecoil = atom({
     key: "gameFigures",
     default: [
-        generateGameFigure(3),
-        generateGameFigure(2),
-        generateGameFigure(1),
+        generateGameFigure("2", Math.random),
+        generateGameFigure("1", Math.random),
+        generateGameFigure("0", Math.random),
     ] as Figure[],
 });
 
