@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { rotateFigure } from "../model/rotate-figure";
+import { rotateFigure } from "../level-model/rotate-figure";
 import { gameFiguresRecoil } from "./playing-data";
 import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw";
 

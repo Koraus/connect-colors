@@ -1,8 +1,10 @@
 import { createRandomMulberry32 } from "../utils/create-random-mulberry32";
 import { weightedRandom01 } from "../utils/weighted-random";
+import { actClearColors } from "./act-clear-colors";
 import { Figure } from "./figure";
 import { generateGameFigure } from "./generate-game-figure";
 import { levels } from "./levels";
+import { actPutFigure } from "./act-put-figure";
 
 
 export type CellColor = 0 | 1 | 2 | 3;
@@ -77,6 +79,8 @@ export const actOnLevelState = (
     state: LevelState,
     action: LevelAction,
 ): [LevelTransition, LevelState] => {
-    // todo: implement
-    return [{}, state];
-}
+    switch (action.action) {
+        case "putFigure": return actPutFigure(state, action);
+        case "clearColors": return actClearColors(state, action);
+    }
+};

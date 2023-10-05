@@ -1,6 +1,6 @@
 import { atom } from "recoil";
-import { LevelAction, LevelState, LevelTransition, createLevelState } from "../../model/level";
-import { levels } from "../../model/levels";
+import { LevelAction, LevelState, LevelTransition, createLevelState } from "../../level-model";
+import { levels } from "../../level-model/levels";
 
 
 export type LevelStateChain = {

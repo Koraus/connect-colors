@@ -2,10 +2,10 @@ import { bestScoreRecoil, levelsRecoil } from "./playing-data";
 import { playingFieldRecoil } from "./playing-data";
 import { useRecoilState } from "recoil";
 import { gameFiguresRecoil } from "./playing-data";
-import { canPlaceFigureInCoords } from "../model/can-place-figure-in-coords";
-import { fieldWithDestroyedMatches } from "../model/field-with-destroyed-matches";
-import { calculateScore } from "../model/calculate-score";
-import { generateGameFigure } from "../model/generate-game-figure";
+import { canPlaceFigureInCoords } from "../level-model/can-place-figure-in-coords";
+import { fieldWithDestroyedMatches } from "../level-model/field-with-destroyed-matches";
+import { calculateScore } from "../level-model/calculate-score";
+import { generateGameFigure } from "../level-model/generate-game-figure";
 import { croppingModeOnPlacementRecoil } from "./cropping-mode-on-placement-recoil";
 
 

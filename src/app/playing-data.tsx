@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 import { localStorageAtomEffect } from "../utils/local-storage-atom-effect";
-import { Figure } from "../model/figure";
-import { generateGameFigure } from "../model/generate-game-figure";
+import { Figure } from "../level-model/figure";
+import { generateGameFigure } from "../level-model/generate-game-figure";
 
 
 export const playingFieldRecoil = atom({

@@ -3,7 +3,7 @@ import { FieldCell } from "./field-cell";
 import { useRecoilValue } from "recoil";
 import { gameFiguresRecoil } from "./playing-data";
 import { useEffect, useState } from "react";
-import { isAvailableMove } from "../model/is-available-move";
+import { isAvailableMove } from "../level-model/is-available-move";
 
 
 export const PlayingField = () => {

@@ -12,7 +12,7 @@ import { Sound } from "./sound";
 import audioUrl from "../assetsx/put-figure.wav";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { figureOnPointerIndexRecoil, gameFiguresRecoil, levelsRecoil } from "./playing-data";
-import { rotateFigure } from "../model/rotate-figure";
+import { rotateFigure } from "../level-model/rotate-figure.tsx";
 import { useWindowEvent } from "../utils/use-window-event";
 import { DestroySameTypeCellsBooster } from "./destroy-same-color-cells-booster";
 import { CroppingModeOnPlacementBooster } from "./cropping-mode-on-placement-booster.tsx";
