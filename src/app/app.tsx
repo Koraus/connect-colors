@@ -67,13 +67,18 @@ function App() {
           pointerEvents: "none",
         }}> level&nbsp;{lvl.level}&nbsp;{lvl.isCompleted ? "completed" : ""}
         </div>
-        <div style={{
-          rotate: "336deg",
-          transform: "translate(-56vh, 40vh)",
-          fontSize: "2rem",
-          height: "fit-content",
-        }}> Current score: {lvl.currentScore}
-        </div>
+        {lvl.isCompleted
+          && <button
+            style={{
+              position: "fixed",
+              inset: "50%",
+              width: "10vw",
+              height: "10vh",
+              zIndex: 2
+            }}
+            onClick={() => location.reload()}> next lvl
+          </button>
+        }
         <div style={{
           rotate: "336deg",
           transform: "translate(-30vh, 60vh)",
