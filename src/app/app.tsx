@@ -56,7 +56,8 @@ function App() {
         zIndex: 2,
         display: "flex",
         flexDirection: "column",
-        maxWidth: "30vw"
+        maxWidth: "30vw",
+        pointerEvents: pointerFigure === undefined ? "auto" : "none",
       }}>
         <div css={{ marginRight: "1em" }}>
           <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
