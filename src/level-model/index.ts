@@ -22,15 +22,9 @@ export type LevelTransition = {
     //
 };
 
-export type LevelAction = {
-    action: "putFigure",
-    figureIndex: number,
-    figureRotation: number,
-    isCropActive: boolean,
-} | {
-    action: "clearColors",
-    value: CellColor,
-};
+export type LevelAction =
+    ({ action: "putFigure" } & Parameters<typeof actPutFigure>[1])
+    | ({ action: "clearColors" } & Parameters<typeof actClearColors>[1]);
 
 
 export const createLevelState = ({
