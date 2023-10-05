@@ -70,3 +70,23 @@ export const gameDecorationsRecoil = atom({
         localStorageAtomEffect(),
     ],
 });
+
+export const levelsRecoil = atom({
+    key: "levels",
+    default: [{
+        level: 1,
+        stock: 10,
+        stockCounter: 10,
+        isCompleted: false,
+        currentScore: 0,
+        bestScore: 0,
+    }, {
+        level: 2,
+        stock: 13,
+        stockCounter: 13,
+        isCompleted: false,
+        currentScore: 0,
+        bestScore: 0,
+    },
+    ]
+});

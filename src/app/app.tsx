@@ -10,14 +10,15 @@ import { useState } from "react";
 import { MenuBtn } from "./menu-btn";
 import { Sound } from "./sound";
 import audioUrl from "../assetsx/put-figure.wav";
-import { useRecoilState } from "recoil";
-import { figureOnPointerIndexRecoil, gameFiguresRecoil } from "./playing-data";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { figureOnPointerIndexRecoil, gameFiguresRecoil, levelsRecoil } from "./playing-data";
 import { rotateFigure } from "../model/rotate-figure";
 import { useWindowEvent } from "../utils/use-window-event";
 
 
 function App() {
 
+  const lvl = useRecoilValue(levelsRecoil)[0];
   const [isMenuOpen, setIsmenueOpen] = useState(false);
 
   const [pointerFigure, setPointerFigure] = useRecoilState(figureOnPointerIndexRecoil);
@@ -58,7 +59,28 @@ function App() {
           <CurrentScore />
           <BestScore />
         </div>
-
+        <div style={{
+          rotate: "341deg",
+          transform: "translate(0vh, 20vh)",
+          fontSize: "2rem",
+          height: "fit-content",
+          pointerEvents: "none",
+        }}> level&nbsp;{lvl.level}&nbsp;{lvl.isCompleted ? "completed" : ""}
+        </div>
+        <div style={{
+          rotate: "336deg",
+          transform: "translate(-56vh, 40vh)",
+          fontSize: "2rem",
+          height: "fit-content",
+        }}> Current score: {lvl.currentScore}
+        </div>
+        <div style={{
+          rotate: "336deg",
+          transform: "translate(-30vh, 60vh)",
+          fontSize: "2rem",
+          height: "fit-content",
+        }}> You need to place {lvl.stock} figures. {lvl.stockCounter}  left to place
+        </div>
       </div>
       <Canvas
         camera={{ fov: 35, position: [10, 28, -10.5] }}
