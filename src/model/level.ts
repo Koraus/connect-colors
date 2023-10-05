@@ -58,7 +58,7 @@ export const createLevelState = ({
         level,
         field: level.fieldMap.map(row => row.map(() => 0)),
         figures,
-        figureStockLeft: level.figureStock - 3,
+        figureStockLeft: level.figureStock,
         score: 0,
     };
 };
