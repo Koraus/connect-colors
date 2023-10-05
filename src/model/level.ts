@@ -41,6 +41,10 @@ export const createLevelState = ({
     const random32 = createRandomMulberry32(seed32);
     const random01 = () => random32() / (1 << 32);
 
+    if (level.figureStock < 3) {
+        throw new Error("level.figureStock must be >= 3");
+    }
+
     const figures = [
         generateGameFigure(
             weightedRandom01(
@@ -54,7 +58,7 @@ export const createLevelState = ({
         level,
         field: level.fieldMap.map(row => row.map(() => 0)),
         figures,
-        figureStockLeft: level.figureStock,
+        figureStockLeft: level.figureStock - 3,
         score: 0,
     };
 };
