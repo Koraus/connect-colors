@@ -55,6 +55,7 @@ export const usePutPointerFigure = () => {
       action,
     });
 
+    setIsCroppingActive(false);
 
 
     setLevels(levels.map((lvl) => {
