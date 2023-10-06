@@ -3,10 +3,10 @@ export const fieldWithoutCellsOfTheSameType = (field: number[][], cellValue: num
         return row.map(
             (cell) => {
                 if (cell === cellValue) {
-                    return 0
+                    return 0;
                 }
-                return cell
-            }
-        )
-    })
-}
+                return cell;
+            },
+        );
+    });
+};

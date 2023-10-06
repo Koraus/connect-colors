@@ -1,9 +1,9 @@
 import { RoundedBox } from "@react-three/drei";
 import { useRecoilValue } from "recoil";
 import { gameDecorationsRecoil } from "./playing-data";
-import { Tree } from "../assetsx/tree";
-import { Pumpkin } from "../assetsx/pumpkin";
-import { Bucket } from "../assetsx/bucket";
+import { Tree } from "../../assetsx/tree";
+import { Pumpkin } from "../../assetsx/pumpkin";
+import { Bucket } from "../../assetsx/bucket";
 import { jsx } from "@emotion/react";
 import { ForwardedRef, forwardRef } from "react";
 import { Group } from "three";

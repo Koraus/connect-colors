@@ -3,9 +3,10 @@ import { useRef, useMemo, useLayoutEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { AudioListener, AudioLoader, PositionalAudio } from "three";
 import { isSounOnRecoil } from "./playing-data";
-import { playingFieldRecoil } from "./playing-data";
+import { levelRecoil } from "./level-recoil";
 
 export const Sound = ({ url }: { url: string }) => {
+    const level = useRecoilValue(levelRecoil);
 
     const isSounOn = useRecoilValue(isSounOnRecoil);
 
@@ -28,13 +29,12 @@ export const Sound = ({ url }: { url: string }) => {
         sound.current.stop();
     }, [buffer]);
 
-    const field = useRecoilValue(playingFieldRecoil);
     useLayoutEffect(() => {
         if (!sound.current) { return; }
         if (!isSounOn) { return; }
 
         sound.current.play();
-    }, [field.prevMove?.field]); // intentionally no isSoundOn in deps
+    }, [level.state]); // intentionally no isSoundOn in deps
 
     return <positionalAudio ref={sound} args={[listener]} />;
 };

@@ -1,11 +1,8 @@
 import { Group } from "three";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { CellDecoration } from "./cell-decoration";
 import { jsx } from "@emotion/react";
-import { usePutPointerFigure } from "./use-put-pointer-figure";
 
 
 export const FieldCell = ({

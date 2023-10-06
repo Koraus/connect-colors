@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import { PlayFill } from "@emotion-icons/bootstrap/PlayFill";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { bestScoreRecoil, gameDecorationsRecoil, isSounOnRecoil } from "./playing-data";
-import { playingFieldRecoil } from "./playing-data";
+import { bestScoreRecoil, gameDecorationsRecoil, isSounOnRecoil } from "./level/playing-data";
 import { Sound } from "@emotion-icons/entypo/Sound";
 import { SoundMute } from "@emotion-icons/entypo/SoundMute";
-import { ResetBtn } from "./reset-btn";
+import { ResetBtn } from "./level/reset-btn";
+import { levelRecoil } from "./level/level-recoil";
 
 
 export const MenuWindow = ({
@@ -13,6 +13,7 @@ export const MenuWindow = ({
 }: {
     isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>
 }) => {
+    const level = useRecoilValue(levelRecoil);
 
     const btnStyle = {
         fontSize: "18px",
@@ -23,7 +24,7 @@ export const MenuWindow = ({
     };
 
     const [isSoundOn, setIsSoundOn] = useRecoilState(isSounOnRecoil);
-    const crtScore = useRecoilValue(playingFieldRecoil).score;
+    const crtScore = level.state.score;
     const bestScore = useRecoilValue(bestScoreRecoil);
     const [decorations, setDecorations] = useRecoilState(gameDecorationsRecoil);
     return (

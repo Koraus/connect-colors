@@ -1,11 +1,14 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil, gameFiguresRecoil } from "./playing-data";
+import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
 import { CellDecoration } from "./cell-decoration";
 import { useRef, useState } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { Group, Plane, Vector3 } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { usePutPointerFigure } from "./use-put-pointer-figure";
+import { levelRecoil } from "./level-recoil";
+import { figureRotationsRecoil } from "./figure-rotations-recoil";
+import { rotateFigure } from "../../level-model/rotate-figure";
 
 
 export const GameFigure = ({
@@ -13,7 +16,9 @@ export const GameFigure = ({
 }: {
     figureIndex: number,
 }) => {
-    const figure = useRecoilValue(gameFiguresRecoil)[figureIndex];
+    const { state: { figures } } = useRecoilValue(levelRecoil);
+    const figureRotations = useRecoilValue(figureRotationsRecoil);
+    const figure = rotateFigure(figures[figureIndex], figureRotations[figureIndex]);
     const w = figure.length;
     const h = figure[0].length;
 

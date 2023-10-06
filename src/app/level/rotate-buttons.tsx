@@ -1,11 +1,11 @@
-import { useRecoilState } from "recoil";
-import { rotateFigure } from "../level-model/rotate-figure";
-import { gameFiguresRecoil } from "./playing-data";
+import { useSetRecoilState } from "recoil";
 import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw";
+import { figureRotationsRecoil } from "./figure-rotations-recoil";
+import update from "immutability-helper";
 
 export function RotateButtons() {
+    const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
 
-    const [gameFigures, setGameFigures] = useRecoilState(gameFiguresRecoil);
     return <div>{[2, 1, 0].map((i) =>
         <button
             style={{
@@ -17,9 +17,9 @@ export function RotateButtons() {
             }}
             key={i}
             onClick={() => {
-                setGameFigures(gameFigures.map(
-                    (el, j) => i === j ? rotateFigure(el) : el,
-                ));
+                setFigureRotations(figureRotations => update(figureRotations, {
+                    [i]: { $set: (figureRotations[i] + 1) % 4 },
+                }));
             }}>
             Rotate {i}&nbsp;
             <span style={{ display: "inline-block", height: "1.5em" }} >

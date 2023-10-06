@@ -10,11 +10,11 @@ export const CroppingModeOnPlacementBooster = () => {
             onClick={() => setIsCroppingActive(!isCroppingActive)}
             style={{
                 width: "fit-content",
-                background: isCroppingActive ? "#f5e39c" : ""
+                background: isCroppingActive ? "#f5e39c" : "",
             }}
         >
             Cropping Mode
         </button>
         // todo add score 
-    )
-}
+    );
+};
