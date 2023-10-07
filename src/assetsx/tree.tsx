@@ -1,7 +1,8 @@
 import { RoundedBox } from "@react-three/drei";
+import { memo } from "react";
 
 
-export const Tree = ({
+const _Tree = ({
     isGhost,
 }: {
     isGhost?: boolean
@@ -32,4 +33,15 @@ export const Tree = ({
             </mesh>
         </mesh>
     </group>;
+};
+
+const GhostTree = memo(() => <_Tree isGhost />);
+const RegularTree = memo(() => <_Tree />);
+
+export const Tree = ({
+    isGhost,
+}: {
+    isGhost?: boolean
+}) => {
+    return isGhost ? <GhostTree /> : <RegularTree />;
 };
