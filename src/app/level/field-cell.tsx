@@ -1,12 +1,33 @@
-import { Group } from "three";
-import { useEffect, useMemo, useRef, useLayoutEffect } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useMemo } from "react";
 import { CellDecoration } from "./cell-decoration";
 import { jsx } from "@emotion/react";
 import { levelRecoil } from "./level-recoil";
 import { useRecoilValue } from "recoil";
 import { isAvailableMove } from "../../level-model/is-available-move";
 import { RoundedBox } from "@react-three/drei";
+import { TransitionGroup } from "../../utils/transition-group";
+
+
+const clamp = (x: number, min: number, max: number) => Math.min(Math.max(x, min), max);
+
+const getTransition = (value: number, prevValue: number) => {
+    if (value === prevValue) {
+        return {
+            transition: "idle" as const,
+            durationMs: 300,
+        };
+    }
+    if (value === 0) {
+        return {
+            transition: "disappear" as const,
+            durationMs: 300,
+        };
+    }
+    return {
+        transition: "appear" as const,
+        durationMs: 300,
+    };
+};
 
 
 export const FieldCell = ({
@@ -19,63 +40,34 @@ export const FieldCell = ({
 
     const level = useRecoilValue(levelRecoil);
     const transition = useMemo(() => {
+
         const currentValue = level.state.field[i][j];
         if (!("prev" in level)) {
-            return [currentValue];
+            return {
+                value: currentValue,
+                track: [],
+            };
         }
         const prevValue = level.prev.state.field[i][j];
         if (!("fieldWithFigure" in level.transition)) {
-            return [prevValue, currentValue];
+            return {
+                value: currentValue,
+                track: [getTransition(currentValue, prevValue)],
+            };
         }
         const transValue = level.transition.fieldWithFigure[i][j];
-        return [prevValue, transValue, currentValue];
+        return {
+            value: transValue,
+            track: [
+                getTransition(transValue, prevValue),
+                getTransition(currentValue, transValue),
+            ],
+        };
     }, [level, i, j]);
     const isWin = useMemo(() => level.state.figureStockLeft === 0, [level]);
     const isLose = useMemo(() => !isAvailableMove(level.state.figures, level.state.field), [level]);
 
-    const animationStartMs = useMemo(() => Date.now(), [level]);
-    useFrame(() => {
-        const g = gRef.current;
-        if (!g) { return; }
-        const timeMs = Date.now() - animationStartMs;
-        for (let k = 0; k < g.children.length - 1; k++) {
-            const pObj = g.children[k];
-            const nObj = g.children[k + 1];
-            const transitionT = (timeMs / 300) - k;
-            if (transitionT <= 0) {
-                nObj.visible = false;
-            } else if (transitionT > 1) {
-                pObj.visible = false;
-            } else {
-                const pv = transition[k];
-                const nv = transition[k + 1];
-                if (pv === nv) {
-                    // idle
-                    pObj.visible = false;
-                    nObj.visible = true;
-                    pObj.position.y = 0;
-                    nObj.scale.set(1, 1, 1);
-                } else if (pv === 0) {
-                    // appear
-                    pObj.visible = false;
-                    nObj.visible = true;
-                    nObj.position.y = 0.5 * (1 - transitionT) ** 2;
-                    nObj.scale.setScalar(1);
-                } else {
-                    // disappear
-                    pObj.visible = true;
-                    nObj.visible = false;
-                    pObj.position.y = 0;
-                    pObj.scale.setScalar(1 - transitionT);
-                }
-            }
-        }
-    });
-
-
-
-
-    const gRef = useRef<Group>(null);
+    const transitionStartMs = useMemo(() => Date.now(), [level]);
     return <group position={[i, 0, j]} {...props}>
         <RoundedBox args={[0.9, 0.1, 0.9]}>
             <meshLambertMaterial color={
@@ -85,8 +77,50 @@ export const FieldCell = ({
                         : cellColors[level.state.field[i][j]]
             } />
         </RoundedBox>
-        <group ref={gRef}>
-            {transition.map((el, k) => <CellDecoration key={k} value={el} />)}
-        </group>
+        <TransitionGroup
+            startMs={transitionStartMs}
+            track={transition.track}
+
+
+            setTransitionState={(g, transition, timeMs) => {
+                if (transition) {
+                    const t = timeMs / transition.durationMs;
+                    const ct = clamp(t, 0, 1);
+
+                    switch (transition.transition) {
+                        case "appear": {
+                            g.position.y = 0.5 * (1 - ct) ** 2;
+                            g.scale.setScalar(1);
+                            return;
+                        }
+                        case "disappear": {
+                            g.position.y = 0;
+                            g.scale.setScalar(1 - ct);
+                            return;
+                        }
+                        case "idle": {
+                            g.position.y = 0;
+                            g.scale.setScalar(1);
+                            return;
+                        }
+                        case "empty": {
+                            g.position.y = 0;
+                            g.scale.setScalar(0);
+                            return;
+                        }
+                    }
+                }
+
+                g.scale.setScalar(1);
+                g.position.y = 0;
+            }}
+
+        >
+            <CellDecoration
+                value={transition.value}
+                isGhost={false}
+                gameOver={isWin || isLose}
+            />
+        </TransitionGroup>
     </group>;
 };
