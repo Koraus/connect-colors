@@ -18,9 +18,10 @@ export type LevelState = {
     score: number;
 }
 
-export type LevelTransition = {
-    // todo
-};
+export type ExtractLevelTransition<T> = T extends [true, LevelState, infer U] ? U : never;
+export type LevelTransition =
+    ExtractLevelTransition<ReturnType<typeof actPutFigure>>
+    | ExtractLevelTransition<ReturnType<typeof actClearColors>>;
 
 export type LevelAction =
     ({ action: "putFigure" } & Parameters<typeof actPutFigure>[1])

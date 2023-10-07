@@ -1,27 +1,29 @@
 import { FieldCell } from "./field-cell";
-import { useRecoilValue } from "recoil";
-import { useEffect, useState } from "react";
-import { isAvailableMove } from "../../level-model/is-available-move";
+import { selector, useRecoilValue } from "recoil";
 import { levelRecoil } from "./level-recoil";
+import memoize from "memoizee";
+import { tuple } from "../../utils/tuple";
 
+const playingFieldSizeRefCache = memoize(
+    (m: number, n: number) => tuple(m, n),
+    { max: 1 });
+
+const playingFieldSizeRecoil = selector({
+    key: "playingFieldSize_d4a9e42bc954bca479f6",
+    get: ({ get }) => {
+        const level = get(levelRecoil);
+        const m = level.state.field.length;
+        const n = level.state.field[0].length;
+        return playingFieldSizeRefCache(m, n);
+    },
+});
 
 export const PlayingField = () => {
-  const level = useRecoilValue(levelRecoil);
+    const [n, m] = useRecoilValue(playingFieldSizeRecoil);
 
-  const [gameOver, setGameOver] = useState(false);
-
-  // todo: useMemo instead of useEffect+useState
-  useEffect(() => {
-    setGameOver(!isAvailableMove(level.state.figures, level.state.field));
-  }, [level.state]);
-
-  return <>
-    {level.state.field.map((el, i) => el.map((el, j) => <FieldCell
-      gameOver={gameOver}
-      value={el}
-      key={j}
-      coords={[i, j]}
-      position={[i, 0, j]}
-    />))}
-  </>;
+    return <>
+        {Array.from({ length: n }, (_, i) =>
+            Array.from({ length: m }, (_, j) =>
+                <FieldCell key={i * m + j} coords={[i, j]} />))}
+    </>;
 };

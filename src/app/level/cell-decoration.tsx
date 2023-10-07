@@ -1,4 +1,3 @@
-import { RoundedBox } from "@react-three/drei";
 import { useRecoilValue } from "recoil";
 import { gameDecorationsRecoil } from "./playing-data";
 import { Tree } from "../../assetsx/tree";
@@ -23,23 +22,12 @@ export const CellDecoration = forwardRef(({
     gameOver?: boolean;
 }, ref: ForwardedRef<Group | null>) => {
     const theme = useRecoilValue(gameDecorationsRecoil); // todo: make prop
-    const color = isGhost ? lightColors[value] : cellColors[value];
 
     return <group {...props} ref={ref} >{(() => {
-        if (value === 0) {
-            return <RoundedBox args={[0.9, 0.1, 0.9]}>
-                <meshLambertMaterial color={gameOver ? "red" : color} />
-            </RoundedBox>;
-        }
-
         if (theme === "figures") {
             return [
-                Tree, Pumpkin, Bucket,
-            ][value - 1]({ isGhost });
+                null, Tree, Pumpkin, Bucket,
+            ][value]?.({ isGhost }) ?? <group />;
         }
-
-        return <RoundedBox args={[0.9, 0.1, 0.9]}>
-            <meshLambertMaterial color={color} />
-        </RoundedBox>;
     })()}</group>;
 });

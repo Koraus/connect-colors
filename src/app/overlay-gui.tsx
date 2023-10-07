@@ -83,13 +83,11 @@ export function OverlayGui() {
                     onClick={() => location.reload()}> next lvl
                 </button>}
             <div style={{
-                rotate: "336deg",
-                transform: "translate(35vh, 37vh)",
-                fontSize: "2rem",
-                height: "fit-content",
             }}>
-                You need to place {level.state.level.figureStock} figures.
-                {level.state.figureStockLeft}  left to place
+                {level.state.figureStockLeft}
+                &nbsp;pcs of&nbsp;
+                {level.state.level.figureStock}
+                &nbsp;left to place
             </div>
         </div>
     </>;

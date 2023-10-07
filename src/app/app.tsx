@@ -1,9 +1,14 @@
 import { Canvas } from "@react-three/fiber";
-import { PlayingField } from "./level/playing-field.tsx";
-import { GameFiguresArea } from "./level/game-figures-area.tsx";
+import { PlayingField as _PlayingField } from "./level/playing-field.tsx";
+import { GameFiguresArea as _GameFiguresArea } from "./level/game-figures-area.tsx";
 import { Sound } from "./level/sound.tsx";
 import audioUrl from "../assetsx/put-figure.wav";
-import { OverlayGui } from "./overlay-gui.tsx";
+import { OverlayGui as _OverlayGui } from "./overlay-gui.tsx";
+import { memo } from "react";
+
+const PlayingField = memo(_PlayingField);
+const GameFiguresArea = memo(_GameFiguresArea);
+const OverlayGui = memo(_OverlayGui);
 
 
 export default function App() {
