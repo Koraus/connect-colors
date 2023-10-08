@@ -4,7 +4,7 @@ import { weightedRandom01 } from "../utils/weighted-random";
 import { calculateScore } from "./calculate-score";
 import { destroyMatches } from "./destroy-matches";
 import { generateGameFigure } from "./generate-game-figure";
-import { putFigure } from "./putFigure";
+import { putFigure } from "./put-figure";
 import { rotateFigure } from "./rotate-figure";
 import { tuple } from "../utils/tuple";
 import { canPutFigure } from "./can-put-figure";

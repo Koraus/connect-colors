@@ -17,11 +17,14 @@ export const GameFigure = ({
 }: {
     figureIndex: number,
 }) => {
-    const { state: { figures } } = useRecoilValue(levelRecoil);
+    const { state: { figures, level: { fieldMap } } } = useRecoilValue(levelRecoil);
     const figureRotations = useRecoilValue(figureRotationsRecoil);
     const figure = rotateFigure(figures[figureIndex], figureRotations[figureIndex]);
     const w = figure.length;
     const h = figure[0].length;
+
+    const fw = fieldMap.length;
+    const fh = fieldMap[0].length;
 
     const ref = useRef<Group>(null);
 
@@ -58,9 +61,9 @@ export const GameFigure = ({
             const p1 = p0.clone().sub(draggedPoint).add(draggedOriginalPos);
             if (
                 p1.x >= -0.5
-                && p1.x <= 10 - w + 0.5
+                && p1.x <= fw - w + 0.5
                 && p1.z >= -0.5
-                && p1.z <= 10 - h + 0.5
+                && p1.z <= fh - h + 0.5
             ) {
                 const p1r = p1.clone().round();
                 p1r.y = p1.y + 0.5;
@@ -100,9 +103,9 @@ export const GameFigure = ({
         const p1 = p0.clone().sub(draggedPoint).add(draggedOriginalPos);
         if (
             p1.x >= -0.5
-            && p1.x <= 10 - w + 0.5
+            && p1.x <= fw - w + 0.5
             && p1.z >= -0.5
-            && p1.z <= 10 - h + 0.5
+            && p1.z <= fh - h + 0.5
         ) {
             const p1r = p1.clone().round();
             putPointerFigure({
