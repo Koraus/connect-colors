@@ -1,25 +1,28 @@
-import { canPutFigure0 } from "./can-put-figure";
-import { Figure } from "./figure";
-import { rotateFigure } from "./rotate-figure";
+import { FAST_CHECK, actPutFigure } from "./act-put-figure";
 
 
-export const isAvailableMove = (availableFigures: Figure[], field: number[][]) => {
-
-    const allVariantsOfFigures = availableFigures.map((figure) => {
-        const arr = Array.from({ length: 4 }, () => undefined);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return arr.map((e, i) => rotateFigure(figure, i));
-    },
-    ).flat() as Figure[];
-
-    const allEmptyFieldCoords = field
-        .map((e, i) => e.map(
-            (e, i1) => e === 0 ? [i, i1] : [])).flat() as [number, number][];
-
-    return allVariantsOfFigures
-        .some(figure => allEmptyFieldCoords
-            .some(coord => canPutFigure0(figure, field, coord),
-            ));
-
+export const isAvailablePut = (
+    state: Parameters<typeof actPutFigure>[0],
+) => {
+    const {
+        field,
+        figures,
+    } = state;
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field[i].length; j++) {
+            for (let fi = 0; fi < figures.length; fi++) {
+                for (let r = 0; r < 4; r++) {
+                    const [ok] = actPutFigure(state, {
+                        coords: [i, j],
+                        figureIndex: fi,
+                        figureRotation: r,
+                        isCroppingActive: false,
+                        isOverlayActive: false,
+                    }, FAST_CHECK);
+                    if (ok) { return true; }
+                }
+            }
+        }
+    }
+    return false;
 };

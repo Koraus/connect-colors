@@ -4,18 +4,20 @@ import { weightedRandom01 } from "../utils/weighted-random";
 import { calculateScore } from "./calculate-score";
 import { destroyMatches } from "./destroy-matches";
 import { generateGameFigure } from "./generate-game-figure";
-import { putFigure } from "./put-figure";
-import { rotateFigure } from "./rotate-figure";
+import { rotatedFigure } from "./rotated-figure";
 import { tuple } from "../utils/tuple";
-import { canPutFigure } from "./can-put-figure";
 
+export const NO_CHECK = 0;
+export const FAST_CHECK = 100;
+export const DETAILED_CHECK = 200;
 
 export const actPutFigure = (state: LevelState, action: {
-    coords: [number, number];
-    figureIndex: number;
-    figureRotation: number;
-    isCroppingActive: boolean;
-}) => {
+    coords: [number, number],
+    figureIndex: number,
+    figureRotation: number,
+    isCroppingActive: boolean,
+    isOverlayActive: boolean,
+}, checkLevel = DETAILED_CHECK) => {
     const {
         seed32,
         level,
@@ -28,23 +30,60 @@ export const actPutFigure = (state: LevelState, action: {
         figureIndex,
         figureRotation,
         isCroppingActive,
+        isOverlayActive,
     } = action;
 
-    if (state.figureStockLeft < 1) {
-        return tuple(false as const, {
-            reason: "out-of-figures" as const,
-        });
+    if (checkLevel > NO_CHECK) {
+        if (state.figureStockLeft < 1) {
+            return tuple(false as const, {
+                reason: "out-of-figures" as const,
+            });
+        }
     }
 
-    const figure = rotateFigure(figures[figureIndex], figureRotation);
+    const figure = rotatedFigure(figures[figureIndex], figureRotation);
 
-    if (!canPutFigure({ field, figure, coords, isCroppingActive })) {
-        return tuple(false as const, {
-            reason: "cannot-put-figure" as const,
-        });
+    const [x, y] = coords;
+    const conflicts = [] as [number, number][];
+    const fieldWithFigure = structuredClone(field);
+    for (let i = 0; i < figure.length; i++) {
+        for (let j = 0; j < figure[i].length; j++) {
+            fieldWithFigure[x + i][y + j] = figure[i][j];
+
+            if (checkLevel > NO_CHECK) {
+                const f0 = figure[i][j];
+                const f1 = field[x + i][y + j];
+                if (f1 === undefined) {
+                    conflicts.push([x + i, y + j]);
+                    if (checkLevel > FAST_CHECK) {
+                        return tuple(false as const, {
+                            reason: "out-of-field" as const,
+                            conflicts,
+                        });
+                    }
+                }
+                if (f0 === 0 || f1 === 0) { continue; }
+                if (f0 === f1 && isOverlayActive) { continue; }
+                if (!isCroppingActive) {
+                    conflicts.push([x + i, y + j]);
+                    if (checkLevel > FAST_CHECK) {
+                        return tuple(false as const, {
+                            reason: "out-of-field" as const,
+                            conflicts,
+                        });
+                    }
+                }
+            }
+        }
     }
-
-    const fieldWithFigure = putFigure({ field, figure, coords, isCroppingActive });
+    if (checkLevel > NO_CHECK) {
+        if (conflicts.length > 0) {
+            return tuple(false as const, {
+                reason: "cannot-put-figure" as const,
+                conflicts,
+            });
+        }
+    }
 
     const scoreToAdd = calculateScore(fieldWithFigure);
 

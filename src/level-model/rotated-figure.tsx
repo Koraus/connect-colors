@@ -1,6 +1,6 @@
 import { Figure } from "./figure";
 
-const rotatedFigure = (figure: Figure) => {
+const _rotatedFigure = (figure: Figure) => {
     const numRows = figure.length;
     const numCols = figure[0].length;
     const rotatedFigure = new Array(numCols)
@@ -15,14 +15,13 @@ const rotatedFigure = (figure: Figure) => {
     return rotatedFigure as Figure;
 };
 
-export const rotateFigure = (figure: Figure, rotation = 1): Figure => {
-    if (rotation !== rotation >>> 0) { throw new Error("rotation must be integer"); }
+export const rotatedFigure = (figure: Figure, rotation = 1): Figure => {
+    if (rotation !== Math.round(rotation)) { throw new Error("rotation must be integer"); }
 
     rotation = rotation % 4;
     if (rotation < 0) { rotation += 4; }
 
-    if (rotation === 0) { return figure; }
-    if (rotation === 1) { return rotatedFigure(figure); }
-
-    return rotateFigure(figure, rotation - 1);
+    return rotation === 0
+        ? figure
+        : _rotatedFigure(rotatedFigure(figure, rotation - 1));
 };

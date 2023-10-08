@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { jsx } from "@emotion/react";
 import { levelRecoil } from "./level-recoil";
 import { useRecoilValue } from "recoil";
-import { isAvailableMove } from "../../level-model/is-available-move"
+import { isAvailablePut } from "../../level-model/is-available-move"
 import { AnimatedCell } from "./animated-cell";
 
 
@@ -52,7 +52,7 @@ export const FieldCell = ({
 
     // todo: win/lose
     const isWin = useMemo(() => level.state.figureStockLeft === 0, [level]);
-    const isLose = useMemo(() => !isAvailableMove(level.state.figures, level.state.field), [level]);
+    const isLose = useMemo(() => !isAvailablePut(level.state), [level]);
 
     return <group position={[i, 0, j]} {...props}>
         <AnimatedCell

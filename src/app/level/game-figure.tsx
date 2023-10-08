@@ -7,7 +7,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { usePutPointerFigure } from "./use-put-pointer-figure";
 import { levelRecoil } from "./level-recoil";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
-import { rotateFigure } from "../../level-model/rotate-figure";
+import { rotatedFigure } from "../../level-model/rotated-figure";
 import { useWindowEvent } from "../../utils/use-window-event";
 import { AnimatedCell } from "./animated-cell";
 
@@ -19,7 +19,7 @@ export const GameFigure = ({
 }) => {
     const { state: { figures, level: { fieldMap } } } = useRecoilValue(levelRecoil);
     const figureRotations = useRecoilValue(figureRotationsRecoil);
-    const figure = rotateFigure(figures[figureIndex], figureRotations[figureIndex]);
+    const figure = rotatedFigure(figures[figureIndex], figureRotations[figureIndex]);
     const w = figure.length;
     const h = figure[0].length;
 
@@ -150,7 +150,7 @@ export const GameFigure = ({
                     color={hovered ? "#f9c8c8" : "#ffe9e0"}
                     roughness={1}
                     transparent={true}
-                    opacity={dragged ? 0 : 0.5}
+                    opacity={dragged ? 0 : hovered ? 0.5 : 0.3}
                 />
             </RoundedBox>
             {
