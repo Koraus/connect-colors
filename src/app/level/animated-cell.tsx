@@ -5,6 +5,7 @@ import { RoundedBox } from "@react-three/drei";
 import { Color, Group, Mesh, MeshLambertMaterial } from "three";
 
 
+const clamp = (x: number, min: number, max: number) => Math.min(Math.max(x, min), max);
 const colors = ["#fff1e4", "#7bf487", "#fdca9f", "#bdc5f9"]
     .map(x => new Color(x));
 
