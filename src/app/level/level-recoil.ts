@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 import { LevelAction, LevelState, LevelTransition, createLevelState } from "../../level-model";
 import { levels } from "../../level-model/levels";
 
@@ -23,3 +23,7 @@ export const levelRecoil = atom({
     } as LevelStateChain,
 });
 
+export const levelInitRecoil = selector({
+    key: "levelInit",
+    get: ({ get }) => get(levelRecoil).state.level,
+});

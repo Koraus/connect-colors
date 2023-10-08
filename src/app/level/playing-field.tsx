@@ -1,25 +1,11 @@
+import { useRecoilValue } from "recoil";
 import { FieldCell } from "./field-cell";
-import { selector, useRecoilValue } from "recoil";
-import { levelRecoil } from "./level-recoil";
-import memoize from "memoizee";
-import { tuple } from "../../utils/tuple";
-
-const playingFieldSizeRefCache = memoize(
-    (m: number, n: number) => tuple(m, n),
-    { max: 1 });
-
-const playingFieldSizeRecoil = selector({
-    key: "playingFieldSize_d4a9e42bc954bca479f6",
-    get: ({ get }) => {
-        const level = get(levelRecoil);
-        const m = level.state.field.length;
-        const n = level.state.field[0].length;
-        return playingFieldSizeRefCache(m, n);
-    },
-});
+import { levelInitRecoil } from "./level-recoil";
 
 export const PlayingField = () => {
-    const [n, m] = useRecoilValue(playingFieldSizeRecoil);
+    const li = useRecoilValue(levelInitRecoil);
+    const m = li.fieldMap.length;
+    const n = li.fieldMap[0].length;
 
     return <>
         {Array.from({ length: n }, (_, i) =>
