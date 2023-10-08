@@ -1,5 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
+import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./pointer-data";
 import { useRef, useState } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { Group, Plane, Vector3 } from "three";
@@ -10,6 +10,7 @@ import { figureRotationsRecoil } from "./figure-rotations-recoil";
 import { rotatedFigure } from "../../level-model/rotated-figure";
 import { useWindowEvent } from "../../utils/use-window-event";
 import { AnimatedCell } from "./animated-cell";
+import { refKey } from "../../utils/ref-key";
 
 
 export const GameFigure = ({
@@ -19,7 +20,7 @@ export const GameFigure = ({
 }) => {
     const { state: { figures, level: { fieldMap } } } = useRecoilValue(levelRecoil);
     const figureRotations = useRecoilValue(figureRotationsRecoil);
-    const figure = rotatedFigure(figures[figureIndex], figureRotations[figureIndex]);
+    const figure = rotatedFigure(figures[figureIndex], figureRotations[refKey(figures[figureIndex])] ?? 0);
     const w = figure.length;
     const h = figure[0].length;
 
@@ -108,15 +109,9 @@ export const GameFigure = ({
             && p1.z >= -0.5
             && p1.z <= fh - h + 0.5
         ) {
-            const p1r = p1.clone().round();
-            putPointerFigure({
-                pointerFigureIndex: figureIndex,
-                coords: [p1r.x, p1r.z],
-            });
+            putPointerFigure();
         }
         setDragged(undefined);
-        setPointerFigureIndex(undefined);
-        setFigureCoords([0, 0]);
     };
     useWindowEvent("pointerup", onPointerUp);
     useWindowEvent("pointercancel", onPointerUp);

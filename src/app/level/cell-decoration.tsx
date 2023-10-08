@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { gameDecorationsRecoil } from "./playing-data";
+import { gameDecorationsRecoil } from "../settings/game-decorations-recoil";
 import { Tree } from "../../assetsx/tree";
 import { Pumpkin } from "../../assetsx/pumpkin";
 import { Bucket } from "../../assetsx/bucket";

@@ -6,13 +6,14 @@ import { MenuWindow } from "./menu-window.tsx";
 import { useState } from "react";
 import { MenuBtn } from "./menu-btn.tsx";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { figureOnPointerIndexRecoil } from "./level/playing-data.tsx";
+import { figureOnPointerIndexRecoil } from "./level/pointer-data.tsx";
 import { useWindowEvent } from "../utils/use-window-event.ts";
 import { DestroySameTypeCellsBooster } from "./level/destroy-same-color-cells-booster.tsx";
 import { CroppingModeOnPlacementBooster } from "./level/cropping-mode-on-placement-booster.tsx.tsx";
 import update from "immutability-helper";
 import { figureRotationsRecoil } from "./level/figure-rotations-recoil.ts";
 import { levelRecoil } from "./level/level-recoil.ts";
+import { refKey } from "../utils/ref-key.ts";
 
 
 
@@ -21,25 +22,29 @@ export function OverlayGui() {
     const level = useRecoilValue(levelRecoil);
     const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
     const [isMenuOpen, setIsmenueOpen] = useState(false);
-    const [pointerFigure, setPointerFigure] = useRecoilState(figureOnPointerIndexRecoil);
+    const [pointerFigureIndex, setPointerFigure] = useRecoilState(figureOnPointerIndexRecoil);
 
     const isCompleted = level.state.figureStockLeft === 0;
 
     useWindowEvent("keydown", (event: KeyboardEvent) => {
         if (event.code !== "Escape") { return; }
-        if (pointerFigure === undefined) { return; }
+        if (pointerFigureIndex === undefined) { return; }
 
         setPointerFigure(undefined);
-    }, [pointerFigure, setPointerFigure]);
+    }, [pointerFigureIndex, setPointerFigure]);
 
     useWindowEvent("keydown", (event: KeyboardEvent) => {
         if (event.code !== "KeyR") { return; }
-        if (pointerFigure === undefined) { return; }
+        if (pointerFigureIndex === undefined) { return; }
+
+        const pointerFigure = level.state.figures[pointerFigureIndex];
+        const key = refKey(pointerFigure);
+
 
         setFigureRotations(figureRotations => update(figureRotations, {
-            [pointerFigure]: { $set: (figureRotations[pointerFigure] + 1) % 4 },
+            [key]: { $set: ((figureRotations[key] ?? 0) + 1) % 4 },
         }));
-    }, [pointerFigure, setFigureRotations]);
+    }, [pointerFigureIndex, setFigureRotations]);
 
 
     return <>
@@ -50,7 +55,7 @@ export function OverlayGui() {
             display: "flex",
             flexDirection: "column",
             maxWidth: "30vw",
-            pointerEvents: pointerFigure === undefined ? "auto" : "none",
+            pointerEvents: pointerFigureIndex === undefined ? "auto" : "none",
         }}>
             <div css={{ marginRight: "1em" }}>
                 <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />

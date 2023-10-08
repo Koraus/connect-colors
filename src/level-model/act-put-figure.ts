@@ -7,7 +7,6 @@ import { generateGameFigure } from "./generate-game-figure";
 import { rotatedFigure } from "./rotated-figure";
 import { tuple } from "../utils/tuple";
 
-export const NO_CHECK = 0;
 export const FAST_CHECK = 100;
 export const DETAILED_CHECK = 200;
 
@@ -33,12 +32,10 @@ export const actPutFigure = (state: LevelState, action: {
         isOverlayActive,
     } = action;
 
-    if (checkLevel > NO_CHECK) {
-        if (state.figureStockLeft < 1) {
-            return tuple(false as const, {
-                reason: "out-of-figures" as const,
-            });
-        }
+    if (state.figureStockLeft < 1) {
+        return tuple(false as const, {
+            reason: "out-of-figures" as const,
+        });
     }
 
     const figure = rotatedFigure(figures[figureIndex], figureRotation);
@@ -48,41 +45,37 @@ export const actPutFigure = (state: LevelState, action: {
     const fieldWithFigure = structuredClone(field);
     for (let i = 0; i < figure.length; i++) {
         for (let j = 0; j < figure[i].length; j++) {
-            fieldWithFigure[x + i][y + j] = figure[i][j];
+            const f0 = figure[i][j];
+            if (f0 === 0) { continue; }
 
-            if (checkLevel > NO_CHECK) {
-                const f0 = figure[i][j];
-                const f1 = field[x + i][y + j];
-                if (f1 === undefined) {
-                    conflicts.push([x + i, y + j]);
-                    if (checkLevel > FAST_CHECK) {
-                        return tuple(false as const, {
-                            reason: "out-of-field" as const,
-                            conflicts,
-                        });
-                    }
-                }
-                if (f0 === 0 || f1 === 0) { continue; }
-                if (f0 === f1 && isOverlayActive) { continue; }
-                if (!isCroppingActive) {
-                    conflicts.push([x + i, y + j]);
-                    if (checkLevel > FAST_CHECK) {
-                        return tuple(false as const, {
-                            reason: "out-of-field" as const,
-                            conflicts,
-                        });
-                    }
+            const f1 = field[x + i][y + j];
+            if (f1 === undefined) {
+                return tuple(false as const, {
+                    reason: "out-of-field" as const,
+                    conflicts,
+                });
+            }
+
+            fieldWithFigure[x + i][y + j] = f0;
+
+            if (f1 === 0) { continue; }
+            if (f0 === f1 && isOverlayActive) { continue; }
+            if (!isCroppingActive) {
+                conflicts.push([x + i, y + j]);
+                if (checkLevel <= FAST_CHECK) {
+                    return tuple(false as const, {
+                        reason: "cannot-put-figure" as const,
+                        conflicts,
+                    });
                 }
             }
         }
     }
-    if (checkLevel > NO_CHECK) {
-        if (conflicts.length > 0) {
-            return tuple(false as const, {
-                reason: "cannot-put-figure" as const,
-                conflicts,
-            });
-        }
+    if (conflicts.length > 0) {
+        return tuple(false as const, {
+            reason: "cannot-put-figure" as const,
+            conflicts,
+        });
     }
 
     const scoreToAdd = calculateScore(fieldWithFigure);

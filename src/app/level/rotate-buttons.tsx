@@ -1,13 +1,17 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Rotate90DegreesCcw } from "@emotion-icons/material/Rotate90DegreesCcw";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
 import update from "immutability-helper";
+import { levelRecoil } from "./level-recoil";
+import { refKey } from "../../utils/ref-key";
 
 export function RotateButtons() {
+    const level = useRecoilValue(levelRecoil);
     const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
 
-    return <div>{[2, 1, 0].map((i) =>
-        <button
+    return <div>{level.state.figures.map((f, i) => {
+        const key = refKey(f);
+        return <button
             style={{
                 fontSize: "14px",
                 marginBottom: "0.3rem",
@@ -15,16 +19,17 @@ export function RotateButtons() {
                 alignItems: "center",
                 borderRadius: "0.3rem",
             }}
-            key={i}
+            key={key}
             onClick={() => {
                 setFigureRotations(figureRotations => update(figureRotations, {
-                    [i]: { $set: (figureRotations[i] + 1) % 4 },
+                    [key]: { $set: ((figureRotations[key] ?? 0) + 1) % 4 },
                 }));
             }}>
             Rotate {i}&nbsp;
-            <span style={{ display: "inline-block", height: "1.5em" }} >
+            <span style={{ display: "inline-block", height: "1.5em" }}>
                 <Rotate90DegreesCcw height={"100%"} />
             </span>
-        </button>)
+        </button>;
+    })
     }</div >;
 }

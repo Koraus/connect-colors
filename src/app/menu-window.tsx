@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { PlayFill } from "@emotion-icons/bootstrap/PlayFill";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { bestScoreRecoil, gameDecorationsRecoil, isSounOnRecoil } from "./level/playing-data";
+import { bestScoreRecoil } from "./best-score-recoil";
+import { isSounOnRecoil } from "./settings/is-soun-on-recoil";
+import { gameDecorationsRecoil } from "./settings/game-decorations-recoil";
 import { Sound } from "@emotion-icons/entypo/Sound";
 import { SoundMute } from "@emotion-icons/entypo/SoundMute";
 import { ResetBtn } from "./level/reset-btn";

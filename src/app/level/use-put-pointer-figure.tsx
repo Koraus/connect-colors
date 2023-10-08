@@ -1,43 +1,32 @@
-import { bestScoreRecoil } from "./playing-data";
-import { useRecoilState } from "recoil";
+import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./pointer-data";
+import { bestScoreRecoil } from "../best-score-recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { croppingModeOnPlacementRecoil } from "./cropping-mode-on-placement-recoil";
-import { actOnLevelState } from "../../level-model";
 import { levelRecoil } from "./level-recoil";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
-import update from "immutability-helper";
-
-
+import { refKey } from "../../utils/ref-key";
+import { putPreviewRecoil } from "./put-preview-recoil";
 
 export const usePutPointerFigure = () => {
     const [level, setLevel] = useRecoilState(levelRecoil);
     const [bestScore, setBestScore] = useRecoilState(bestScoreRecoil);
-    const [isCroppingActive, setIsCroppingActive] = useRecoilState(croppingModeOnPlacementRecoil);
-    const [figureRotations, setFigureRotations] = useRecoilState(figureRotationsRecoil);
+    const { action, actionResult } = useRecoilValue(putPreviewRecoil);
+    const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
+    const setIsCroppingActive = useSetRecoilState(croppingModeOnPlacementRecoil);
+    const setPointerFigureIndex = useSetRecoilState(figureOnPointerIndexRecoil);
+    const setFigureCoords = useSetRecoilState(figureGhostCoordsRecoil);
 
-    return ({
-        pointerFigureIndex,
-        coords,
-    }: {
-        pointerFigureIndex: number,
-        coords: [number, number]
-    }) => {
-        const action = {
-            action: "putFigure",
-            coords,
-            figureIndex: pointerFigureIndex,
-            figureRotation: figureRotations[pointerFigureIndex],
-            isCroppingActive,
-        } as Parameters<typeof actOnLevelState>[1];
-        const actionResult = actOnLevelState(level.state, action);
+    return () => {
         if (!actionResult[0]) {
             console.error(actionResult[1]);
             return;
         }
         const [, state, transition] = actionResult;
 
-        setFigureRotations(update(figureRotations, {
-            [pointerFigureIndex]: { $set: 0 },
-        }));
+        setFigureRotations(figureRotations => (Object.fromEntries(state.figures.map((f, i) => {
+            const key = refKey(f);
+            return [key, figureRotations[key]];
+        }))));
 
         setLevel({
             prev: level,
@@ -47,7 +36,8 @@ export const usePutPointerFigure = () => {
         });
 
         setIsCroppingActive(false);
+        setPointerFigureIndex(undefined);
+        setFigureCoords([0, 0]);
         setBestScore(Math.max(bestScore, state.score));
-
     };
 };
