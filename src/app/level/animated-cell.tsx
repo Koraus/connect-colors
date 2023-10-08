@@ -1,6 +1,6 @@
 import { jsx } from "@emotion/react";
 import { TransitionGroup } from "../../utils/transition-group";
-import { clamp, CellDecoration } from "./cell-decoration";
+import { CellDecoration } from "./cell-decoration";
 import { RoundedBox } from "@react-three/drei";
 import { Color, Group, Mesh, MeshLambertMaterial } from "three";
 
