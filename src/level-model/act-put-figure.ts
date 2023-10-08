@@ -48,7 +48,7 @@ export const actPutFigure = (state: LevelState, action: {
             const f0 = figure[i][j];
             if (f0 === 0) { continue; }
 
-            const f1 = field[x + i][y + j];
+            const f1 = field[x + i]?.[y + j];
             if (f1 === undefined) {
                 return tuple(false as const, {
                     reason: "out-of-field" as const,
