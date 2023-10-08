@@ -68,7 +68,7 @@ export const GameFigure = ({
                 const p1r = p1.clone().round();
                 p1r.y = p1.y + 0.6;
                 const d = p1.distanceTo(p1r) / Math.sqrt(2);
-                g.position.lerpVectors(p1r, p1, d ** 2);
+                g.position.lerpVectors(p1r, p1, d ** 2.5);
                 setFigureCoords([p1r.x, p1r.z]);
             } else {
                 g.position.copy(p1);
