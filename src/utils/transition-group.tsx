@@ -3,42 +3,46 @@ import { useRef, ForwardedRef, forwardRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { jsx } from "@emotion/react";
 
+export type Transition = {
+    durationMs: number,
+    onFrame?: (g: Group, t: number, timeMs: number) => void,
+};
 
-export const TransitionGroup = forwardRef(<TTransition,>({
-    startMs, track, setTransitionState, ...props
-}: jsx.JSX.IntrinsicElements["group"] & {
-    startMs: number;
-    track: Array<{
-        transition: TTransition;
-        durationMs: number;
-    }>;
-    setTransitionState: (
+export type TransitionTrack<TTransition extends Transition> = {
+    startMs: number,
+    transitions: TTransition[],
+    onFrame?: (
         g: Group,
-        transition: undefined | { transition: TTransition; durationMs: number; },
-        timeMs: number
-    ) => void;
-}, _ref: ForwardedRef<Group | null>) => {
+        timeMs: number,
+        transition: undefined | TTransition,
+    ) => void,
+}
+
+
+export const TransitionGroup = forwardRef(<TTransition extends Transition,>({
+    startMs, transitions, onFrame, ...props
+}: jsx.JSX.IntrinsicElements["group"] & TransitionTrack<TTransition>, _ref: ForwardedRef<Group | null>) => {
     const ref = useRef<Group | null>(null);
     const resolveSetTransitionState = () => {
         let timeMs = Date.now() - startMs;
-        let currentTransition = undefined as undefined | (typeof track)[number];
-        for (const t of track) {
+        let ct = undefined as undefined | (typeof transitions)[number];
+        for (const t of transitions) {
             if (timeMs < t.durationMs) {
-                currentTransition = t;
+                ct = t;
                 break;
             }
             timeMs -= t.durationMs;
         }
-        if (!currentTransition && track.length > 0) {
-            currentTransition = track[track.length - 1];
-            timeMs += currentTransition.durationMs;
+        if (!ct && transitions.length > 0) {
+            ct = transitions[transitions.length - 1];
+            timeMs += ct.durationMs;
         }
 
         const g = ref.current;
         if (!g) { return; }
-        setTransitionState(g, currentTransition, timeMs);
+        ct?.onFrame?.(g, timeMs / ct.durationMs, timeMs);
+        onFrame?.(g, timeMs, ct);
     };
-
 
     useFrame(() => {
         const g = ref.current;

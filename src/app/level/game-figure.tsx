@@ -1,6 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { figureGhostCoordsRecoil, figureOnPointerIndexRecoil } from "./playing-data";
-import { CellDecoration } from "./cell-decoration";
 import { useRef, useState } from "react";
 import { RoundedBox } from "@react-three/drei";
 import { Group, Plane, Vector3 } from "three";
@@ -10,6 +9,7 @@ import { levelRecoil } from "./level-recoil";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
 import { rotateFigure } from "../../level-model/rotate-figure";
 import { useWindowEvent } from "../../utils/use-window-event";
+import { AnimatedCell } from "./animated-cell";
 
 
 export const GameFigure = ({
@@ -66,12 +66,13 @@ export const GameFigure = ({
                 && p1.z <= fh - h + 0.5
             ) {
                 const p1r = p1.clone().round();
-                p1r.y = p1.y + 0.5;
+                p1r.y = p1.y + 0.6;
                 const d = p1.distanceTo(p1r) / Math.sqrt(2);
-                g.position.lerpVectors(p1r, p1, d ** 3);
+                g.position.lerpVectors(p1r, p1, d ** 2);
                 setFigureCoords([p1r.x, p1r.z]);
             } else {
                 g.position.copy(p1);
+                g.position.y = 0.38;
                 setFigureCoords([0, 0]);
             }
 
@@ -141,26 +142,27 @@ export const GameFigure = ({
     >
         <group position={[0, 0, 0]}>
             <RoundedBox
-                args={[w, 0.1, h]}
-                radius={0.05}
+                args={[w + 0.2, 0.04, h + 0.2]}
+                radius={0.02}
                 position={[-0.5 + w / 2, -0.05, -0.5 + h / 2]}
             >
                 <meshStandardMaterial
                     color={hovered ? "#f9c8c8" : "#ffe9e0"}
                     roughness={1}
                     transparent={true}
-                    opacity={dragged ? 0.2 : 1}
+                    opacity={dragged ? 0 : 0.5}
                 />
             </RoundedBox>
             {
                 figure.map((el, i) => el.map((el, j) =>
                     el === 0
                         ? null
-                        : <CellDecoration
+                        : <AnimatedCell
                             key={`${i}_${j}`}
                             value={el}
                             position={[i, 0, j]}
                             isGhost={!!dragged}
+                            isDragged={!!dragged}
                         />))
             }
         </group>
