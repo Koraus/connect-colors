@@ -9,6 +9,7 @@ import { usePutPointerFigure } from "./use-put-pointer-figure";
 import { levelRecoil } from "./level-recoil";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
 import { rotateFigure } from "../../level-model/rotate-figure";
+import { useWindowEvent } from "../../utils/use-window-event";
 
 
 export const GameFigure = ({
@@ -80,6 +81,42 @@ export const GameFigure = ({
         }
     });
 
+    const onPointerUp = () => {
+        const g = ref.current;
+        if (!g) { return; }
+        if (!dragged) { return; }
+        raycaster.setFromCamera(pointer, camera);
+        const p0 = raycaster.ray.intersectPlane(
+            new Plane(new Vector3(0, 1, 0), 0),
+            new Vector3());
+        if (!p0) { return; }
+
+        const draggedPoint = dragged.point.clone();
+        draggedPoint.y = 0;
+
+        const draggedOriginalPos = dragged.originalPos.clone();
+        draggedOriginalPos.y = 0;
+
+        const p1 = p0.clone().sub(draggedPoint).add(draggedOriginalPos);
+        if (
+            p1.x >= -0.5
+            && p1.x <= 10 - w + 0.5
+            && p1.z >= -0.5
+            && p1.z <= 10 - h + 0.5
+        ) {
+            const p1r = p1.clone().round();
+            putPointerFigure({
+                pointerFigureIndex: figureIndex,
+                coords: [p1r.x, p1r.z],
+            });
+        }
+        setDragged(undefined);
+        setPointerFigureIndex(undefined);
+        setFigureCoords([0, 0]);
+    };
+    useWindowEvent("pointerup", onPointerUp);
+    useWindowEvent("pointercancel", onPointerUp);
+
     return <group
         ref={ref}
 
@@ -95,40 +132,8 @@ export const GameFigure = ({
             });
             ev.stopPropagation();
         }}
-        onPointerUp={() => {
-            const g = ref.current;
-            if (!g) { return; }
-            if (!dragged) { return; }
-            raycaster.setFromCamera(pointer, camera);
-            const p0 = raycaster.ray.intersectPlane(
-                new Plane(new Vector3(0, 1, 0), 0),
-                new Vector3());
-            if (!p0) { return; }
-
-            const draggedPoint = dragged.point.clone();
-            draggedPoint.y = 0;
-
-            const draggedOriginalPos = dragged.originalPos.clone();
-            draggedOriginalPos.y = 0;
-
-            const p1 = p0.clone().sub(draggedPoint).add(draggedOriginalPos);
-            if (
-                p1.x >= -0.5
-                && p1.x <= 10 - w + 0.5
-                && p1.z >= -0.5
-                && p1.z <= 10 - h + 0.5
-            ) {
-                const p1r = p1.clone().round();
-                putPointerFigure({
-                    pointerFigureIndex: figureIndex,
-                    coords: [p1r.x, p1r.z],
-                });
-            }
-            setDragged(undefined);
-            setPointerFigureIndex(undefined);
-            setFigureCoords([0, 0]);
-        }}
-        onPointerEnter={() => setHovered(true)}
+        onPointerUp={onPointerUp}
+        onPointerEnter={() => setHovered(!dragged && true)}
         onPointerLeave={() => setHovered(false)}
     >
         <group position={[0, 0, 0]}>
