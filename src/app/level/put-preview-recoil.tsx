@@ -6,6 +6,7 @@ import { levelRecoil } from "./level-recoil";
 import { figureRotationsRecoil } from "./figure-rotations-recoil";
 import { tuple } from "../../utils/tuple";
 import { refKey } from "../../utils/ref-key";
+import { actPutFigure } from "../../level-model/act-put-figure";
 
 
 export const putPreviewRecoil = selector({
@@ -24,6 +25,14 @@ export const putPreviewRecoil = selector({
             };
         }
         const coords = get(figureGhostCoordsRecoil);
+        if (coords === undefined) {
+            return {
+                action: undefined,
+                actionResult: tuple(false as const, {
+                    reason: "no coords" as const,
+                }),
+            };
+        }
         const isOverlayActive = true;
         const action = {
             action: "putFigure",
@@ -32,7 +41,7 @@ export const putPreviewRecoil = selector({
             figureRotation: figureRotations[refKey(level.state.figures[pointerFigureIndex])] ?? 0,
             isCroppingActive,
             isOverlayActive,
-        } as Parameters<typeof actOnLevelState>[1];
+        } as Parameters<typeof actPutFigure>[1] & { action: "putFigure" };
         const actionResult = actOnLevelState(level.state, action);
         return {
             action,

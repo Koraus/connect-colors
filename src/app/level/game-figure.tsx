@@ -74,7 +74,7 @@ export const GameFigure = ({
             } else {
                 g.position.copy(p1);
                 g.position.y = 0.38;
-                setFigureCoords([0, 0]);
+                setFigureCoords(undefined);
             }
 
             g.parent?.worldToLocal(g.position);

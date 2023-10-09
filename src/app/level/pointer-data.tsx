@@ -8,7 +8,7 @@ export const figureOnPointerIndexRecoil = atom({
 
 export const figureGhostCoordsRecoil = atom({
     key: "figureGhostCoords",
-    default: [0, 0] as [number, number],
+    default: undefined as [number, number] | undefined,
 });
 
 

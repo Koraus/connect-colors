@@ -23,7 +23,7 @@ export const usePutPointerFigure = () => {
         }
         const [, state, transition] = actionResult;
 
-        setFigureRotations(figureRotations => (Object.fromEntries(state.figures.map((f, i) => {
+        setFigureRotations(figureRotations => (Object.fromEntries(state.figures.map((f) => {
             const key = refKey(f);
             return [key, figureRotations[key]];
         }))));
@@ -37,7 +37,7 @@ export const usePutPointerFigure = () => {
 
         setIsCroppingActive(false);
         setPointerFigureIndex(undefined);
-        setFigureCoords([0, 0]);
+        setFigureCoords(undefined);
         setBestScore(Math.max(bestScore, state.score));
     };
 };
