@@ -23,7 +23,7 @@ export default function App() {
             <OverlayGui />
 
             <Canvas
-                camera={{ fov: 35, position: [10, 28, -10.5] }}
+                camera={{ fov: 35, position: [8, 20, -10.5] }}
                 gl={{ useLegacyLights: true }}
             >
                 <Sound url={audioUrl} />
