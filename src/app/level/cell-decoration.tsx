@@ -1,9 +1,9 @@
 import { useRecoilValue } from "recoil";
 import { gameDecorationsRecoil } from "../settings/game-decorations-recoil";
-import { Tree } from "../../assetsx/tree";
-import { Pumpkin } from "../../assetsx/pumpkin";
-import { Bucket } from "../../assetsx/bucket";
+import { Candle } from "../../assetsx/candle";
 import { jsx } from "@emotion/react";
+import { Hat } from "../../assetsx/witch-hat";
+import { Pumpkin2 } from "../../assetsx/pumpkin2";
 
 
 
@@ -21,7 +21,8 @@ export const CellDecoration = ({
     return <group {...props} >{(() => {
         if (theme === "figures") {
             return [
-                null, Tree, Pumpkin, Bucket,
+                null, Candle, Pumpkin2, Hat,
+                // Bucket, Tree, Pumpkin
             ][value]?.({ isGhost }) ?? <group />;
         }
     })()}</group>;
