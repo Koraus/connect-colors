@@ -10,7 +10,7 @@ export const GameFiguresArea = () => {
     const level = useRecoilValue(levelRecoil);
 
     const { camera } = useThree();
-    useLayoutEffect(() => camera.lookAt(3, 0, 4), [camera]);
+    useLayoutEffect(() => camera.lookAt(1, 0, 4), [camera]);
 
     return level.state.figures.map((el, index) => <group
         key={refKey(el)}

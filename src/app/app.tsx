@@ -23,12 +23,12 @@ export default function App() {
             <OverlayGui />
 
             <Canvas
-                camera={{ fov: 35, position: [8, 20, -10.5] }}
+                camera={{ fov: 35, position: [5, 20, -10] }}
                 gl={{ useLegacyLights: true }}
             >
                 <Sound url={audioUrl} />
-                <ambientLight intensity={0.6} />
-                <pointLight position={[10, 10, 10]} intensity={0.5} />
+                <ambientLight intensity={0.5} />
+                <pointLight position={[10, 15, -5]} intensity={0.8} />
                 <PlayingField />
                 <GameFiguresArea />
             </Canvas>
