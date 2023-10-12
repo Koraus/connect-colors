@@ -5,7 +5,8 @@ import { useMemo } from "react";
 
 useGLTF.preload(tree);
 
-export const Forest = ({ ...props
+export const Tree2 = ({
+    ...props
 }: jsx.JSX.IntrinsicElements["group"]) => {
     const { scene } = useGLTF(tree);
     const clone = useMemo(() => scene.clone(), [scene]);

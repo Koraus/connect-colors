@@ -39,12 +39,13 @@ export const MenuWindow = ({
                 zIndex: 100,
                 inset: 0,
                 backgroundColor: "rgba(122, 127, 132, 0.61)",
+                pointerEvents: "all",
             }}
             onClick={() => setIsOpen(false)}
         >
             <div
                 style={{
-                    width: "70vw",
+                    width: "40vw",
                     height: "90vh",
                     padding: "1rem",
                     backgroundColor: "rgba(67, 199, 255, 0.9)",

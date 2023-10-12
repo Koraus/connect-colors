@@ -2,8 +2,6 @@ import { RotateButtons } from "./level/rotate-buttons.tsx";
 import { CurrentScore } from "./level/current-score.tsx";
 import { UndoBtn } from "./level/undo-btn.tsx";
 import { BestScore } from "./best-score.tsx";
-import { MenuWindow } from "./menu-window.tsx";
-import { useState } from "react";
 import { MenuBtn } from "./menu-btn.tsx";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { figureOnPointerIndexRecoil } from "./level/pointer-data.tsx";
@@ -14,14 +12,20 @@ import update from "immutability-helper";
 import { figureRotationsRecoil } from "./level/figure-rotations-recoil.ts";
 import { levelRecoil } from "./level/level-recoil.ts";
 import { refKey } from "../utils/ref-key.ts";
+import { Dispatch, SetStateAction } from "react";
 
 
 
-export function OverlayGui() {
+export function OverlayGui({
+    isMenuOpen,
+    setIsmenueOpen,
+}: {
+    isMenuOpen: boolean,
+    setIsmenueOpen: Dispatch<SetStateAction<boolean>>,
+}) {
 
     const level = useRecoilValue(levelRecoil);
     const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
-    const [isMenuOpen, setIsmenueOpen] = useState(false);
     const [pointerFigureIndex, setPointerFigure] = useRecoilState(figureOnPointerIndexRecoil);
 
     const isCompleted = level.state.figureStockLeft === 0;
@@ -48,14 +52,11 @@ export function OverlayGui() {
 
 
     return <>
-        <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
         <div css={{
-            position: "fixed",
-            zIndex: 2,
             display: "flex",
             flexDirection: "column",
             maxWidth: "30vw",
-            pointerEvents: pointerFigureIndex === undefined ? "auto" : "none",
+            pointerEvents: pointerFigureIndex === undefined ? "all" : "none",
         }}>
             <div css={{ marginRight: "1em" }}>
                 <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
