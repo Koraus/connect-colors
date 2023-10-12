@@ -5,7 +5,7 @@ import { Sound } from "./level/sound";
 import audioUrl from "../assetsx/put-figure.wav";
 import { OverlayGui as _OverlayGui } from "./overlay-gui";
 import { memo } from "react";
-import { Forest } from "./level/Forest";
+import { Forest } from "./level/forest";
 import { MenuWindow as _MenuWindow } from "./menu-window";
 import { useState } from "react";
 
