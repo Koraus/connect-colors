@@ -2,13 +2,13 @@ import { useLoader, useThree } from "@react-three/fiber";
 import { useRef, useMemo, useLayoutEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { AudioListener, AudioLoader, PositionalAudio } from "three";
-import { isSounOnRecoil } from "../settings/is-soun-on-recoil";
+import { isSoundOnRecoil } from "../settings/is-sound-on-recoil";
 import { levelRecoil } from "./level-recoil";
 
 export const Sound = ({ url }: { url: string }) => {
     const level = useRecoilValue(levelRecoil);
 
-    const isSounOn = useRecoilValue(isSounOnRecoil);
+    const isSounOn = useRecoilValue(isSoundOnRecoil);
 
     const sound = useRef<PositionalAudio | null>(null);
 

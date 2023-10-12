@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { PlayFill } from "@emotion-icons/bootstrap/PlayFill";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { bestScoreRecoil } from "./best-score-recoil";
-import { isSounOnRecoil } from "./settings/is-soun-on-recoil";
+import { isSoundOnRecoil } from "./settings/is-sound-on-recoil";
 import { gameDecorationsRecoil } from "./settings/game-decorations-recoil";
 import { Sound } from "@emotion-icons/entypo/Sound";
 import { SoundMute } from "@emotion-icons/entypo/SoundMute";
@@ -25,7 +25,7 @@ export const MenuWindow = ({
         width: "30%",
     };
 
-    const [isSoundOn, setIsSoundOn] = useRecoilState(isSounOnRecoil);
+    const [isSoundOn, setIsSoundOn] = useRecoilState(isSoundOnRecoil);
     const crtScore = level.state.score;
     const bestScore = useRecoilValue(bestScoreRecoil);
     const [decorations, setDecorations] = useRecoilState(gameDecorationsRecoil);
