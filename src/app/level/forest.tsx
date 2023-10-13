@@ -1,6 +1,10 @@
 import { MeshStandardMaterial, SphereGeometry } from "three";
-import { Tree2 } from "../../assetsx/tree2";
 import { useMemo } from "react";
+import tree2 from "../../assetsx/tree2.glb";
+import { GltfScene } from "../../utils/gltf-scene";
+import { useGLTF } from "@react-three/drei";
+
+useGLTF.preload(tree2);
 
 const PHI = (1 + Math.sqrt(5)) / 2;
 
@@ -52,7 +56,7 @@ export function Forest({
             <primitive object={g} attach="geometry" />
             <primitive object={m} attach="material" />
         </mesh>
-        <Tree2 position={[0, 0, 0]} />
+        <GltfScene url={tree2} />
     </group>)
     }</group >;
 }
