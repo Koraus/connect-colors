@@ -6,17 +6,13 @@ import audioUrl from "../assetsx/put-figure.wav";
 import { OverlayGui as _OverlayGui } from "./overlay-gui";
 import { memo } from "react";
 import { Forest } from "./level/forest";
-import { MenuWindow as _MenuWindow } from "./menu-window";
-import { useState } from "react";
 
 const PlayingField = memo(_PlayingField);
 const GameFiguresArea = memo(_GameFiguresArea);
 const OverlayGui = memo(_OverlayGui);
-const MenuWindow = memo(_MenuWindow);
 
 
 export default function App() {
-    const [isMenuOpen, setIsmenueOpen] = useState(false);
     return (
         <div css={{
             position: "fixed",
@@ -43,8 +39,7 @@ export default function App() {
                 padding: "2em",
                 pointerEvents: "none",
             }}>
-                <MenuWindow isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
-                <OverlayGui isMenuOpen={isMenuOpen} setIsmenueOpen={setIsmenueOpen} />
+                <OverlayGui />
             </div>
         </div >
     );

@@ -1,10 +1,11 @@
-import { useRecoilState } from "recoil";
-import { levelRecoil } from "./level-recoil";
-import undoIcon from "../../assets/undo-move.svg"
+import { useRecoilState, useRecoilValue } from "recoil";
+import soundOnIcon from "../assets/sound-on.svg"
+import soundOffIcon from "../assets/sound-off.svg"
+import { isSoundOnRecoil } from "./settings/is-sound-on-recoil";
 
-export const UndoBtn = () => {
+export const MusicSwitchBtn = () => {
 
-    const [level, setLevel] = useRecoilState(levelRecoil);
+    const [isSound, setIsSound] = useRecoilState(isSoundOnRecoil);
 
     return (
         <button
@@ -17,15 +18,13 @@ export const UndoBtn = () => {
                 padding: "0.5vmax",
                 width: "fit-content",
                 position: "fixed",
-                left: "2vmax",
-                bottom: "2vmax",
-                filter: !("prev" in level) ? "grayscale(80%)" : "none",
+                right: "2vmax",
+                top: "2vmax",
             }}
-            disabled={!("prev" in level)}
-            onClick={() => {
-                if (!("prev" in level)) { return; }
-                setLevel(level.prev);
-            }} >
+            onClick={
+                () => setIsSound(!isSound)
+            }
+        >
             <div style={{
                 boxSizing: "border-box",
                 background: "linear-gradient(90deg, #49B5F7 0%, #2578CF 100%)",
@@ -34,10 +33,9 @@ export const UndoBtn = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-
             }} >
                 <img
-                    src={undoIcon}
+                    src={isSound ? soundOffIcon : soundOnIcon}
                     alt="icon"
                     style={{
                         display: "block",

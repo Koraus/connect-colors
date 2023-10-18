@@ -2,7 +2,6 @@ import { RotateButtons } from "./level/rotate-buttons.tsx";
 import { CurrentScore } from "./level/current-score.tsx";
 import { UndoBtn } from "./level/undo-btn.tsx";
 import { BestScore } from "./best-score.tsx";
-import { MenuBtn } from "./menu-btn.tsx";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { figureOnPointerIndexRecoil } from "./level/pointer-data.tsx";
 import { useWindowEvent } from "../utils/use-window-event.ts";
@@ -13,16 +12,15 @@ import { figureRotationsRecoil } from "./level/figure-rotations-recoil.ts";
 import { levelRecoil } from "./level/level-recoil.ts";
 import { refKey } from "../utils/ref-key.ts";
 import { Dispatch, SetStateAction } from "react";
+import { ResetBtn } from "./level/reset-btn.tsx";
+import { ProgressBar } from "./progress-bar.tsx";
+import { RandomLevelBtn } from "./random-level-btn.tsx";
+import { MusicSwitchBtn } from "./music-switch-btn.tsx";
+import { NextLvl } from "./next-lvl.tsx";
 
 
 
-export function OverlayGui({
-    isMenuOpen,
-    setIsmenueOpen,
-}: {
-    isMenuOpen: boolean,
-    setIsmenueOpen: Dispatch<SetStateAction<boolean>>,
-}) {
+export function OverlayGui({ }) {
 
     const level = useRecoilValue(levelRecoil);
     const setFigureRotations = useSetRecoilState(figureRotationsRecoil);
@@ -58,10 +56,12 @@ export function OverlayGui({
             maxWidth: "30vw",
             pointerEvents: pointerFigureIndex === undefined ? "all" : "none",
         }}>
-            <div css={{ marginRight: "1em" }}>
-                <MenuBtn isOpen={isMenuOpen} setIsOpen={setIsmenueOpen} />
+            <RandomLevelBtn />
+            <MusicSwitchBtn />
+            <ProgressBar />
+            {/* <div css={{ marginRight: "1em" }}>
                 <RotateButtons />
-                <UndoBtn />
+                <ResetBtn />
             </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <DestroySameTypeCellsBooster type={1} />
@@ -76,25 +76,10 @@ export function OverlayGui({
             <div style={{
                 fontSize: "2rem",
             }}> level&nbsp;{isCompleted ? "completed" : ""}
-            </div>
-            {isCompleted
-                && <button
-                    style={{
-                        position: "fixed",
-                        inset: "50%",
-                        width: "10vw",
-                        height: "10vh",
-                        zIndex: 2,
-                    }}
-                    onClick={() => location.reload()}> next lvl
-                </button>}
-            <div style={{
-            }}>
-                {level.state.figureStockLeft}
-                &nbsp;pcs of&nbsp;
-                {level.state.level.figureStock}
-                &nbsp;left to place
-            </div>
+            </div> */}
+
+            {isCompleted && <NextLvl />}
+            <UndoBtn />
         </div>
     </>;
 }

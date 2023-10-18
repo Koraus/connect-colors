@@ -1,10 +1,6 @@
-import { useRecoilState } from "recoil";
-import { levelRecoil } from "./level-recoil";
-import undoIcon from "../../assets/undo-move.svg"
+import randomIcon from "../assets/random-level.svg"
 
-export const UndoBtn = () => {
-
-    const [level, setLevel] = useRecoilState(levelRecoil);
+export const NextLvl = () => {
 
     return (
         <button
@@ -16,16 +12,14 @@ export const UndoBtn = () => {
                 background: "linear-gradient(180deg, #2587E2 0%, #1A4C69 100%)",
                 padding: "0.5vmax",
                 width: "fit-content",
+                height: "fit-content",
                 position: "fixed",
-                left: "2vmax",
-                bottom: "2vmax",
-                filter: !("prev" in level) ? "grayscale(80%)" : "none",
+                inset: "50%",
+
             }}
-            disabled={!("prev" in level)}
-            onClick={() => {
-                if (!("prev" in level)) { return; }
-                setLevel(level.prev);
-            }} >
+            onClick={() => location.reload()}
+
+        >
             <div style={{
                 boxSizing: "border-box",
                 background: "linear-gradient(90deg, #49B5F7 0%, #2578CF 100%)",
@@ -37,7 +31,7 @@ export const UndoBtn = () => {
 
             }} >
                 <img
-                    src={undoIcon}
+                    src={randomIcon}
                     alt="icon"
                     style={{
                         display: "block",
