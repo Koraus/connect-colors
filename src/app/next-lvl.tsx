@@ -14,7 +14,8 @@ export const NextLvl = () => {
                 width: "fit-content",
                 height: "fit-content",
                 position: "fixed",
-                inset: "50%",
+                top: "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)",
+                left: "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)",
 
             }}
             onClick={() => location.reload()}
