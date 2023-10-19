@@ -37,6 +37,7 @@ export const UndoBtn = () => {
 
             }} >
                 <img
+                    draggable={false}
                     src={undoIcon}
                     alt="icon"
                     style={{

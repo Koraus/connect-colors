@@ -30,6 +30,7 @@ export const RandomLevelBtn = () => {
 
             }} >
                 <img
+                    draggable={false}
                     src={randomIcon}
                     alt="icon"
                     style={{

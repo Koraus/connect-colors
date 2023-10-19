@@ -5,6 +5,7 @@ export const NextLvl = () => {
     return (
         <button
             style={{
+                transform:" scale(1.7)",
                 fontSize: "1rem",
                 boxSizing: "border-box",
                 borderRadius: "1.5vmax",
@@ -32,12 +33,12 @@ export const NextLvl = () => {
 
             }} >
                 <img
+                    draggable={false}
                     src={randomIcon}
                     alt="icon"
                     style={{
                         display: "block",
                         width: "4.5vmax",
-
                     }}
                 />
             </div>

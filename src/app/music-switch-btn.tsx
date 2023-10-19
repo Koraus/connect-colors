@@ -21,6 +21,7 @@ export const MusicSwitchBtn = () => {
                 right: "2vmax",
                 top: "2vmax",
             }}
+      
             onClick={
                 () => setIsSound(!isSound)
             }
@@ -35,6 +36,7 @@ export const MusicSwitchBtn = () => {
                 alignItems: "center",
             }} >
                 <img
+                    draggable={false}
                     src={isSound ? soundOnIcon : soundOffIcon}
                     alt="icon"
                     style={{

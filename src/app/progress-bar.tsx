@@ -25,6 +25,7 @@ export const ProgressBar = () => {
         }}>
             <span>  {level.state.figureStockLeft} </span> <span> / {level.state.level.figureStock}</span>
             <img
+                draggable={false}
                 src={icoPath}
                 style={{ width: "9vmax" }}
                 alt="" />
