@@ -35,7 +35,7 @@ export const MusicSwitchBtn = () => {
                 alignItems: "center",
             }} >
                 <img
-                    src={isSound ? soundOffIcon : soundOnIcon}
+                    src={isSound ? soundOnIcon : soundOffIcon}
                     alt="icon"
                     style={{
                         display: "block",
