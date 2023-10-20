@@ -1,7 +1,13 @@
 import { useState } from "react";
 import randomIcon from "../assets/random-level.svg"
+import { useSetRecoilState } from "recoil";
+import { LevelStateChain, levelRecoil } from "./level/level-recoil";
+import { createLevelState } from "../level-model";
+import { levels } from "../level-model/levels";
 
 export const RandomLevelBtn = () => {
+
+    const setLevel = useSetRecoilState(levelRecoil)
 
     const [isWarning, setIsWarning] = useState(false)
     const [isYesHovering, setIsYesHovering] = useState(false);
@@ -34,7 +40,15 @@ export const RandomLevelBtn = () => {
                     }}
                     onMouseEnter={() => setIsYesHovering(true)}
                     onMouseLeave={() => setIsYesHovering(false)}
-                    onClick={() => location.reload()}
+                    onClick={() => {
+                        setIsWarning(false);
+                        setLevel({
+                            state: createLevelState({
+                                seed32: Math.random() * (1 << 32) >>> 0,
+                                level: levels["1"],
+                            }),
+                        } as LevelStateChain)
+                    }}
                 > Yes(&#10003;)  </button>
                 <button
                     style={{
@@ -79,7 +93,7 @@ export const RandomLevelBtn = () => {
                     <img
                         draggable={false}
                         src={randomIcon}
-                        alt="icon"
+                        alt="random lvl"
                         style={{
                             display: "block",
                             width: "4.5vmax",

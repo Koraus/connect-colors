@@ -1,11 +1,15 @@
+import { useSetRecoilState } from "recoil";
 import randomIcon from "../assets/random-level.svg"
+import { LevelStateChain, levelRecoil } from "./level/level-recoil";
+import { createLevelState } from "../level-model";
+import { levels } from "../level-model/levels";
 
 export const NextLvl = () => {
-
+    const setLevel = useSetRecoilState(levelRecoil)
     return (
         <button
             style={{
-                transform:" scale(1.7)",
+                transform: " scale(1.7)",
                 fontSize: "1rem",
                 boxSizing: "border-box",
                 borderRadius: "1.5vmax",
@@ -17,10 +21,15 @@ export const NextLvl = () => {
                 position: "fixed",
                 top: "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)",
                 left: "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)",
-
             }}
-            onClick={() => location.reload()}
-
+            onClick={() => {
+                setLevel({
+                    state: createLevelState({
+                        seed32: Math.random() * (1 << 32) >>> 0,
+                        level: levels["1"],
+                    }),
+                } as LevelStateChain)
+            }}
         >
             <div style={{
                 boxSizing: "border-box",
@@ -30,12 +39,11 @@ export const NextLvl = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-
             }} >
                 <img
                     draggable={false}
                     src={randomIcon}
-                    alt="icon"
+                    alt="next"
                     style={{
                         display: "block",
                         width: "4.5vmax",

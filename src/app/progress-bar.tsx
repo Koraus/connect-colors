@@ -23,12 +23,13 @@ export const ProgressBar = () => {
             right: "2vmax",
             bottom: "2vmax",
         }}>
-            <span>  {level.state.figureStockLeft} </span> <span> / {level.state.level.figureStock}</span>
+            <span> {level.state.figureStockLeft} </span> <span> / {level.state.level.figureStock}</span>
             <img
                 draggable={false}
                 src={icoPath}
                 style={{ width: "9vmax" }}
-                alt="" />
+                alt="figures"
+            />
         </div>
     )
 }
