@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import randomIcon from "../assets/random-level.svg"
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { LevelStateChain, levelRecoil } from "./level/level-recoil";
 import { createLevelState } from "../level-model";
 import { levels } from "../level-model/levels";
+import { css } from "@emotion/react";
 
 export const RandomLevelBtn = () => {
 
-    const setLevel = useSetRecoilState(levelRecoil)
-
+    const [level, setLevel] = useRecoilState(levelRecoil)
     const [isWarning, setIsWarning] = useState(false)
-    const [isYesHovering, setIsYesHovering] = useState(false);
-    const [isNoHovering, setIsNoHovering] = useState(false);
+    const isWin = useMemo(() => level.state.figureStockLeft === 0, [level]);
 
     return (
         <div>
@@ -32,14 +31,17 @@ export const RandomLevelBtn = () => {
                         boxSizing: "border-box",
                         borderRadius: "1.2vmax",
                         border: "none",
-                        background: isYesHovering
-                            ? "linear-gradient(90deg, #58b8f4 0%, #6895c5 100%)"
-                            : "linear-gradient(90deg, #49B5F7 0%, #2578CF 100%)",
                         padding: "1vmax",
                         margin: "1vmax",
-                    }}
-                    onMouseEnter={() => setIsYesHovering(true)}
-                    onMouseLeave={() => setIsYesHovering(false)}
+                    }
+                    }
+                    css={css`
+                    background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
+                    &:hover {  
+                        background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
+                        color: white; 
+                    } `}
+
                     onClick={() => {
                         setIsWarning(false);
                         setLevel({
@@ -56,14 +58,15 @@ export const RandomLevelBtn = () => {
                         boxSizing: "border-box",
                         borderRadius: "1.2vmax",
                         border: "none",
-                        background: isNoHovering
-                            ? "linear-gradient(90deg, #58b8f4 0%, #6895c5 100%)"
-                            : "linear-gradient(90deg, #49B5F7 0%, #2578CF 100%)",
                         padding: "1vmax",
                         margin: "1vmax",
                     }}
-                    onMouseEnter={() => setIsNoHovering(true)}
-                    onMouseLeave={() => setIsNoHovering(false)}
+                    css={css`
+                    background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
+                    &:hover {  
+                        background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
+                        color: white; 
+                    } `}
                     onClick={() => setIsWarning(false)}> No (X) </button>
             </div>}
             <button
@@ -76,10 +79,22 @@ export const RandomLevelBtn = () => {
                     padding: "0.5vmax",
                     width: "fit-content",
                     position: "fixed",
-                    left: "2vmax",
-                    top: "2vmax",
+                    transitionDuration: "1500ms",
+                    left: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
+                    top: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
+                    transform: isWin ? "scale(2)" : "none",
                 }}
-                onClick={() => setIsWarning(true)}
+                onClick={() => {
+                    if (isWin) {
+                        return setLevel({
+                            state: createLevelState({
+                                seed32: Math.random() * (1 << 32) >>> 0,
+                                level: levels["1"],
+                            }),
+                        } as LevelStateChain)
+                    }
+                    return setIsWarning(true)
+                }}
             >
                 <div style={{
                     boxSizing: "border-box",
@@ -101,6 +116,6 @@ export const RandomLevelBtn = () => {
                     />
                 </div>
             </button >
-        </div>
+        </div >
     );
 };

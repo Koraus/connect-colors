@@ -7,6 +7,7 @@ export const ProgressBar = () => {
     const level = useRecoilValue(levelRecoil);
     return (
         <div css={{
+            userSelect: "none",
             boxSizing: "border-box",
             borderRadius: "1.5vmax",
             border: "0.3vmax solid #E4E4E4",
@@ -42,6 +43,7 @@ export const ProgressBar = () => {
                     top: 0,
                     left: 0,
                     background: "linear-gradient(90deg, #49B5F7 0%, #2578CF 100%)",
+                    transitionDuration: "500ms",
                     width: `${(level.state.level.figureStock - level.state.figureStockLeft) / level.state.level.figureStock * 100}%`,
                     height: "100%",
                 }}> </div>

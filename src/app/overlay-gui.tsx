@@ -16,8 +16,6 @@ import { ResetBtn } from "./level/reset-btn.tsx";
 import { ProgressBar } from "./progress-bar.tsx";
 import { RandomLevelBtn } from "./random-level-btn.tsx";
 import { MusicSwitchBtn } from "./music-switch-btn.tsx";
-import { NextLvl } from "./next-lvl.tsx";
-
 
 
 export function OverlayGui({ }) {
@@ -77,8 +75,6 @@ export function OverlayGui({ }) {
                 fontSize: "2rem",
             }}> level&nbsp;{isCompleted ? "completed" : ""}
             </div> */}
-
-            {isCompleted && <NextLvl />}
             <UndoBtn />
         </div>
     </>;
