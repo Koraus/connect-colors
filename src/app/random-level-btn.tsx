@@ -5,6 +5,7 @@ import { LevelStateChain, levelRecoil } from "./level/level-recoil";
 import { createLevelState } from "../level-model";
 import { levels } from "../level-model/levels";
 import { css } from "@emotion/react";
+import { isAvailablePut } from "../level-model/is-available-move";
 import { WinScene } from "./win-scene";
 
 export const RandomLevelBtn = () => {
@@ -12,6 +13,7 @@ export const RandomLevelBtn = () => {
     const [level, setLevel] = useRecoilState(levelRecoil)
     const [isWarning, setIsWarning] = useState(false)
     const isWin = useMemo(() => level.state.figureStockLeft === 0, [level]);
+    const isLose = useMemo(() => !isAvailablePut(level.state), [level]);
 
     return (
         <div>
@@ -36,7 +38,7 @@ export const RandomLevelBtn = () => {
                         margin: "1vmax",
                     }
                     }
-                    css={css `
+                    css={css`
                     background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
                     &:hover {  
                         background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
@@ -62,7 +64,7 @@ export const RandomLevelBtn = () => {
                         padding: "1vmax",
                         margin: "1vmax",
                     }}
-                    css={css `
+                    css={css`
                     background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
                     &:hover {  
                         background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
@@ -70,6 +72,16 @@ export const RandomLevelBtn = () => {
                     } `}
                     onClick={() => setIsWarning(false)}> No (X) </button>
             </div>}
+            {isLose && !isWin && < div style={{
+                background: "radial-gradient(#e74949, #494847)",
+                opacity: 0.5,
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                zIndex: 2,
+            }}> </div>}
             <button
                 style={{
                     fontSize: "1rem",
@@ -81,13 +93,13 @@ export const RandomLevelBtn = () => {
                     width: "fit-content",
                     position: "fixed",
                     transitionDuration: "1500ms",
-                    left: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
-                    top: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
-                    transform: isWin ? "scale(2)" : "none",
-                    zIndex: isWin ? 10 : 1,
+                    left: isWin || isLose ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
+                    top: isWin || isLose ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
+                    transform: isWin || isLose ? "scale(2)" : "none",
+                    zIndex: isWin || isLose ? 10 : 1,
                 }}
                 onClick={() => {
-                    if (isWin) {
+                    if (isWin || isLose) {
                         return setLevel({
                             state: createLevelState({
                                 seed32: Math.random() * (1 << 32) >>> 0,
