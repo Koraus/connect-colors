@@ -32,7 +32,6 @@ export default function App() {
                 <PlayingField />
                 <GameFiguresArea />
             </Canvas>
-
             <div css={{
                 position: "absolute",
                 inset: 0,

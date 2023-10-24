@@ -5,6 +5,7 @@ import { LevelStateChain, levelRecoil } from "./level/level-recoil";
 import { createLevelState } from "../level-model";
 import { levels } from "../level-model/levels";
 import { css } from "@emotion/react";
+import { WinScene } from "./win-scene";
 
 export const RandomLevelBtn = () => {
 
@@ -14,10 +15,10 @@ export const RandomLevelBtn = () => {
 
     return (
         <div>
+            {isWin && <WinScene />}
             {isWarning && <div style={{
                 boxSizing: "border-box",
                 position: "fixed",
-                zIndex: 100,
                 textAlign: "center",
                 padding: "2vmax",
                 borderRadius: "1.2vmax",
@@ -35,7 +36,7 @@ export const RandomLevelBtn = () => {
                         margin: "1vmax",
                     }
                     }
-                    css={css`
+                    css={css `
                     background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
                     &:hover {  
                         background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
@@ -61,7 +62,7 @@ export const RandomLevelBtn = () => {
                         padding: "1vmax",
                         margin: "1vmax",
                     }}
-                    css={css`
+                    css={css `
                     background: linear-gradient(90deg, #49B5F7 0%, #2578CF 100%);
                     &:hover {  
                         background: linear-gradient(90deg, #2ba8f7 0%, #014996 100%);
@@ -83,6 +84,7 @@ export const RandomLevelBtn = () => {
                     left: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
                     top: isWin ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
                     transform: isWin ? "scale(2)" : "none",
+                    zIndex: isWin ? 10 : 1,
                 }}
                 onClick={() => {
                     if (isWin) {
