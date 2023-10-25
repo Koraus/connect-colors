@@ -131,7 +131,7 @@ export const GameFigure = ({
             });
             ev.stopPropagation();
         }}
-        onPointerUp={onPointerUp}
+        onPointerUp={() => { onPointerUp; setPointerFigureIndex(undefined) }}
         onPointerEnter={() => setHovered(!dragged && true)}
         onPointerLeave={() => setHovered(false)}
     >
