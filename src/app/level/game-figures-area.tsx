@@ -12,9 +12,11 @@ export const GameFiguresArea = () => {
     const { camera } = useThree();
     useLayoutEffect(() => camera.lookAt(1, 0, 4), [camera]);
 
+    const down = 2;
+
     return level.state.figures.map((el, index) => <group
         key={refKey(el)}
-        position={[-4, 0, index * 4]}
+        position={[-4, 0, (index * 4.5) - down]}
     >
         <GameFigure
             figureIndex={index}
