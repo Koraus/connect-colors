@@ -17,15 +17,31 @@ export const WinScene = () => {
         transform: translate(10vmax, -70vmax);
 	}
 
-	50% {
+	70% {
 		transform: scale(1.5);
         transform: translate(15max, 50vmax);
 	}
 
 	100% {
-		transform: scale(0.1);
+		transform: scale(0.2);
         transform: translate(20vmax, 110max);
 	}
+`
+const winAnimation2 = keyframes`
+    0% {
+        transform: scale(0.5);
+        transform: translate(10vmax, 100vmax);
+    }
+
+    70% {
+        transform: scale(1.5);
+        transform: translate(15max, -50vmax);
+    }
+
+    100% {
+        transform: scale(0.2);
+        transform: translate(20vmax, -110max);
+    }
 `
 
     return (
@@ -42,7 +58,7 @@ export const WinScene = () => {
 
             {
                 Array.from(
-                    { length: 100 },
+                    { length: 150 },
                     (_, i) => i).map((_, i) => {
                         return (
                             <div
@@ -51,13 +67,38 @@ export const WinScene = () => {
                                     position: "absolute",
                                     top: Math.random() * 100 + "%",
                                     left: Math.random() * 100 + "%",
-                                    width: "0.5vmax",
-                                    height: "1.1vmax",
+                                    width: "0.6vmax",
+                                    height: "1vmax",
                                     borderRadius: "20%",
                                     background: getRandomRGB(),
                                 }}
                                 css={css `
                                 animation: ${winAnimation} 3s ease infinite;
+                              `}
+                            >
+                            </div>
+                        )
+                    }
+                    )
+            }
+            {
+                Array.from(
+                    { length: 150 },
+                    (_, i) => i).map((_, i) => {
+                        return (
+                            <div
+                                key={i}
+                                style={{
+                                    position: "absolute",
+                                    top: Math.random() * 100 + "%",
+                                    left: Math.random() * 100 + "%",
+                                    width: "0.6vmax",
+                                    height: "1vmax",
+                                    borderRadius: "20%",
+                                    background: getRandomRGB(),
+                                }}
+                                css={css `
+                                animation: ${winAnimation2} 2s ease infinite;
                               `}
                             >
                             </div>

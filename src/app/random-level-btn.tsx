@@ -92,6 +92,7 @@ export const RandomLevelBtn = () => {
                     padding: "0.5vmax",
                     width: "fit-content",
                     position: "fixed",
+                    transitionDelay: "1s",
                     transitionDuration: "1500ms",
                     left: isWin || isLose ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
                     top: isWin || isLose ? "calc(50% - 4.5vmax - 0.3vmax - 0.5vmax)" : "2vmax",
